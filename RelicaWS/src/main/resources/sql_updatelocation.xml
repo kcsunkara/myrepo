@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+	<comment>This query returns request copy related queries.</comment>
+	<entry key="assetLocation.sql">
+		select top 1 id as ASSET_ID, l_path as L_PATH from STAR_COMMAND.DBO.ASSETS where
+		dam_internal_id=:dam_internal_id and repository=:repository
+	</entry>
+	<entry key="updatePolicyAsNull.sql">
+		UPDATE STAR_COMMAND.DBO.ASSETS SET policy_id=null,
+		l_path=:lPath, name=:name
+		where dam_internal_id=:dam_internal_id and
+		repository=:repository
+	</entry>
+	<entry key="updateAssetName.sql">
+		UPDATE STAR_COMMAND.DBO.ASSETS SET name=:name where
+		dam_internal_id=:dam_internal_id and repository=:repository
+	</entry>
+	
+	<entry key="updateLocations.sql">
+	        DECLARE @lpath nvarchar(2048), @assetname nvarchar(1024)
+            set @lpath=?
+            set @assetname=?
+            
+            DECLARE @MyTableVar table (assetid int)
+            UPDATE STAR_COMMAND.DBO.assets 
+            set 
+            l_path = case when l_path &lt;> @lpath then @lpath else l_path end,
+            name = case when l_path &lt;>   @lpath then  @assetname else @assetname end,
+            policy_id = case when l_path &lt;> @lpath then  null else policy_id end
+            OUTPUT inserted.id  INTO @MyTableVar
+            where dam_internal_id=? and repository=?
+            
+             --Display the result set of the table variable.
+            SELECT assetid FROM @MyTableVar
+	</entry>
+	
+</properties>
