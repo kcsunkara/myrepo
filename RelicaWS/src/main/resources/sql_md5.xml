@@ -6,20 +6,20 @@
 	<entry key="getPoolsizes.sql">
 
 		select id,md5_pool_large,md5_pool_small,
-		(SELECT COUNT(*) from STAR_COMMAND.DBO.batchjobs with(NOLOCK) WHERE storage_id=sl.id and
+		(SELECT COUNT(*) from ASSET_REPLICA.DBO.batchjobs with(NOLOCK) WHERE storage_id=sl.id and
 		job_type='MD5_LARGE' and job_status='NEW') CURRENT_MD5_LARGE ,
-		(SELECT COUNT(*) from STAR_COMMAND.DBO.batchjobs with(NOLOCK) WHERE storage_id=sl.id and
+		(SELECT COUNT(*) from ASSET_REPLICA.DBO.batchjobs with(NOLOCK) WHERE storage_id=sl.id and
 		job_type='MD5_SMALL' and job_status='NEW') CURRENT_MD5_SMALL
-		from STAR_COMMAND.DBO.storage_locations sl where id=:storagelocationId
+		from ASSET_REPLICA.DBO.storage_locations sl where id=:storagelocationId
 
 	</entry>
 
 	<entry key="getNewAssetsForMD5.sql">
 			select  top 1 1 
-FROM STAR_COMMAND.DBO.assets A WITH(NOLOCK)
-INNER JOIN STAR_COMMAND.DBO.policies P WITH(NOLOCK)
+FROM ASSET_REPLICA.DBO.assets A WITH(NOLOCK)
+INNER JOIN ASSET_REPLICA.DBO.policies P WITH(NOLOCK)
 ON p.id=a.policy_id
-INNER JOIN STAR_COMMAND.DBO.asset_instances ai WITH(NOLOCK)	 
+INNER JOIN ASSET_REPLICA.DBO.asset_instances ai WITH(NOLOCK)	 
 ON AI.asset_id = A.ID		
 WHERE A.DELETE_DATE is null 
 AND ai.storage_location_id=:storagelocationId 
@@ -30,21 +30,21 @@ AND p.md5_check = 1
 	</entry>
 
 	<entry key="getStorageLocationId.sql">
-		select id from STAR_COMMAND.DBO.storage_locations
+		select id from ASSET_REPLICA.DBO.storage_locations
 		where physical_name=:storageName
 	</entry>
 
 	<entry key="storageLocationName.sql">
-		select physical_name from STAR_COMMAND.DBO.storage_locations
+		select physical_name from ASSET_REPLICA.DBO.storage_locations
 		where id=:storageId
 	</entry>
 
 	<entry key="getAssetsForMD5Olderthan90days.sql">
 		select top 1 1 
-		from STAR_COMMAND.DBO.assets a WITH(NOLOCK)
+		from ASSET_REPLICA.DBO.assets a WITH(NOLOCK)
 		WHERE a.DELETE_DATE is null
     	AND EXISTS( SELECT 1 
-		FROM STAR_COMMAND.DBO.asset_instances ai WITH(NOLOCK)
+		FROM ASSET_REPLICA.DBO.asset_instances ai WITH(NOLOCK)
 		WHERE last_check is not null 
 		and last_check &lt; ((CURRENT_TIMESTAMP) - :md5RecheckDuration) AND ai.status ='V' 
 		and ai.asset_id = a.id 
@@ -58,7 +58,7 @@ AND p.md5_check = 1
   storage_id int,
   request_host_name nvarchar(100)
   )
-insert into STAR_COMMAND.dbo.batchjobs(
+insert into ASSET_REPLICA.dbo.batchjobs(
     job_type
   , asset_instance_id
   , storage_id  -- What goes here, the FPD storage ID or source t1?
@@ -76,24 +76,24 @@ insert into STAR_COMMAND.dbo.batchjobs(
    , 'NEW'     as job_status
    , ? as request_host_name
 FROM
-              STAR_COMMAND.dbo.asset_instances   AI WITH(NOLOCK)
-   INNER JOIN STAR_COMMAND.dbo.assets             A WITH(NOLOCK) on AI.asset_id=A.id
-   INNER JOIN STAR_COMMAND.dbo.policies           P on A.policy_id=P.id
-   INNER JOIN STAR_COMMAND.dbo.storage_locations SL on AI.storage_location_id=SL.id
+              ASSET_REPLICA.dbo.asset_instances   AI WITH(NOLOCK)
+   INNER JOIN ASSET_REPLICA.dbo.assets             A WITH(NOLOCK) on AI.asset_id=A.id
+   INNER JOIN ASSET_REPLICA.dbo.policies           P on A.policy_id=P.id
+   INNER JOIN ASSET_REPLICA.dbo.storage_locations SL on AI.storage_location_id=SL.id
    ,------- CURRENT MD5 Processing Pool Levels ----- 
     (select SL_jobs.id as POOL_STORAGE_ID
       ,     SL_jobs.md5_pool_large as TOTAL_POOL_LARGE
       ,     SL_jobs.md5_pool_small as TOTAL_POOL_SMALL
       ,     sum( case when ( bj1.job_type='MD5_LARGE' and bj1.job_status='NEW') then 1 else 0 end) as CURRENT_MD5_LARGE
       ,     sum( case when ( bj1.job_type='MD5_SMALL' and bj1.job_status='NEW') then 1 else 0 end) as CURRENT_MD5_SMALL
-    from STAR_COMMAND.dbo.storage_locations SL_jobs 
-         LEFT OUTER JOIN STAR_COMMAND.dbo.batchjobs bj1 WITH(NOLOCK) on SL_jobs.id=bj1.storage_id 
+    from ASSET_REPLICA.dbo.storage_locations SL_jobs 
+         LEFT OUTER JOIN ASSET_REPLICA.dbo.batchjobs bj1 WITH(NOLOCK) on SL_jobs.id=bj1.storage_id 
               and bj1.storage_id=? and bj1.job_type in ('MD5_LARGE','MD5_SMALL')
               and bj1.job_status='NEW'
     where SL_jobs.id=?
     group by SL_jobs.id, SL_jobs.md5_pool_large, SL_jobs.md5_pool_small) POOL_LEVELS
    ,-------- DICTIONARY VALUE FOR Max Small filesize for determining job type ----------
-     (select min(CONVERT(int,dct.value)) as MAX_SMALLFILESIZE from STAR_COMMAND.dbo.dictionary dct
+     (select min(CONVERT(int,dct.value)) as MAX_SMALLFILESIZE from ASSET_REPLICA.dbo.dictionary dct
          where dct.dictionary='CONFIG' and dct.keyname='SMALL_FILESIZE') SIZE_CUTOFF      
 WHERE 
 	 A.DELETE_DATE IS NULL and
@@ -109,8 +109,8 @@ WHERE
     and SL.id=?
     and  ai.asset_id not in (
          select ai_jobs.asset_id
-         from star_command.dbo.batchjobs bj_list WITH(NOLOCK)
-           inner join star_command.dbo.asset_instances ai_jobs WITH(NOLOCK) on bj_list.asset_instance_id=ai_jobs.id
+         from ASSET_REPLICA.dbo.batchjobs bj_list WITH(NOLOCK)
+           inner join ASSET_REPLICA.dbo.asset_instances ai_jobs WITH(NOLOCK) on bj_list.asset_instance_id=ai_jobs.id
          where bj_list.job_type in ('MD5_SMALL','MD5_LARGE') 
            and ( bj_list.job_status='NEW' or (BJ_list.JOB_STATUS='ERROR' AND
                 BJ_list.END_DATE > DATEADD(HOUR,-1,GETDATE()))))
@@ -134,59 +134,59 @@ WHERE
 	
 	</entry>
 	<entry key="getAssetAbsoultePathforMD5.sql">
-		SELECT (SELECT PATH FROM STAR_COMMAND.dbo.STORAGE_LOCATIONS SL
+		SELECT (SELECT PATH FROM ASSET_REPLICA.dbo.STORAGE_LOCATIONS SL
 				WHERE SL.ID=:storageId) + A.FS_PATH as path
-					FROM STAR_COMMAND.DBO.ASSETS A WITH(NOLOCK), STAR_COMMAND.DBO.ASSET_INSTANCES AI WITH(NOLOCK)
+					FROM ASSET_REPLICA.DBO.ASSETS A WITH(NOLOCK), ASSET_REPLICA.DBO.ASSET_INSTANCES AI WITH(NOLOCK)
 					WHERE A.ID=AI.ASSET_ID AND
 						AI.ID=:assetInstanceId	
 	</entry>
 
 	<entry key="getAbsoulteBasePath.sql">
-		select path from STAR_COMMAND.DBO.storage_locations where id=:storageId
+		select path from ASSET_REPLICA.DBO.storage_locations where id=:storageId
 	</entry>
 
 	<entry key="getRelativePath.sql">
-		select fs_path from STAR_COMMAND.DBO.assets where id=:assetId
+		select fs_path from ASSET_REPLICA.DBO.assets where id=:assetId
 	</entry>
 
 	<entry key="assetInstanceId.sql">
 		select ai.asset_id as asset_id, ai.id as id, a.user_md5 as user_md5,
-		a.asset_md5 as asset_md5 from STAR_COMMAND.dbo.asset_instances ai WITH(NOLOCK),
-		STAR_COMMAND.dbo.batchjobs b, STAR_COMMAND.dbo.assets a WITH(NOLOCK) where
+		a.asset_md5 as asset_md5 from ASSET_REPLICA.dbo.asset_instances ai WITH(NOLOCK),
+		ASSET_REPLICA.dbo.batchjobs b, ASSET_REPLICA.dbo.assets a WITH(NOLOCK) where
 		a.id=ai.asset_id and ai.id=b.asset_instance_id and b.job_id=:job_id
 	</entry>
 
 
 	<entry key="updateErrors.sql">
-		update STAR_COMMAND.dbo.batchjobs set
+		update ASSET_REPLICA.dbo.batchjobs set
 		error_message=:error_message,job_status='ERROR',end_date=CURRENT_TIMESTAMP
 		where job_id=:job_id
 	</entry>
 
 	<entry key="updateSuccess.sql">
-		update STAR_COMMAND.dbo.batchjobs set
+		update ASSET_REPLICA.dbo.batchjobs set
 		job_status='COMPLETED',end_date=CURRENT_TIMESTAMP where job_id=:job_id
 	</entry>
 
 
 	<entry key="updateAssetsWithASSET_MD5.sql">
-		update STAR_COMMAND.dbo.assets set asset_md5=:asset_md5 where id=:assetId
+		update ASSET_REPLICA.dbo.assets set asset_md5=:asset_md5 where id=:assetId
 	</entry>
 
 
 	<entry key="updateAssetInstance.sql">
-		update STAR_COMMAND.dbo.asset_instances set status=:status,
+		update ASSET_REPLICA.dbo.asset_instances set status=:status,
 		location_md5=:location_md5, last_check=CURRENT_TIMESTAMP where
 		id=:instanceId
 	</entry>
 	
 	<entry key="folderPath.sql">
-		select policy_id as policy_id,folder_pattern as folder_pattern from  STAR_COMMAND.dbo.dam_folders where repository=:repository and 
+		select policy_id as policy_id,folder_pattern as folder_pattern from  ASSET_REPLICA.dbo.dam_folders where repository=:repository and 
   		folder_pattern COLLATE Latin1_General_CS_AS like :lPath order by len(folder_pattern) desc
 	</entry>
 	
 	<entry key="folderPatterns.sql">
-		select policy_id as policy_id,folder_pattern as folder_pattern from  STAR_COMMAND.dbo.dam_folders where repository=:repository 
+		select policy_id as policy_id,folder_pattern as folder_pattern from  ASSET_REPLICA.dbo.dam_folders where repository=:repository 
   		order by len(folder_pattern) desc
 	</entry>
 	
