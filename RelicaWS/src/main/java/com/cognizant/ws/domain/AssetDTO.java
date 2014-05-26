@@ -47,14 +47,8 @@ public class AssetDTO implements java.io.Serializable{
 	public List<AssetInstancesDTO> assetInstances;
 	
 	@Column
-	private String dam_internal_id;
-	
-	@Column
 	@NotEmpty(message = "{enter.name}")
 	private String name;
-	
-	@Column
-	private String repository;
 	
 	@Column
 	@NotNull(message = "{enter.filesize}")
@@ -78,9 +72,6 @@ public class AssetDTO implements java.io.Serializable{
 	@Column
 	private Date  delete_date;
 	
-	@Column
-	private String l_path;
-
 	@Column
 	@NotNull(message = "{enter.fspath}")
 	private String fs_path;
@@ -107,13 +98,6 @@ public class AssetDTO implements java.io.Serializable{
 	}
 	public void setAssetInstances(List<AssetInstancesDTO> assetInstances) {
 		this.assetInstances = assetInstances;
-	}
-	
-	public String getDam_internal_id() {
-		return dam_internal_id;
-	}
-	public void setDam_internal_id(String dam_internal_id) {
-		this.dam_internal_id = dam_internal_id;
 	}
 	
 	public Long getFilesize() {
@@ -154,13 +138,6 @@ public class AssetDTO implements java.io.Serializable{
 	public void setDelete_date(Date delete_date) {
 		this.delete_date = delete_date;
 	}
-	public String getL_path() {
-		return l_path;
-	}
-	public void setL_path(String l_path) {
-		this.l_path = l_path;
-	}
-
 	
 	public Long getId() {
 		return id;
@@ -174,12 +151,6 @@ public class AssetDTO implements java.io.Serializable{
 	
 	public void setName(String name) {
 		this.name = name;
-	}
-	public String getRepository() {
-		return repository;
-	}
-	public void setRepository(String repository) {
-		this.repository = repository;
 	}
 
 	@PostPersist

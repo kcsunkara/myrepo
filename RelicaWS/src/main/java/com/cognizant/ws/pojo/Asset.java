@@ -10,11 +10,7 @@ public class Asset implements java.io.Serializable{
 	
 	private Long id;
 
-	private String dam_internal_id;
-		
 	private String name;
-	
-	private String repository;
 	
 	private Long filesize;
 	
@@ -27,8 +23,6 @@ public class Asset implements java.io.Serializable{
     private Date created_date;
 	
 	private Date  delete_date;
-	
-	private String l_path;
 	
 	private String fs_path;
 	
@@ -43,13 +37,6 @@ public class Asset implements java.io.Serializable{
 	}
 	public void setAssetInstanceList(List<AssetInstance> assetInstanceList) {
 		this.assetInstanceList = assetInstanceList;
-	}
-	
-	public String getDam_internal_id() {
-		return dam_internal_id;
-	}
-	public void setDam_internal_id(String dam_internal_id) {
-		this.dam_internal_id = dam_internal_id;
 	}
 	
 	public Long getFilesize() {
@@ -82,12 +69,6 @@ public class Asset implements java.io.Serializable{
 	public void setDelete_date(Date delete_date) {
 		this.delete_date = delete_date;
 	}
-	public String getL_path() {
-		return l_path;
-	}
-	public void setL_path(String l_path) {
-		this.l_path = l_path;
-	}
 
 	public Long getId() {
 		return id;
@@ -101,12 +82,6 @@ public class Asset implements java.io.Serializable{
 	
 	public void setName(String name) {
 		this.name = name;
-	}
-	public String getRepository() {
-		return repository;
-	}
-	public void setRepository(String repository) {
-		this.repository = repository;
 	}
 	
 	public String getFs_path() {

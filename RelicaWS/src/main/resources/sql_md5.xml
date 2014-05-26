@@ -130,8 +130,6 @@ WHERE
    )
   ORDER BY AI.ID DESC
  select job_id,asset_instance_id from @OUTPUT_RECS
-
-	
 	</entry>
 	<entry key="getAssetAbsoultePathforMD5.sql">
 		SELECT (SELECT PATH FROM ASSET_REPLICA.dbo.STORAGE_LOCATIONS SL

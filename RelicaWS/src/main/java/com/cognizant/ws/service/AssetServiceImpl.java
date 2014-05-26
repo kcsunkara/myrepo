@@ -274,8 +274,7 @@ public class AssetServiceImpl implements AssetService {
 		.addScalar("CUSTOMER_ID", LongType.INSTANCE)
 		.addScalar("INSTANCE_ID", LongType.INSTANCE)
 		.addScalar("ABSOULUTE_PATH", StringType.INSTANCE)
-		.addScalar("storage_type", StringType.INSTANCE)
-		.addScalar("DAM_INTERNAL_ID", StringType.INSTANCE);
+		.addScalar("storage_type", StringType.INSTANCE);
 		List<Object[]> results = query.getResultList();
 		
 		LOG.info("ASSETS MARKED FOR DELETION:");
@@ -307,8 +306,7 @@ public class AssetServiceImpl implements AssetService {
 				.addScalar("CUSTOMER_ID", LongType.INSTANCE)
 				.addScalar("INSTANCE_ID", LongType.INSTANCE)
 				.addScalar("ABSOULUTE_PATH", StringType.INSTANCE)
-				.addScalar("storage_type", StringType.INSTANCE)
-				.addScalar("DAM_INTERNAL_ID", StringType.INSTANCE);
+				.addScalar("storage_type", StringType.INSTANCE); 
 		List<Object[]> updatedAssetsResults = query.getResultList();
 
 		if (!updatedAssetsResults.isEmpty()) {
@@ -321,17 +319,15 @@ public class AssetServiceImpl implements AssetService {
 				Long instanceId = (Long) objects[2];
 				String absPath = (String) objects[3];
 				storage_type = (String) objects[4];
-				String damInternalId = (String) objects[5];
 				LOG.info("ASSET_ID: " + assetId + "; CUSTOMER_ID: "
 						+ customerId + "; ASSET_INSTANCE_ID: " + instanceId
-						+ "; ABSOLUTE_PATH: " + absPath+";damInternalId"+damInternalId);
+						+ "; ABSOLUTE_PATH: " + absPath+";");
 				data = new HashMap<String, String>();
 				data.put("assetId", assetId.toString());
 				data.put("customerId", customerId.toString());
 				data.put("instanceId", instanceId.toString());
 				data.put("path", absPath);
 				data.put("storage_type", storage_type);
-				data.put("damInternalId", damInternalId);
 				updatedAssets.add(data);
 			}
 

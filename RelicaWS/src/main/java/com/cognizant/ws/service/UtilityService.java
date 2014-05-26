@@ -16,7 +16,6 @@ public interface UtilityService {
 	public Customer getCustomerDetails(Long customerId);
 	public CustomerSummaryDTO getCustomerSummary(Long customerId);
 	public Asset getAssetDetailsByJCID(Long assetId);
-	public Asset getAssetDetailsByDAMID(String dam_internal_id, String repository);
 	public Map<Date, Map<String, Long>> getCustomerUsage(CustomerUsageServiceParams params) throws ReplicaWSException;
 
 }

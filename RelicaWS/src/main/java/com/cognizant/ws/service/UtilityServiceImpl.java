@@ -106,23 +106,11 @@ public class UtilityServiceImpl implements UtilityService {
 		return prepareAssetDetails(assetDetailsQuery);
 	}
 	
-	public Asset getAssetDetailsByDAMID(String dam_internal_id, String repository) {
-		
-		LOG.info("getAssetDetailsByDAMID service invoked...");
-		
-		Query assetDetailsQuery = em.createNativeQuery(utility.getAssetDetailsByDAMID());
-		assetDetailsQuery.setParameter("dam_internal_id", dam_internal_id);
-		assetDetailsQuery.setParameter("repository", repository);
-		return prepareAssetDetails(assetDetailsQuery);
-	}
-	
 	private Asset prepareAssetDetails(Query assetDetailsQuery) {
 		
 		assetDetailsQuery.unwrap(SQLQuery.class)
 		.addScalar("A_id", LongType.INSTANCE)
 		.addScalar("name", StringType.INSTANCE)
-		.addScalar("dam_internal_id", StringType.INSTANCE)
-		.addScalar("repository", StringType.INSTANCE)
 		.addScalar("fs_path", StringType.INSTANCE)
 		.addScalar("filesize", LongType.INSTANCE)
 		.addScalar("policy_id", LongType.INSTANCE)
@@ -130,7 +118,6 @@ public class UtilityServiceImpl implements UtilityService {
 		.addScalar("user_md5", StringType.INSTANCE)
 		.addScalar("created_date", DateType.INSTANCE)
 		.addScalar("delete_date", DateType.INSTANCE)
-		.addScalar("l_path", StringType.INSTANCE)
 		.addScalar("customer_id", LongType.INSTANCE)
 		.addScalar("customer_name", StringType.INSTANCE)
 		.addScalar("AI_id", LongType.INSTANCE)
@@ -157,34 +144,31 @@ public class UtilityServiceImpl implements UtilityService {
 			if(itrCount==0)  {
 				asset.setId((Long)record[0]);
 				asset.setName((String)record[1]);
-				asset.setDam_internal_id((String)record[2]);
-				asset.setRepository((String)record[3]);
-				asset.setFs_path((String)record[4]);
-				asset.setFilesize((Long)record[5]);
-				asset.setPolicy_id((Long)record[6]);
-				asset.setAsset_md5((String)record[7]);
-				asset.setUser_md5((String)record[8]);
-				asset.setCreated_date((Date)record[9]);
-				asset.setDelete_date((Date)record[10]);
-				asset.setL_path((String)record[11]);
-				asset.setCustomer_id((Long)record[12]);
-				asset.setCustomer_name((String)record[13]);
+				asset.setFs_path((String)record[2]);
+				asset.setFilesize((Long)record[3]);
+				asset.setPolicy_id((Long)record[4]);
+				asset.setAsset_md5((String)record[5]);
+				asset.setUser_md5((String)record[6]);
+				asset.setCreated_date((Date)record[7]);
+				asset.setDelete_date((Date)record[8]);
+				asset.setCustomer_id((Long)record[9]);
+				asset.setCustomer_name((String)record[10]);
 			}
 			
 			AssetInstance instance = new AssetInstance();
 			
-			instance.setId((Long)record[14]);
+			instance.setId((Long)record[11]);
 			instance.setAsset_id((Long)record[0]);
-			instance.setStorageLocationId(((Long)record[15])+"");
-			instance.setFilename((String)record[16]);
-			instance.setLocation_md5((String)record[17]);
-			instance.setCreate_date((Date)record[18]);
-			instance.setLast_check((Date)record[19]);
-			instance.setPurge_date((Date)record[20]);
-			instance.setStatus((String)record[21]);
-			instance.setEncrypted((String)record[22]);
-			instance.setBase_path((String)record[23]);
-			instance.setSigniant_id((String)record[24]);
+			instance.setStorageLocationId(((Long)record[12])+"");
+			instance.setFilename((String)record[13]);
+			instance.setLocation_md5((String)record[14]);
+			instance.setCreate_date((Date)record[15]);
+			instance.setLast_check((Date)record[16]);
+			instance.setPurge_date((Date)record[17]);
+			instance.setStatus((String)record[18]);
+			instance.setEncrypted((String)record[19]);
+			instance.setBase_path((String)record[20]);
+			instance.setSigniant_id((String)record[21]);
 			
 			asset.getAssetInstanceList().add(instance);
 			

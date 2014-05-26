@@ -64,7 +64,7 @@ public class ReplicaWSUtility {
 	@Value("${updateAssetInstance.sql}")
 	private String updateAssetInstance;
 
-	@Value("${eligibleAassetsForDelete.sql.sql}")
+	@Value("${eligibleAassetsForDelete.sql}")
 	private String findDeleteAssets;
 
 	@Value("${storageLocationName.sql}")
@@ -82,26 +82,8 @@ public class ReplicaWSUtility {
 	@Value("${updateAssetHistory.sql}")
 	private String updateAssetHistory;
 
-	@Value("${findInstancesOfAssetsHighestPriority.sql}")
-	private String findInstancesOfAssetsHighestPriority;
-
-	@Value("${findInstancesOfAssetsBasedPolicyPriority.sql}")
-	private String findInstancesOfAssetsBasedPolicyPriority;
-
-	@Value("${finaAssetsBasedOnPolicy.sql}")
-	private String finaAssetsBasedOnPolicy;
-
 	@Value("${verifyPolicies.sql}")
 	private String verifyPolicies;
-
-	@Value("${assetLocation.sql}")
-	private String assetLocation;
-
-	@Value("${updatePolicyAsNull.sql}")
-	private String updatePolicyAsNull;
-
-	@Value("${updateAssetName.sql}")
-	private String updateAssetName;
 
 	@Value("${assetsInstancesCount.sql}")
 	private String assetsInstancesCount;
@@ -188,30 +170,6 @@ public class ReplicaWSUtility {
 		this.assetsInstancesCount = assetsInstancesCount;
 	}
 
-	public String getUpdateAssetName() {
-		return updateAssetName;
-	}
-
-	public void setUpdateAssetName(String updateAssetName) {
-		this.updateAssetName = updateAssetName;
-	}
-
-	public String getUpdatePolicyAsNull() {
-		return updatePolicyAsNull;
-	}
-
-	public void setUpdatePolicyAsNull(String updatePolicyAsNull) {
-		this.updatePolicyAsNull = updatePolicyAsNull;
-	}
-
-	public String getAssetLocation() {
-		return assetLocation;
-	}
-
-	public void setAssetLocation(String assetLocation) {
-		this.assetLocation = assetLocation;
-	}
-
 	public String getVerifyPolicies() {
 		return verifyPolicies;
 	}
@@ -219,35 +177,6 @@ public class ReplicaWSUtility {
 	public void setVerifyPolicies(String verifyPolicies) {
 		this.verifyPolicies = verifyPolicies;
 	}
-
-	public String getFindInstancesOfAssetsBasedPolicyPriority() {
-		return findInstancesOfAssetsBasedPolicyPriority;
-	}
-
-	public void setFindInstancesOfAssetsBasedPolicyPriority(
-			String findInstancesOfAssetsBasedPolicyPriority) {
-		this.findInstancesOfAssetsBasedPolicyPriority = findInstancesOfAssetsBasedPolicyPriority;
-	}
-
-	public String getFinaAssetsBasedOnPolicy() {
-		return finaAssetsBasedOnPolicy;
-	}
-
-	public void setFinaAssetsBasedOnPolicy(String finaAssetsBasedOnPolicy) {
-		this.finaAssetsBasedOnPolicy = finaAssetsBasedOnPolicy;
-	}
-
-	public String getFindInstancesOfAssetsHighestPriority() {
-		return findInstancesOfAssetsHighestPriority;
-	}
-
-	public void setFindInstancesOfAssetsHighestPriority(
-			String findInstancesOfAssetsHighestPriority) {
-		this.findInstancesOfAssetsHighestPriority = findInstancesOfAssetsHighestPriority;
-	}
-
-	@Value("${retrieveBatchJobsinNew.sql}")
-	private String retrieveBatchJobsinNew;
 
 	@Value("${tier1copies.sql}")
 	private String tier1copies;
@@ -294,18 +223,6 @@ public class ReplicaWSUtility {
 
 	public void setDbSnapshot(String dbSnapshot) {
 		this.dbSnapshot = dbSnapshot;
-	}
-
-	public void setRetrieveBatchJobsinNew(String retrieveBatchJobsinNew) {
-		this.retrieveBatchJobsinNew = retrieveBatchJobsinNew;
-	}
-
-	public void setretrieveBatchJobsinNew(String retrieveBatchJobsinNew) {
-		this.retrieveBatchJobsinNew = retrieveBatchJobsinNew;
-	}
-
-	public String getRetrieveBatchJobsinNew() {
-		return retrieveBatchJobsinNew;
 	}
 
 	public String getUpdateAssetHistory() {
@@ -557,17 +474,6 @@ public class ReplicaWSUtility {
 
 	public void setAssetDetailsByJCID(String assetDetailsByJCID) {
 		this.assetDetailsByJCID = assetDetailsByJCID;
-	}
-	
-	@Value("${assetDetailsByDAMID.sql}")
-	private String assetDetailsByDAMID;
-
-	public String getAssetDetailsByDAMID() {
-		return assetDetailsByDAMID;
-	}
-
-	public void setAssetDetailsByDAMID(String assetDetailsByDAMID) {
-		this.assetDetailsByDAMID = assetDetailsByDAMID;
 	}
 	
 	@Value("${inOutHostNameQuery.sql}")

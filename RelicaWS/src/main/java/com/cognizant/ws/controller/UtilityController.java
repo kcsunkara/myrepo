@@ -61,15 +61,6 @@ public class UtilityController {
 		return asset;
 	}
 	
-	@RequestMapping(value = "/getAssetDetailsByDAMID/{dam_internal_id}/{repository}", method = RequestMethod.GET)
-	public @ResponseBody Asset getAssetDetailsByDAMID(
-			@PathVariable("dam_internal_id") String dam_internal_id,
-			@PathVariable("repository") String repository) {
-		LOG.debug("getCustomerSummary controller invoked");
-		Asset asset = utilityService.getAssetDetailsByDAMID(dam_internal_id, repository);
-		return asset;
-	}
-	
 	@RequestMapping(value = "/getCustomerUsage", method = RequestMethod.POST)
 	public @ResponseBody Map<Date, Map<String, Long>> getCustomerUsage( 
 			@RequestBody CustomerUsageServiceParams params) throws ReplicaWSException {

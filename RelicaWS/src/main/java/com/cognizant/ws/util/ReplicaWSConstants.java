@@ -35,8 +35,6 @@ public class ReplicaWSConstants {
 	
 	public static final String SIGNIANT_ID = "signiantId";
 	
-	public static final String DAM_INTERNAL_ID = "damInternalId";
-    
 	public static final String REPOSITORY = "repository";
 	
 	public static final String LV_STORAGE_ID="222221";
