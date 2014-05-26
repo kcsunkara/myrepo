@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd" >
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+
+	<!-- Appenders -->
+	<appender name="FILE" class="org.apache.log4j.DailyRollingFileAppender">
+		<param name="file" value="C:/Users/SUNKK001/apache-tomcat-7.0.42/replicaws_logs/replicaws.log" />
+		<param name="DatePattern" value="'.'yyyy-MM-dd" />
+		<param name="Append" value="true" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="[%t] %d{HH:mm:ss,SSS} %-5p %l - %m%n" />
+		</layout>
+	</appender>
+
+	<!-- Application Loggers -->
+	<logger name="com.cognizant.ws">
+		<level value="info" />
+	</logger>
+
+	<!-- 3rdparty Loggers 
+	<logger name="org.springframework.core">
+		<level value="info" />
+	</logger>
+
+	<logger name="org.springframework.beans">
+		<level value="info" />
+	</logger>
+
+	<logger name="org.springframework.context">
+		<level value="info" />
+	</logger>
+
+	<logger name="org.springframework.web">
+		<level value="info" />
+	</logger>-->
+
+	<!-- <logger name="org.hibernate"> <level value="warn" /> </logger> -->
+
+	<logger name="org.hibernate.tool.hbm2ddl" additivity="false">
+		<level value="info" />
+		<appender-ref ref="FILE" />
+	</logger>
+
+	<!-- <logger name="org.hibernate" additivity="false"> <level value="warn"/><appender-ref 
+		ref="FILE" /> </logger> -->
+
+	<!-- Root Logger -->
+	<root>
+		<priority value="info" />
+		<appender-ref ref="FILE" />
+	</root>
+
+</log4j:configuration>
