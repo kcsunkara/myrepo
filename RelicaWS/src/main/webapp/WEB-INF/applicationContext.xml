@@ -46,9 +46,6 @@
 				<value>classpath:sql_requestcopytier.xml</value>				
 				<value>classpath:sql_assetdeletion.xml</value>
 				<value>classpath:sql_md5.xml</value>
-				<value>classpath:sql_requestcopytier2.xml</value>
-				<value>classpath:sql_restoreasset.xml</value>
-				<value>classpath:sql_updatelocation.xml</value>
 				<value>classpath:sql_customerSummary.xml</value>
 			</list>
 		</property>
