@@ -39,9 +39,6 @@ public class PolicySites implements java.io.Serializable {
 	@Column
 	private Long number_copies;
 
-	@Column
-	private Long restore_priority;
-	
 	public PolicySitesPK getCompositId() {
 		return compositId;
 	}
@@ -63,21 +60,6 @@ public class PolicySites implements java.io.Serializable {
 	 */
 	public void setNumber_copies(Long number_copies) {
 		this.number_copies = number_copies;
-	}
-
-	/**
-	 * @return the restore_priority
-	 */
-	public Long getRestore_priority() {
-		return restore_priority;
-	}
-
-	/**
-	 * @param restore_priority
-	 *            the restore_priority to set
-	 */
-	public void setRestore_priority(Long restore_priority) {
-		this.restore_priority = restore_priority;
 	}
 
 	@JsonIgnore
