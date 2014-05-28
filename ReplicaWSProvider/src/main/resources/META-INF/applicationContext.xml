@@ -17,7 +17,7 @@
 	<!-- Scans the classpath for annotated components that will be auto-registered 
 		as Spring beans. For example @Controller and @Service. Make sure to set the 
 		correct base-package -->
-	<context:component-scan base-package="com.disney.ws" />
+	<context:component-scan base-package="com.cognizant.ws" />
 
 	<!-- Configures the annotation-driven Spring MVC Controller programming 
 		model. Note that, with Spring 3.0, this tag works in Servlet MVC only! -->
@@ -42,13 +42,10 @@
 		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
 		<property name="locations">
 			<list>
-				<value>file:${catalina.base}/shared/jc_wsdb.properties</value>
+				<value>file:${catalina.base}/shared/replica_ws_db.properties</value>
 				<value>classpath:sql_requestcopytier.xml</value>
 				<value>classpath:sql_assetdeletion.xml</value>
 				<value>classpath:sql_md5.xml</value>
-				<value>classpath:sql_requestcopytier2.xml</value>
-				<value>classpath:sql_restoreasset.xml</value>
-				<value>classpath:sql_updatelocation.xml</value>				
 			</list>
 		</property>
 	</bean>

@@ -15,7 +15,7 @@ public interface UtilityService {
 	public Policy getPolicyDetails(Long policyId);
 	public Customer getCustomerDetails(Long customerId);
 	public CustomerSummaryDTO getCustomerSummary(Long customerId);
-	public Asset getAssetDetailsByJCID(Long assetId);
+	public Asset getAssetDetailsByAssetID(Long assetId);
 	public Map<Date, Map<String, Long>> getCustomerUsage(CustomerUsageServiceParams params) throws ReplicaWSException;
 
 }

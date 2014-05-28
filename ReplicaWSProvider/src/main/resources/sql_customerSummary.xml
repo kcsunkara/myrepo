@@ -3,7 +3,7 @@
 <properties>
 <comment>This  xml includes utility related queries.</comment>
 
-<entry key="assetDetailsByJCID.sql">
+<entry key="assetDetailsByAssetID.sql">
 SELECT 
 A.ID A_ID, A.NAME AS NAME, A.FS_PATH AS FS_PATH, FILESIZE, POLICY_ID, 
 ASSET_MD5, USER_MD5, CREATED_DATE, DELETE_DATE, C.ID AS CUSTOMER_ID, C.NAME AS CUSTOMER_NAME, 

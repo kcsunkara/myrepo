@@ -45,7 +45,7 @@ public class AssetController {
 	private AssetService assetService;
 
 	/**
-	 * This method will fetch all the assets from JC database.
+	 * This method will fetch all the assets from database.
 	 * @return
 	 */
 	@RequestMapping(value = "/assets", method = RequestMethod.GET)
@@ -80,7 +80,7 @@ public class AssetController {
 	}
 	
 	/**
-	 * This method will ingest the File Assets to JC database.
+	 * This method will ingest the File Assets to database.
 	 * @param assetDTOList
 	 * @return
 	 * @throws ReplicaWSException
@@ -162,7 +162,7 @@ public class AssetController {
 	}
 
 	/**
-	 * This method will assign a Policy to an asset in JC-Database.
+	 * This method will assign a Policy to an asset in Database.
 	 * 
 	 * @param assetId
 	 * @param asset

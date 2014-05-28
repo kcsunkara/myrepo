@@ -32,7 +32,7 @@ public class CopyTierController {
 
 	/**
 	 * This request method will fetch all the CopyTier1 eligible assets
-	 * from JC database based on the policy sites
+	 * from database based on the policy sites
 	 * 
 	 * @param storageId
 	 * @return
@@ -55,8 +55,7 @@ public class CopyTierController {
 	}
 
 	/**
-	 * This response method will update the copyTier1 status to JC
-	 * database based on the policy sites
+	 * This response method will update the copyTier1 status to database based on the policy sites
 	 * 
 	 * @param batchId
 	 * @param status

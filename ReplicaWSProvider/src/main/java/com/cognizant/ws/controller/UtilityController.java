@@ -53,11 +53,11 @@ public class UtilityController {
 		return summaryDTO;
 	}
 	
-	@RequestMapping(value = "/getAssetDetailsByJCID/{assetId}", method = RequestMethod.GET)
-	public @ResponseBody Asset getAssetDetailsByJCID(
+	@RequestMapping(value = "/getAssetDetailsByAssetID/{assetId}", method = RequestMethod.GET)
+	public @ResponseBody Asset getAssetDetailsByAssetID(
 			@PathVariable("assetId") Long assetId) {
 		LOG.debug("getCustomerSummary controller invoked");
-		Asset asset = utilityService.getAssetDetailsByJCID(assetId);
+		Asset asset = utilityService.getAssetDetailsByAssetID(assetId);
 		return asset;
 	}
 	

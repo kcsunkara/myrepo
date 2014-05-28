@@ -465,15 +465,15 @@ public class ReplicaWSUtility {
 		this.allStorageNames = allStorageNames;
 	}
 	
-	@Value("${assetDetailsByJCID.sql}")
-	private String assetDetailsByJCID;
+	@Value("${assetDetailsByAssetID.sql}")
+	private String assetDetailsByAssetID;
 
-	public String getAssetDetailsByJCID() {
-		return assetDetailsByJCID;
+	public String getAssetDetailsByAssetID() {
+		return assetDetailsByAssetID;
 	}
 
-	public void setAssetDetailsByJCID(String assetDetailsByJCID) {
-		this.assetDetailsByJCID = assetDetailsByJCID;
+	public void setAssetDetailsByAssetID(String assetDetailsByAssetID) {
+		this.assetDetailsByAssetID = assetDetailsByAssetID;
 	}
 	
 	@Value("${inOutHostNameQuery.sql}")

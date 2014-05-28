@@ -90,9 +90,9 @@ public class UtilityServiceImpl implements UtilityService {
 		return summaryDTO;
 	}
 
-	public Asset getAssetDetailsByJCID(Long assetId) {
+	public Asset getAssetDetailsByAssetID(Long assetId) {
 		
-		LOG.info("getAssetDetailsByJCID service invoked...");
+		LOG.info("getAssetDetailsByAssetID service invoked...");
 		
 		/*CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
 		CriteriaQuery<AssetInstances> criteriaQuery = criteriaBuilder.createQuery(AssetInstances.class);
@@ -101,7 +101,7 @@ public class UtilityServiceImpl implements UtilityService {
 				criteriaBuilder.equal(member.get("asset_id"),assetId), criteriaBuilder.notEqual(member.get("status"),"D"));
 		List<AssetInstances> assetInstances = em.createQuery(criteriaQuery).getResultList();*/
 		
-		Query assetDetailsQuery = em.createNativeQuery(utility.getAssetDetailsByJCID());
+		Query assetDetailsQuery = em.createNativeQuery(utility.getAssetDetailsByAssetID());
 		assetDetailsQuery.setParameter("assetId", assetId);
 		return prepareAssetDetails(assetDetailsQuery);
 	}
