@@ -42,7 +42,7 @@
 		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
 		<property name="locations">
 			<list>
-				<value>file:${catalina.base}/shared/jc_wsdb.properties</value>
+				<value>file:${catalina.base}/shared/replica_ws_db.properties</value>
 				<value>classpath:sql_requestcopytier.xml</value>				
 				<value>classpath:sql_assetdeletion.xml</value>
 				<value>classpath:sql_md5.xml</value>
