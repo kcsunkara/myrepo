@@ -10,6 +10,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+<title>Asset Replica Dashboard</title>
 <META http-equiv="Content-Type" content="text/html;charset=UTF-8">
 
 
@@ -148,9 +149,9 @@ $(function ()
 	 		 }); 
 			 var html ="";
 			 $('#totalCount > tbody > tr').remove();
-			 html += '<tr class="pagecontent"><td width="15%" style="background-color: black; font-size:15px; !important;color: yellow;">Total Cost</td>';
+			 html += '<tr class="pagecontent"><td width="15%" style="background-color: #118F7C; font-size:15px; !important;color: white;">Total Cost</td>';
 			 $.each(response[2], function (locationName1, totalCost) { 
-			 html += '<td width="15%" style="background-color: black; font-size:15px; !important;color: yellow;"> $ '+totalCost+'</td>';
+			 html += '<td width="15%" style="background-color: #118F7C; font-size:15px; !important;color: white;"> $ '+totalCost+'</td>';
 			 });
 			 html += "</tr>";
 			 $(html).appendTo('#totalCount');  
@@ -190,7 +191,7 @@ $(function ()
               </div>
 
               <div>
-                    <h3 style="margin-left:120px; font-size:20px">Detailed Usage Report</h3>
+                    <h3 style="margin-left:2px; font-size:20px">Detailed Usage Report</h3>
               </div>
               		 <div id="customerTable">
                            <table>

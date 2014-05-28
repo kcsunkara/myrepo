@@ -3,6 +3,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+<title>Asset Replica Dashboard</title>
 <META http-equiv="Content-Type" content="text/html;charset=UTF-8">
 
 <link href="/replicauidashboard/css/search.css" rel="Stylesheet" type="text/css"> 
@@ -24,7 +25,7 @@
   <LI class="bookmarked people">
   <a style="color: #FFFF00" href="../replicauidashboard/detailedUsageReport.html">Reports</a></LI>
     <LI class="bookmarked last actions">
-  <a style="color: #FFFF00" href="../replicauidashboard/policyInfo.html">Policy Information</a></LI>
+  <a style="color: #FFFF00" href="../replicauidashboard/policyInfo.html">Policies</a></LI>
   </ul>
   </div>
   </div>

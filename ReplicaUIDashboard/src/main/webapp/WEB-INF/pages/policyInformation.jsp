@@ -4,15 +4,37 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Policy Information</title>
-<script
-	src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<title>Asset Replica Dashboard</title>
+<script	type="text/javascript" src="../replicauidashboard/js/jquery-1.3.1.min.js"></script>
+<script type="text/javascript" src="../replicauidashboard/js/jquery.tablesorter.pager.js"></script>
+<script type="text/javascript" src="../replicauidashboard/js/jquery.tablesorter.js"></script> 
+	
 <link href="../replicauidashboard/css/search.css" rel="Stylesheet"
 	type="text/css">
 <link type="text/css" rel="stylesheet" href="css/styles.css" />
 <script type="text/javascript" src="js/jquery.pajinate.js"></script>
-<script>
+
+<script defer="defer">
+$(document).ready(function() 
+{ 
+$("#policy_list")
+      .tablesorter({widthFixed: true, widgets: ['zebra']})
+      .tablesorterPager({container: $("#pager")}); 
+} 
+);  
 </script>
+<div id="pager" class="pager">
+       <form>
+              <img src="../replicauidashboard/image/first.png" class="first"/>
+              <img src="../replicauidashboard/image/prev.png" class="prev"/>
+              <input type="text" class="pagedisplay"/>
+              <img src="../replicauidashboard/image/next.png" class="next"/>
+              <img src="../replicauidashboard/image/last.png" class="last"/>
+              <select class="pagesize">
+                     <option value="250">250 per page</option>
+                     </select>
+       </form>
+</div>
 </head>
 <body>
 <%@ include file="header.jsp"%>
@@ -22,54 +44,54 @@
 <h2 id="Policy Information">Policy Information</h2>
 <div id="tableDetailsPolicyInformation">
 	<div id="summaryDetailsPolicyInformation">
-		<table cellpadding="3" cellspacing="0" width="100%">
-
-
+		<table width="100%" class="tablesorter" id="policy_list">
+		<thead>
 			<tr>
-				<th id="policyTableColumn1"><b>Policy ID</b></th>
-				<th id="policyTableColumn1"><b>Name</b></th>
-				<th id="policyTableColumn1"><b>Customer ID</b></th>
-				<th id="policyTableColumn1"><b>M5 Check</b></th>
-				<th id="policyTableColumn1"><b>Active</b></th>
-				<th id="policyTableColumn1"><b>File System Path</b></th>
+				<th class="header"><b>Policy ID</b></th>
+				<th class="header"><b>Name</b></th>
+				<th class="header"><b>Customer ID</b></th>
+				<th class="header"><b>M5 Check</b></th>
+				<th class="header"><b>Active</b></th>
+				<th class="header"><b>File System Path</b></th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td class="even">1</td>
+				<td class="even">John</td>
+				<td class="even">101</td>
+				<td class="even">True</td>
+				<td class="even">False</td>
+				<td class="even">../info1</td>
 			</tr>
 
 			<tr>
-				<td id="policyTableColumn2">1</td>
-				<td id="policyTableColumn2">John</td>
-				<td id="policyTableColumn2">101</td>
-				<td id="policyTableColumn2">True</td>
-				<td id="policyTableColumn2">False</td>
-				<td id="policyTableColumn2">../info</td>
+				<td  class="odd">2</td>
+				<td  class="odd">Peter</td>
+				<td  class="odd">102</td>
+				<td  class="odd">True</td>
+				<td  class="odd">False</td>
+				<td  class="odd">../web2</td>
 			</tr>
 
 			<tr>
-				<td id="policyTableColumn2">2</td>
-				<td id="policyTableColumn2">Peter</td>
-				<td id="policyTableColumn2">102</td>
-				<td id="policyTableColumn2">True</td>
-				<td id="policyTableColumn2">False</td>
-				<td id="policyTableColumn2">../web</td>
+				<td class="even">3</td>
+				<td class="even">Max</td>
+				<td class="even">103</td>
+				<td class="even">False</td>
+				<td class="even">False</td>
+				<td class="even">../web3</td>
 			</tr>
 
 			<tr>
-				<td id="policyTableColumn2">3</td>
-				<td id="policyTableColumn2">Max</td>
-				<td id="policyTableColumn2">103</td>
-				<td id="policyTableColumn2">False</td>
-				<td id="policyTableColumn2">False</td>
-				<td id="policyTableColumn2">../web</td>
+				<td class="odd">4</td>
+				<td class="odd">Smith</td>
+				<td class="odd">104</td>
+				<td class="odd">False</td>
+				<td class="odd">True</td>
+				<td class="odd">../info4</td>
 			</tr>
-
-			<tr>
-				<td id="policyTableColumn2">4</td>
-				<td id="policyTableColumn2">Smith</td>
-				<td id="policyTableColumn2">104</td>
-				<td id="policyTableColumn2">False</td>
-				<td id="policyTableColumn2">True</td>
-				<td id="policyTableColumn2">../info</td>
-			</tr>
-
+		</tbody>
 		</table>
 	</div>
 </div>

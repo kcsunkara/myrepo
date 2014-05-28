@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Job Queue Manager</title>
+<title>Asset Replica Dashboard</title>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <link href="../replicauidashboard/css/search.css" rel="Stylesheet" type="text/css">
 <link type="text/css" rel="stylesheet" href="css/styles.css" />
@@ -328,7 +328,7 @@ $(document).delegate("#queueTable2 input[type='button']", "click", function() {
                        
                        </div>
                        </div>
-                      <div style="width: 100%; height: 30px;background-color: rgb(231, 126, 126);" >
+                      <div style="width: 100%; height: 30px;background-color: #118F7C" >
                       <table id="queueTable1" >
                       <tr >
                        <td width="20%" align="center"  >All</td>

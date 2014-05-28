@@ -9,6 +9,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+<title>Asset Replica Dashboard</title>
 <META http-equiv="Content-Type" content="text/html;charset=UTF-8">
 <script type="text/javascript" src="../replicauidashboard/js/jquery-1.3.1.min.js"></script>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
@@ -46,11 +47,11 @@ $(document).ready(function(){
 		
 			tr= $('<tr><td ><h3>Total Assets#: </h3></td><td>'+response.totalAssets+'</td><td><h3>Total Size (GB):</h3></td> <td>'
 					+(Math.round(response.totalSizeOfAssets)/(1024*1024*1024)).toFixed(2)+'</td></tr>' +
-					'<tr><td style="background-color: rgba(76, 16, 153, 0.83);color: #F1F3EB;" height="1em"><h3>Customer Details: </h3></td><td style="background-color: rgba(76, 16, 153, 0.83);color: #F1F3EB; "></td>'+ 
-					'<td style="background-color: rgba(76, 16, 153, 0.83);color: #F1F3EB;"></td><td style="background-color: rgba(76, 16, 153, 0.83);color: #F1F3EB;"></td><td style="background-color: rgba(76, 16, 153, 0.83);color: #F1F3EB;"></td><td style="background-color: rgba(76, 16, 153, 0.83);color: #F1F3EB;"></td><tr >'
-					+'<td width="16%" style="color: #6E6E6E; background-color: #CEE3F6;">Customer Name:</td><td  width="16%" style="background-color: #CEE3F6;"><b>'+customerName+'</b></td>'
-			 		+'<tr><td  width="16%" style="color: #6E6E6E;background-color: #CEE3F6;">Email:</td><td  width="16%" style="background-color: #CEE3F6;"><b>'+email+'</b></td>'+
-			 		'</tr>'
+					'<tr><td style="background-color: #0489B1;color: #F1F3EB;"><h3>Customer Details: </h3></td><td style="background-color: #0489B1;color: #F1F3EB; "></td>'+ 
+					'<td style="background-color: #0489B1;color: #F1F3EB;"></td><td style="background-color: #0489B1;color: #F1F3EB;"></td><td style="background-color: #0489B1;color: #F1F3EB;"></td><td style="background-color: #0489B1;color: #F1F3EB;"></td></tr>'
+					+'<tr><td width="16%" style="color: #6E6E6E; background-color: #CEE3F6;">Customer Name:</td><td  width="16%" style="background-color: #CEE3F6;"><b>'+customerName+'</b></td>'
+			 		+'<td  width="16%" style="color: #6E6E6E;background-color: #CEE3F6;">Email:</td><td  width="16%" style="background-color: #CEE3F6;"><b>'+email+'</b></td>'
+			 		+'<td style="background-color: #CEE3F6;color: #6E6E6E;"></td><td style="background-color: #CEE3F6;color: #6E6E6E;"></td></tr>'
 			 		+'<tr><td> <h4>Policy Details: </h4></tr>').appendTo('#customerTable2');
 			 		//tr= $('').appendTo('#customerTable2');
 			

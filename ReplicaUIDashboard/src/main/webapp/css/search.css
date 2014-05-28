@@ -1,3 +1,16 @@
+/*#content{
+    width:980px;
+    margin: 0 auto;
+    background-color: #fff;
+    box-shadow: 0 0 30px 1px #AAA;
+}*/
+#content {
+	width: 100%;
+	min-width: 1080px;
+	float: left;
+	margin: 0;
+}
+
 #smContainer {
 	border: 1px solid;
 	height: 615px;
@@ -7,12 +20,17 @@
 #header {
 	background: url("/replicauidashboard/image/header.png");
 	height: 80px;
-	
+
+	background-size: 100%;	
 }
 
 #header #cognizant_logo {
-	width: 225px;
-	height: 80px;
+	
+	margin-top: 12px;
+	margin-left: 16px;
+	
+	width: 85px;
+	height: 57px;
 	
 }
 
@@ -24,7 +42,6 @@
 	margin-top: -68px;
 	margin-left: 12px;
 	float: left;
-	background-color:#6495ed;
 }
 
 #helpButton {
@@ -60,19 +77,6 @@
 	font-size: 10pt;
 	text-decoration: underline;
 	cursor: pointer;
-}
-
-/*#content{
-    width:980px;
-    margin: 0 auto;
-    background-color: #fff;
-    box-shadow: 0 0 30px 1px #AAA;
-}*/
-#content {
-	width: 100%;
-	min-width: 1080px;
-	float: left;
-	margin: 0;
 }
 
 #subHeader {
@@ -279,15 +283,17 @@ table.tablesorter thead tr .headerSortDown,table.tablesorter thead tr .headerSor
 }
 
 #summary {
-	/* background-image: url('/replicauidashboard/image/Details.jpg'); */
+	/*background-image: url('/replicauidashboard/image/Details.jpg');*/
 	height: 45px;
 	width: 100%;
-	color: #F1F3EB;
+	color: #F8FBEF;
 	border-top-left-radius: 4px;
 	border-top-right-radius: 4px;
-	margin-left: 0px;
+	margin-left: 2px;
 	font-size: 14pt;
-	background-color: rgba(76, 216, 153, 0.83);
+	background-color: #0489B1;
+	
+	vertical-align: middle
 }
 
 #tableDetails {
@@ -368,17 +374,21 @@ table.tablesorter thead tr .headerSortDown,table.tablesorter thead tr .headerSor
 #queueTable1
 {
 	width:100% ;
-    color: yellow; 
+    color: white; 
     font-weight: bold;
 	font-family: verdana;
-    font-size: 14px;	 
+    font-size: 14px;
+    	 
 }
 #queueTable
 {
 	width:100%;
     font-weight: bold;
 	font-family: verdana;
-    font-size: 14px;	
+    font-size: 14px;
+    
+    vertical-align: middle
+    	
 }
 #queueDetails
 {
@@ -398,26 +408,27 @@ table.tablesorter thead tr .headerSortDown,table.tablesorter thead tr .headerSor
  #queueTable2 tr:nth-child(even) {
 background-color:#BDBDBD; 
 }
+
 #policyTableColumn1
 {
 	width: 10%;
 	align: center;  
-	border-left: 1px solid black;
-	border-right: 1px solid black;
-	border-top: 1px solid black ; 
-	border-bottom: 1px solid black ; 
-	background-color: #BDBDBD ; 
+	border-left: 1px solid grey;
+	border-right: 1px solid grey;
+	border-top: 1px solid grey ; 
+	border-bottom: 1px solid grey ;
+	color: white; 
+	background-color: #0489B1; 
 	font-size: 12px;
 }
 #policyTableColumn2
 {
 	width: 10%;
 	align: center;  
-	border-left: 1px solid black;
-	border-right: 1px solid black;
-	border-top: 1px solid black ; 
-	border-bottom: 1px solid black ; 
+	border: 1px solid grey;
+	border-right: 1px solid grey;
+	border-top: 1px solid grey ; 
+	border-bottom: 1px solid grey ; 
 	background-color: #FFFFFF ; 
 	font-size: 12px;
 }
-

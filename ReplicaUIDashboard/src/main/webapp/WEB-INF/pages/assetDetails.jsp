@@ -10,6 +10,7 @@
 <html>
 
 <head>
+<title>Asset Replica Dashboard</title>
 <META http-equiv="Content-Type" content="text/html;charset=UTF-8">
 <link href="../replicauidashboard/css/search.css" rel="Stylesheet"
 	type="text/css">
