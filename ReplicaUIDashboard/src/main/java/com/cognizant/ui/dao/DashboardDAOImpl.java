@@ -28,6 +28,7 @@ import com.cognizant.ui.json.Customer;
 import com.cognizant.ui.model.Asset;
 import com.cognizant.ui.model.AssetDetails;
 import com.cognizant.ui.model.CustomJobBean;
+import com.cognizant.ui.model.Policy;
 import com.cognizant.ui.util.ReplicaUIUtility;
 
 @Repository
@@ -488,6 +489,18 @@ public class DashboardDAOImpl implements DashboardDAO {
             
         }
         return detailsMap;
+    }
+	
+	/**
+    * This method will fetch all the policies in the DB.
+    * 
+    * @retun list policies.
+    */
+    @SuppressWarnings("unchecked")
+	public List<Policy> getPolicies() {
+    	 Query query = em.createNamedQuery("allPolicies");
+    	 List<Policy> policyList = (List<Policy>) query.getResultList();
+    	 return policyList;
     }
 
 }

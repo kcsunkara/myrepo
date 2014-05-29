@@ -58,8 +58,7 @@ import com.google.gson.Gson;
 
 public class DashboardController {
 
-	private static final Logger LOG = Logger
-			.getLogger(DashboardController.class);
+	private static final Logger LOG = Logger.getLogger(DashboardController.class);
 
 	@Autowired
 	private DashboardService dashboardService;
@@ -525,7 +524,8 @@ public class DashboardController {
 	 * @return
 	 */
 	@RequestMapping(value = "/policyInfo.html", method = RequestMethod.GET)
-	public String policyInfo() {
+	public String policyInfo(ModelMap modelMap) {
+		modelMap.put("policyList", dashboardService.getPolicies());
 		return "policyInformation";
 	}
 	

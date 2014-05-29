@@ -11,6 +11,7 @@ import com.cognizant.ui.beans.SearchCriteria;
 import com.cognizant.ui.json.Customer;
 import com.cognizant.ui.model.AssetDetails;
 import com.cognizant.ui.model.CustomJobBean;
+import com.cognizant.ui.model.Policy;
 
 @Service
 @Transactional
@@ -94,5 +95,13 @@ public class DashboardServiceImpl implements DashboardService {
         Map<String,Integer> locationIds=dashBoardDao.getLocationsIds();
         return locationIds;
     }
+ 
+ /**
+  * This method will fetch all the policies in the DB.
+  * @retun list policies.
+  */
+ public List<Policy> getPolicies() {
+	 return dashBoardDao.getPolicies();
+ }
 
 }

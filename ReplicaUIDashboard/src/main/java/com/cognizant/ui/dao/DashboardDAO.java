@@ -7,6 +7,7 @@ import com.cognizant.ui.beans.SearchCriteria;
 import com.cognizant.ui.json.Customer;
 import com.cognizant.ui.model.AssetDetails;
 import com.cognizant.ui.model.CustomJobBean;
+import com.cognizant.ui.model.Policy;
 
 public interface DashboardDAO {
 
@@ -60,4 +61,12 @@ public interface DashboardDAO {
     
     public List<AssetDetails> getInvalidAssets();
     public Map<String,Integer> getLocationsIds();
+    
+    /**
+    * This method will fetch all the policies in the DB.
+    * 
+    * @retun list policies.
+    */
+    public List<Policy> getPolicies();
+    
 }

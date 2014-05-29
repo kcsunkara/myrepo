@@ -1,6 +1,7 @@
 package com.cognizant.ui.model;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
 
 
@@ -10,6 +11,8 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name="policies")
+@NamedQueries(
+		{@NamedQuery(name = "allPolicies", query = "from  Policy order by len(fs_path) desc")})
 public class Policy implements Serializable {
 	private static final long serialVersionUID = 1L;
 
