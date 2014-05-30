@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -13,89 +14,112 @@
 	type="text/css">
 <link type="text/css" rel="stylesheet" href="css/styles.css" />
 <script type="text/javascript" src="js/jquery.pajinate.js"></script>
-
-<script defer="defer">
-$(document).ready(function() 
-{ 
-$("#policy_list")
-      .tablesorter({widthFixed: true, widgets: ['zebra']})
-      .tablesorterPager({container: $("#pager")}); 
-} 
-);  
-</script>
-<div id="pager" class="pager">
-       <form>
-              <img src="../replicauidashboard/image/first.png" class="first"/>
-              <img src="../replicauidashboard/image/prev.png" class="prev"/>
-              <input type="text" class="pagedisplay"/>
-              <img src="../replicauidashboard/image/next.png" class="next"/>
-              <img src="../replicauidashboard/image/last.png" class="last"/>
-              <select class="pagesize">
-                     <option value="250">250 per page</option>
-                     </select>
-       </form>
-</div>
 </head>
+
 <body>
 <%@ include file="header.jsp"%>
 <div id="content">
 	<div class="bookmarked" id="logo"></div>
 </div>
-<h2 id="Policy Information">Policy Information</h2>
+<c:if test="${empty param.pid}">
+	<h2 id="Policies Available">Policies Available</h2>
+</c:if>
+<c:if test="${not empty param.pid}">
+	<h2 id="Policies Available">View/Change Policy for Asset ID - ${param.assetId}</h2>
+</c:if>
+<%
+String policyId = request.getParameter("pid");
+%>
 <div id="tableDetailsPolicyInformation">
 	<div id="summaryDetailsPolicyInformation">
 		<table width="100%" class="tablesorter" id="policy_list">
 		<thead>
 			<tr>
-				<th class="header"><b>Policy ID</b></th>
-				<th class="header"><b>Name</b></th>
-				<th class="header"><b>Customer ID</b></th>
-				<th class="header"><b>M5 Check</b></th>
-				<th class="header"><b>Active</b></th>
-				<th class="header"><b>File System Path</b></th>
+				<th><b>Policy ID</b></th>
+				<th><b>Name</b></th>
+				<th><b>Customer ID</b></th>
+				<th><b>Active</b></th>
+				<th><b>Encrypted</b></th>
+				<th><b>M5 Check</b></th>
+				<th><b>File System Path</b></th>
+				<c:if test="${not empty param.pid}">
+					<th><b>Selected</b></th>
+				</c:if>
 			</tr>
 		</thead>
 		
-		<c:forEach items="${assets}" var="asset">
+		<c:forEach items="${policyList}" var="policy">
 		<tbody>
 			<tr>
-				<td class="even">1</td>
-				<td class="even">John</td>
-				<td class="even">101</td>
-				<td class="even">True</td>
-				<td class="even">False</td>
-				<td class="even">../info1</td>
-			</tr>
-
-			<tr>
-				<td  class="odd">2</td>
-				<td  class="odd">Peter</td>
-				<td  class="odd">102</td>
-				<td  class="odd">True</td>
-				<td  class="odd">False</td>
-				<td  class="odd">../web2</td>
-			</tr>
-
-			<tr>
-				<td class="even">3</td>
-				<td class="even">Max</td>
-				<td class="even">103</td>
-				<td class="even">False</td>
-				<td class="even">False</td>
-				<td class="even">../web3</td>
-			</tr>
-
-			<tr>
-				<td class="odd">4</td>
-				<td class="odd">Smith</td>
-				<td class="odd">104</td>
-				<td class="odd">False</td>
-				<td class="odd">True</td>
-				<td class="odd">../info4</td>
+				<td>${policy.id}</td>
+				<td>${policy.policyName}</td>
+				<td>${policy.customerId}</td>
+				<td>${policy.active}</td>
+				<td>${policy.encrypt}</td>
+				<td>${policy.md5Check}</td>
+				<td>${policy.fsPath}</td>
+				<c:if test="${not empty param.pid}">
+					<td>
+						<c:if test="${param.pid == policy.id}">
+							<input name="p_selected" type="radio" checked="checked"/>
+						</c:if>
+						<c:if test="${param.pid != policy.id}">
+							<input name="p_selected" type="radio"/>
+						</c:if>
+					</td>
+				</c:if>
 			</tr>
 		</tbody>
 		</c:forEach>
 		</table>
+		<c:if test="${not empty param.pid}">
+			<h5 id="Details of Policy">Details of Policy ID - ${param.pid}</h5>
+		</c:if>
+		<c:if test="${empty param.pid}">
+			<h5 id="Details of Policy">Details of Policy ID - 122</h5>
+		</c:if>
+		
+		<table width="100%" class="tablesorter" id="policy_list">
+		<thead>
+			<tr>
+				<th><b>Policy ID</b></th>
+				<th><b>Name</b></th>
+				<th><b>Customer ID</b></th>
+				<th><b>Active</b></th>
+				<th><b>Encrypted</b></th>
+				<th><b>M5 Check</b></th>
+				<th><b>File System Path</b></th>
+				<c:if test="${not empty param.pid}">
+					<th><b>Selected</b></th>
+				</c:if>
+			</tr>
+		</thead>
+		
+		<c:forEach items="${policyList}" var="policy">
+		<tbody>
+			<tr>
+				<td>${policy.id}</td>
+				<td>${policy.policyName}</td>
+				<td>${policy.customerId}</td>
+				<td>${policy.active}</td>
+				<td>${policy.encrypt}</td>
+				<td>${policy.md5Check}</td>
+				<td>${policy.fsPath}</td>
+				<c:if test="${not empty param.pid}">
+					<td>
+						<c:if test="${param.pid == policy.id}">
+							<input name="p_selected" type="radio" checked="checked"/>
+						</c:if>
+						<c:if test="${param.pid != policy.id}">
+							<input name="p_selected" type="radio"/>
+						</c:if>
+					</td>
+				</c:if>
+			</tr>
+		</tbody>
+		</c:forEach>
+		</table>
+
 	</div>
 </div>
 

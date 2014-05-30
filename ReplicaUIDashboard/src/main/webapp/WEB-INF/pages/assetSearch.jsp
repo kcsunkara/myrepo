@@ -165,7 +165,7 @@ function clearAll()
                                                                            <c:if test="${fn:length(asset_md5) <= 10}">${asset.assetMD5}</c:if>
                                                               </td>
 
-                                                              <td><a title="${asset.policyId}">${asset.policyId} </a></td>
+                                                              <td><a title="View/Change Policy Details" href="/replicauidashboard/policyInfo.html?pid=${asset.policyId}&assetId=${asset.id}">${asset.policyId} </a></td>
 
                                                               <td><a title="${asset.customerName}"
                                                               > <c:set var="assetcustomerName"
@@ -182,7 +182,6 @@ function clearAll()
                                                                            <c:if test="${(asset_delete_date) == null}">Active</c:if> <c:if
                                                                                   test="${(asset_delete_date) != null}">Deleted</c:if>
                                                               </a></td>
-
                                                        </tr>
                                                 
                          
@@ -192,7 +191,7 @@ function clearAll()
 
                            </c:if>
                      </c:if>
-                     <c:if test="${fn:length(assets) > 250}">
+                     <c:if test="${fn:length(assets) > 20}">
 
                      <div id="pager" class="pager">
        <form>
@@ -202,7 +201,7 @@ function clearAll()
               <img src="../replicauidashboard/image/next.png" class="next"/>
               <img src="../replicauidashboard/image/last.png" class="last"/>
               <select class="pagesize">
-                     <option value="250">250 per page</option>
+                     <option value="20">20 per page</option>
                      </select>
        </form>
 </div>
@@ -218,7 +217,7 @@ function clearAll()
 </script>
 </c:if>
 
-       <c:if test="${fn:length(assets) <= 250}">
+       <c:if test="${fn:length(assets) <= 20}">
        <script defer="defer">
        $(document).ready(function() 
     { 
