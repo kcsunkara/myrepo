@@ -145,5 +145,12 @@ WHERE JOB_STATUS='NEW' AND JOB_ID=:jobId
 <entry key="getLocations.sql">
 select name,id from ASSET_REPLICA.dbo.storage_locations
 </entry>
+
+<entry key="getPolicySiteInfo.sql">
+SELECT SITE_ID SITEID, NAME, TIER, IS_PRIMARY_SITE ISPRIMARY, NUMBER_COPIES REQUIREDCOPIES 
+FROM POLICY_SITES PS, SITES S 
+WHERE S.ID = PS.SITE_ID
+AND POLICY_ID = :pid
+</entry>
 	
 </properties>
