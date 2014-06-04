@@ -32,6 +32,7 @@ function changePolicy(pid) {
 		});
 	});
 }
+
 </script>
 
 </head>
