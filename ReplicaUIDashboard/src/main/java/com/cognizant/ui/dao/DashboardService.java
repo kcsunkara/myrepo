@@ -3,6 +3,7 @@ package com.cognizant.ui.dao;
 import java.util.List;
 import java.util.Map;
 
+import com.cognizant.ui.beans.CustomPolicySiteInfo;
 import com.cognizant.ui.beans.SearchCriteria;
 import com.cognizant.ui.json.Customer;
 import com.cognizant.ui.model.AssetDetails;
@@ -67,4 +68,6 @@ public interface DashboardService {
      * @retun list policies.
      */
     public List<Policy> getPolicies();
+    
+    public List<CustomPolicySiteInfo> getSiteInfo(Long pid);
 }

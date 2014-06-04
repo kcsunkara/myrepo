@@ -15,6 +15,8 @@ import javax.persistence.Query;
 
 import org.apache.log4j.Logger;
 import org.hibernate.SQLQuery;
+import org.hibernate.type.BooleanType;
+import org.hibernate.type.CharacterType;
 import org.hibernate.type.IntegerType;
 import org.hibernate.type.LongType;
 import org.hibernate.type.StringType;
@@ -23,6 +25,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.cognizant.ui.beans.CustomPolicySiteInfo;
 import com.cognizant.ui.beans.SearchCriteria;
 import com.cognizant.ui.json.Customer;
 import com.cognizant.ui.model.Asset;
@@ -493,7 +496,6 @@ public class DashboardDAOImpl implements DashboardDAO {
 	
 	/**
     * This method will fetch all the policies in the DB.
-    * 
     * @retun list policies.
     */
     @SuppressWarnings("unchecked")
@@ -501,6 +503,29 @@ public class DashboardDAOImpl implements DashboardDAO {
     	 Query query = em.createNamedQuery("allPolicies");
     	 List<Policy> policyList = (List<Policy>) query.getResultList();
     	 return policyList;
+    }
+    
+    public List<CustomPolicySiteInfo> getSiteInfo(Long pid) {
+    	Query query = em.createNativeQuery(util.getPolicySiteInfo());
+    	query.setParameter("pid", pid);
+    	query.unwrap(SQLQuery.class).addScalar("SITEID", LongType.INSTANCE)
+    	.addScalar("NAME", StringType.INSTANCE)
+    	.addScalar("TIER", StringType.INSTANCE)
+    	.addScalar("ISPRIMARY", BooleanType.INSTANCE)
+    	.addScalar("REQUIREDCOPIES", IntegerType.INSTANCE);
+    	List<Object[]> resultList = query.getResultList();
+    	
+    	List<CustomPolicySiteInfo> customPolicySiteInfoList = new ArrayList<CustomPolicySiteInfo>();
+    	for(Object[] record : resultList) {
+    		CustomPolicySiteInfo policySiteInfo = new CustomPolicySiteInfo();
+    		policySiteInfo.setSiteId((Long) record[0]);
+    		policySiteInfo.setName((String) record[1]);
+    		policySiteInfo.setTier((String) record[2]);
+    		policySiteInfo.setIsPrimary((Boolean) record[3]);
+    		policySiteInfo.setRequiredCopies((Integer) record[4]);
+    		customPolicySiteInfoList.add(policySiteInfo);
+    	}
+    	return customPolicySiteInfoList;
     }
 
 }

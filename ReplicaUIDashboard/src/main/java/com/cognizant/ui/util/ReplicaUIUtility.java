@@ -166,5 +166,16 @@ public class ReplicaUIUtility {
 		public void setLocationsList(String locationsList) {
 			this.locationsList = locationsList;
 		}
+		
+		@Value("${getPolicySiteInfo.sql}")
+        private String policySiteInfo;
+
+		public String getPolicySiteInfo() {
+			return policySiteInfo;
+		}
+
+		public void setPolicySiteInfo(String policySiteInfo) {
+			this.policySiteInfo = policySiteInfo;
+		}
 
 }

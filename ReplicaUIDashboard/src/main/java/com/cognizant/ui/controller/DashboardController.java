@@ -29,6 +29,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -36,6 +37,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.client.RestTemplate;
 
+import com.cognizant.ui.beans.CustomPolicySiteInfo;
 import com.cognizant.ui.beans.SearchCriteria;
 import com.cognizant.ui.dao.DashboardService;
 import com.cognizant.ui.json.Customer;
@@ -43,6 +45,7 @@ import com.cognizant.ui.json.CustomerDTO;
 import com.cognizant.ui.json.CustomerUsageDTO;
 import com.cognizant.ui.model.AssetDetails;
 import com.cognizant.ui.model.CustomJobBean;
+import com.cognizant.ui.model.Policy;
 import com.cognizant.ui.util.ReplicaUIUtility;
 import com.google.gson.Gson;
 
@@ -524,10 +527,35 @@ public class DashboardController {
 	 * @return
 	 */
 	@RequestMapping(value = "/policyInfo.html", method = RequestMethod.GET)
-	public String policyInfo(ModelMap modelMap) {
-		modelMap.put("policyList", dashboardService.getPolicies());
+	public String policyInfo(
+			@RequestParam(value = "pid", required = false) Long pid, 
+			@RequestParam(value = "assetId", required = false) Long assetId, 
+			ModelMap modelMap) {
+		modelMap = getPolicySiteInfo(modelMap, pid, assetId);
 		return "policyInformation";
 	}
 	
+	private ModelMap getPolicySiteInfo(ModelMap modelMap, Long pid, Long assetId) {
+		List<Policy> policyList = dashboardService.getPolicies();
+		List<CustomPolicySiteInfo> policySiteInfoList = null;
+		if(pid != null) {
+			policySiteInfoList = dashboardService.getSiteInfo(pid);
+		} else {
+			policySiteInfoList = dashboardService.getSiteInfo(policyList.get(0).getId());
+		}
+		modelMap.put("policyId", pid);
+		modelMap.put("assetId", assetId);
+		modelMap.put("policyList", policyList);
+		modelMap.put("policySiteInfo", policySiteInfoList);
+		
+		return modelMap;
+	}
+	
+	@RequestMapping(value = "/siteInfoByPID.html")
+	public @ResponseBody List<CustomPolicySiteInfo> getSiteInfoByPID(
+			@RequestParam(value = "pid", required = false) Long pid) { 	
+    	List<CustomPolicySiteInfo> policySiteInfoList = dashboardService.getSiteInfo(pid);
+    	return policySiteInfoList;
+    }
   
 }
