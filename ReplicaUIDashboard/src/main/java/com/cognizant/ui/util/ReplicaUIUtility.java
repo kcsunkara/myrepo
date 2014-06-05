@@ -177,5 +177,17 @@ public class ReplicaUIUtility {
 		public void setPolicySiteInfo(String policySiteInfo) {
 			this.policySiteInfo = policySiteInfo;
 		}
+		
+		@Value("${updatePolicyForAsset.sql}") 
+		private String updatePolicyForAssetQuery;
+
+		public String getUpdatePolicyForAssetQuery() {
+			return updatePolicyForAssetQuery;
+		}
+
+		public void setUpdatePolicyForAssetQuery(String updatePolicyForAssetQuery) {
+			this.updatePolicyForAssetQuery = updatePolicyForAssetQuery;
+		}
+		
 
 }

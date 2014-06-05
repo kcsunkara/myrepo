@@ -527,5 +527,14 @@ public class DashboardDAOImpl implements DashboardDAO {
     	}
     	return customPolicySiteInfoList;
     }
+    
+    public int updatePolicyForAsset(Long pid, Long assetId) {
+    	Query query = em.createNativeQuery(util.getUpdatePolicyForAssetQuery());
+    	query.setParameter("pid", pid);
+    	query.setParameter("assetId", assetId);
+    	
+    	int updatedCount = query.executeUpdate();
+    	return updatedCount;
+    }
 
 }

@@ -70,4 +70,6 @@ public interface DashboardService {
     public List<Policy> getPolicies();
     
     public List<CustomPolicySiteInfo> getSiteInfo(Long pid);
+    
+    public int updatePolicyForAsset(Long pid, Long assetId);
 }

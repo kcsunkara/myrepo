@@ -148,9 +148,11 @@ select name,id from ASSET_REPLICA.dbo.storage_locations
 
 <entry key="getPolicySiteInfo.sql">
 SELECT SITE_ID SITEID, NAME, TIER, IS_PRIMARY_SITE ISPRIMARY, NUMBER_COPIES REQUIREDCOPIES 
-FROM POLICY_SITES PS, SITES S 
+FROM ASSET_REPLICA.dbo.POLICY_SITES PS, ASSET_REPLICA.dbo.SITES S 
 WHERE S.ID = PS.SITE_ID
 AND POLICY_ID = :pid
 </entry>
-	
+<entry key="updatePolicyForAsset.sql">
+UPDATE ASSET_REPLICA.DBO.ASSETS SET POLICY_ID=:pid WHERE ID=:assetId
+</entry>	
 </properties>

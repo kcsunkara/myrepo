@@ -72,4 +72,6 @@ public interface DashboardDAO {
     
     public List<CustomPolicySiteInfo> getSiteInfo(Long pid);
     
+    public int updatePolicyForAsset(Long pid, Long assetId);
+
 }

@@ -111,5 +111,9 @@ public class DashboardServiceImpl implements DashboardService {
 	public List<CustomPolicySiteInfo> getSiteInfo(Long pid) {
 		return dashBoardDao.getSiteInfo(pid);
 	}
+	
+	public int updatePolicyForAsset(Long pid, Long assetId) {
+		return dashBoardDao.updatePolicyForAsset(pid, assetId);
+	}
 
 }

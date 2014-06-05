@@ -552,10 +552,16 @@ public class DashboardController {
 	}
 	
 	@RequestMapping(value = "/siteInfoByPID.html")
-	public @ResponseBody List<CustomPolicySiteInfo> getSiteInfoByPID(
-			@RequestParam(value = "pid", required = false) Long pid) { 	
+	public @ResponseBody List<CustomPolicySiteInfo> getSiteInfoByPID(@RequestParam(value = "pid", required = false) Long pid) { 	
     	List<CustomPolicySiteInfo> policySiteInfoList = dashboardService.getSiteInfo(pid);
     	return policySiteInfoList;
+    }
+	
+	@RequestMapping(value = "/updatePolicyForAsset.html")
+	public @ResponseBody int updatePolicyForAsset(
+			@RequestParam(value = "pid", required = false) Long pid,
+			@RequestParam(value = "assetId", required = false) Long assetId) { 	
+    	return dashboardService.updatePolicyForAsset(pid, assetId);
     }
   
 }
