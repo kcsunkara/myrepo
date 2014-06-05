@@ -35,7 +35,7 @@
 	
 	<bean id="messageSource"
 	    class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
-	    <property name="basename" value="file:${catalina.base}/shared/replica_ui_db" />
+	    <property name="basename" value="file:${catalina.base}/shared/replicaui_db" />
 	    <property name="defaultEncoding" value="UTF-8"/>
 	</bean>
 

@@ -343,7 +343,7 @@ public class DashboardController {
          Properties props = new Properties();
          try {
          File sharedDir = new File(System.getProperty("catalina.base"), "shared");
-         File sharedFile = new File(sharedDir, "replica_ui_db.properties");
+         File sharedFile = new File(sharedDir, "replicaui_db.properties");
          InputStream stream = new FileInputStream(sharedFile);
         
          props.load(stream);
@@ -448,7 +448,7 @@ public class DashboardController {
         try 
 		{
 			File sharedDir = new File(System.getProperty("catalina.base"), "shared");
-			File sharedFile = new File(sharedDir, "replica_ui_db.properties");
+			File sharedFile = new File(sharedDir, "replicaui_db.properties");
 			InputStream stream = new FileInputStream(sharedFile);
 			
 			props.load(stream);
