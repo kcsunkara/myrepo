@@ -6,7 +6,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Asset Replica Dashboard</title>
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<!-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script> -->
 <script type="text/javascript" src="../replicauidashboard/js/jquery.tablesorter.pager.js"></script>
 <script type="text/javascript" src="../replicauidashboard/js/jquery.tablesorter.js"></script> 
 	
@@ -14,6 +14,16 @@
 	type="text/css">
 <link type="text/css" rel="stylesheet" href="css/styles.css" />
 <script type="text/javascript" src="js/jquery.pajinate.js"></script>
+
+<script src="js/jquery.1.9.1.min.js"></script>
+<script src="js/vendor/jquery.ui.widget.js"></script>
+<script src="js/jquery.iframe-transport.js"></script>
+<script src="js/jquery.fileupload.js"></script>
+<script src="bootstrap/js/bootstrap.min.js"></script>
+<!-- <link href="bootstrap/css/bootstrap.css" type="text/css" rel="stylesheet" />-->
+<link href="css/dropzone.css" type="text/css" rel="stylesheet" />
+<script src="js/myuploadfunction.js"></script>
+
 
 <script>
 
@@ -26,6 +36,9 @@ $(document).ready(function(){
 	}
 	$('#successMsgDiv').hide();
 	$('#errorMsgDiv').hide();
+	
+	$('#successMsgDiv2').hide();
+	$('#errorMsgDiv2').hide();
 	
 });
 
@@ -69,6 +82,19 @@ function updatePolicy() {
 	});
 }
 
+function uploadAsset() {
+	$('input[id="uploadAssetButton"]').prop("disabled", true);
+	var selectedPid = $('input[name="p_selected"]:checked').val();
+	var assetId = getParameterByName('assetId');
+	$.post('upload.html', {"pid" : selectedPid, "assetId" : assetId}, function(response) {
+		if(response == 1) {
+			$('#successMsgDiv2').show();	
+		}
+		if(response != 1) {
+			$('#errorMsgDiv2').show();
+		}
+	});
+}
 </script>
 
 </head>
@@ -167,7 +193,15 @@ function updatePolicy() {
 		<br/>
 		<div id="updatePolicyDiv" align="center">Click here to change the Policy: <input id="updatePolicyButton" type="button" value="Change Policy" size="30" onclick="updatePolicy()"/><div id="successMsgDiv"><h6><i>Policy updated successfully...</i></h6></div>
 			<div id="errorMsgDiv"><h6><i>Error occurred while updating the policy...</i></h6></div>		 
-		</div>		
+		</div>
+		
+		<div id="uploadAssetDiv" align="center">Click here to upload Asset into the selected Policy: 
+			<input id="fileupload" type="file" name="files[]" multiple>
+			<input id="uploadAssetButton" type="button" value="Upload Selected Asset" size="30" onclick="uploadAsset()"/>
+			<div id="dropzone" class="fade well">Drop files here</div>
+			<div id="successMsgDiv2"><h6><i>Asset uploaded successfully...</i></h6></div>
+		</div>
+		
 	</div>
 </div>
 
