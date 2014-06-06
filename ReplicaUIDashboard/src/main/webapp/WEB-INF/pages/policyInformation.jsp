@@ -82,11 +82,13 @@ function updatePolicy() {
 	});
 }
 
-function uploadAsset() {
+/* function uploadAsset() {
 	$('input[id="uploadAssetButton"]').prop("disabled", true);
 	var selectedPid = $('input[name="p_selected"]:checked').val();
-	var assetId = getParameterByName('assetId');
-	$.post('upload.html', {"pid" : selectedPid, "assetId" : assetId}, function(response) {
+	
+	alert("In uploadAsset... selectedPid = "+selectedPid);
+	
+	$.post('./controller/upload.html', {"pid" : selectedPid}, function(response) {
 		if(response == 1) {
 			$('#successMsgDiv2').show();	
 		}
@@ -94,9 +96,34 @@ function uploadAsset() {
 			$('#errorMsgDiv2').show();
 		}
 	});
-}
+} */
 </script>
+<script>
+   var client = new XMLHttpRequest();
+  
+   function upload() 
+   {
+      var file = document.getElementById("fileupload");
+     
+      /* Create a FormData instance */
+      var formData = new FormData();
+      /* Add the file */ 
+      formData.append("upload", file.files[0]);
 
+      client.open("post", "./controller/upload.html", true);
+      client.setRequestHeader("Content-Type", "multipart/form-data");
+      client.send(formData);  /* Send to server */ 
+   }
+     
+   /* Check the response status */  
+   client.onreadystatechange = function() 
+   {
+      if (client.readyState == 4 && client.status == 200) 
+      {
+         alert(client.statusText);
+      }
+   }
+</script>
 </head>
 
 <body>
@@ -195,10 +222,12 @@ function uploadAsset() {
 			<div id="errorMsgDiv"><h6><i>Error occurred while updating the policy...</i></h6></div>		 
 		</div>
 		
-		<div id="uploadAssetDiv" align="center">Click here to upload Asset into the selected Policy: 
-			<input id="fileupload" type="file" name="files[]" multiple>
-			<input id="uploadAssetButton" type="button" value="Upload Selected Asset" size="30" onclick="uploadAsset()"/>
+		<div id="uploadAssetDiv" align="center">Click here to upload Asset into the selected Policy:
+		<form id="assetUploadForm" action="" method="POST" enctype="multipart/form-data"> 
+			<input id="fileupload" type="file" name="fileupload" />
+			<input id="uploadAssetButton" type="button" value="Upload Selected Asset" size="30" onclick="upload()" />
 			<div id="dropzone" class="fade well">Drop files here</div>
+		</form>
 			<div id="successMsgDiv2"><h6><i>Asset uploaded successfully...</i></h6></div>
 		</div>
 		
