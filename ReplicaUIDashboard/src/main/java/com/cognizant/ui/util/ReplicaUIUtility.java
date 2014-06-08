@@ -189,5 +189,51 @@ public class ReplicaUIUtility {
 			this.updatePolicyForAssetQuery = updatePolicyForAssetQuery;
 		}
 		
+		@Value("${getFSPathForPolicy.sql}") 
+		private String fsPathForPolicy;
+
+		public String getFsPathForPolicy() {
+			return fsPathForPolicy;
+		}
+
+		public void setFsPathForPolicy(String fsPathForPolicy) {
+			this.fsPathForPolicy = fsPathForPolicy;
+		}
+
+		@Value("${getAbsolutePathForPolicy.sql}") 
+		private String absolutePathForPolicy;
+
+		public String getAbsolutePathForPolicy() {
+			return absolutePathForPolicy;
+		}
+
+		public void setAbsolutePathForPolicy(String absolutePathForPolicy) {
+			this.absolutePathForPolicy = absolutePathForPolicy;
+		}
+		
+		@Value("${landingZoneId}")
+		private String landingZoneId;
+
+		public String getLandingZoneId() {
+			return landingZoneId;
+		}
+
+		public void setLandingZoneId(String landingZoneId) {
+			this.landingZoneId = landingZoneId;
+		}
+		
+		@Value("${ws.addasset.url}")
+		private String addAssetServiceUrl;
+
+		public String getAddAssetServiceUrl() {
+			return addAssetServiceUrl;
+		}
+
+		public void setAddAssetServiceUrl(String addAssetServiceUrl) {
+			this.addAssetServiceUrl = addAssetServiceUrl;
+		}
+		
+		
+		
 
 }

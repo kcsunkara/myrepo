@@ -121,6 +121,45 @@ public class AssetController {
 		return new ResponseEntity<List<MessageResponse>>(listMessageResponse,
 				HttpStatus.CREATED);
 	}
+	
+	/**
+	 * This method will ingest the Assets From DashBoardUI to database.
+	 * @param assetDTOList
+	 * @return
+	 * @throws ReplicaWSException
+	 */
+	@RequestMapping(value = "/dashboardAssetUpload", method = RequestMethod.POST)
+	public ResponseEntity<MessageResponse> dashboardAssetUpload(
+			@Valid @RequestBody AssetDTOList assetDTOList)
+			throws ReplicaWSException {
+
+		AssetDTOList assetDTOLists = assetService.saveFileAssets(assetDTOList);
+
+		DateFormat dm = new SimpleDateFormat("dd MMM yyyy hh:mm:ss");
+
+		MessageResponse em = null;
+		for (AssetDTO assetDTO : assetDTOLists.getAssets()) {
+			em = new MessageResponse();
+			em.setCode(HttpStatus.CREATED + "");
+
+			if (assetDTO.isAssetExists()) {
+				em.setMessage("Asset already exists");
+				em.setDescription("Asset already exists for this combination name:"
+						+ assetDTO.getName()
+						+ " filesize:"
+						+ assetDTO.getFilesize()
+						+ " fs_path:"
+						+ assetDTO.getFs_path());
+			} else {
+				em.setMessage("Asset and AssetInstances are added successfully");
+				em.setDescription("Asset and AssetInstances are added successfully");
+			}
+
+			em.setAssetId(assetDTO.getId());
+		}
+
+		return new ResponseEntity<MessageResponse>(em,HttpStatus.CREATED);
+	}
 
 	/**
 	 * This method will find a policy for the requested Asset. if the policy id

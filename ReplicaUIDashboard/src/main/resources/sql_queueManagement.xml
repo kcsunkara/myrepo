@@ -155,4 +155,16 @@ AND POLICY_ID = :pid
 <entry key="updatePolicyForAsset.sql">
 UPDATE ASSET_REPLICA.DBO.ASSETS SET POLICY_ID=:pid WHERE ID=:assetId
 </entry>	
+
+<entry key="getFSPathForPolicy.sql">
+SELECT FS_PATH FROM ASSET_REPLICA.DBO.POLICIES WHERE ID=:pid
+</entry>
+
+<entry key="getAbsolutePathForPolicy.sql">
+SELECT SL.PATH + P.FS_PATH ABS_PATH
+FROM ASSET_REPLICA.DBO.STORAGE_LOCATIONS SL, ASSET_REPLICA.DBO.POLICIES P
+WHERE SL.ID = :landingZoneId
+AND P.ID=:pid
+</entry>
+
 </properties>

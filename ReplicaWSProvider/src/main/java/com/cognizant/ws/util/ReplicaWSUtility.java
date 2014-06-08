@@ -487,5 +487,16 @@ public class ReplicaWSUtility {
 		this.inOutHostNameQuery = inOutHostNameQuery;
 	}
 	
+	@Value("${landingZoneId}")
+	private String landingZoneId;
+
+	public String getLandingZoneId() {
+		return landingZoneId;
+	}
+
+	public void setLandingZoneId(String landingZoneId) {
+		this.landingZoneId = landingZoneId;
+	}
+	
 
 }

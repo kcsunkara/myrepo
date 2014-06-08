@@ -3,6 +3,7 @@ package com.cognizant.ui.controller;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
@@ -14,6 +15,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -22,6 +25,7 @@ import java.util.Set;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
+import javax.persistence.Query;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -29,6 +33,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -36,6 +41,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.cognizant.ui.beans.CustomPolicySiteInfo;
 import com.cognizant.ui.beans.SearchCriteria;
@@ -45,6 +52,7 @@ import com.cognizant.ui.json.CustomerDTO;
 import com.cognizant.ui.json.CustomerUsageDTO;
 import com.cognizant.ui.model.AssetDetails;
 import com.cognizant.ui.model.CustomJobBean;
+import com.cognizant.ui.model.FileMeta;
 import com.cognizant.ui.model.Policy;
 import com.cognizant.ui.util.ReplicaUIUtility;
 import com.google.gson.Gson;
@@ -563,5 +571,20 @@ public class DashboardController {
 			@RequestParam(value = "assetId", required = false) Long assetId) { 	
     	return dashboardService.updatePolicyForAsset(pid, assetId);
     }
+	
+	@RequestMapping(value="/upload", method = RequestMethod.POST)
+	public @ResponseBody String upload(MultipartHttpServletRequest request, HttpServletResponse response) {
+		Long pid = Long.parseLong(request.getParameter("pid"));
+		System.out.println("Selected PID for file upload: "+pid);
+		Iterator<String> itr =  request.getFileNames();
+		MultipartFile mpf = null;
+		mpf = request.getFile(itr.next()); 
+		try {
+			FileCopyUtils.copy(mpf.getBytes(), new FileOutputStream("C:/Users/KCSunkara/Temp/"+mpf.getOriginalFilename()));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return dashboardService.addAssetForUploadedFile(pid, mpf);
+	}
   
 }

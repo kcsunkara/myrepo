@@ -41,7 +41,7 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 			@NamedQuery(name="allAssets",query="select id," +
 			"name,fs_path,filesize," +
 			"policy.id,asset_md5,user_md5 from  Asset"),
-			@NamedQuery(name="isAssetExists",query="select 'x' from  Asset where" +
+			@NamedQuery(name="isAssetExists",query="select id from  Asset where" +
 					" name=:name and filesize=:filesize and fs_path=:fsPath")
 		}
 		)

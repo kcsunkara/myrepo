@@ -2,6 +2,7 @@ package com.cognizant.ws.service;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -17,6 +18,10 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
 import org.apache.commons.lang.StringUtils;
+import org.codehaus.jackson.JsonGenerationException;
+import org.codehaus.jackson.map.JsonMappingException;
+import org.codehaus.jackson.map.ObjectMapper;
+import org.codehaus.jackson.map.annotate.JsonSerialize.Inclusion;
 import org.hibernate.SQLQuery;
 import org.hibernate.ScrollMode;
 import org.hibernate.ScrollableResults;
@@ -98,6 +103,21 @@ public class AssetServiceImpl implements AssetService {
 	@Transactional
 	public AssetDTOList saveFileAssets(AssetDTOList assetDTOList)
 			throws ReplicaWSException {
+		
+		String inputJSON = null;
+		ObjectMapper mapper = new ObjectMapper();
+		try {
+			inputJSON = mapper.writeValueAsString(assetDTOList);
+			System.out.println(mapper.writeValueAsString(assetDTOList));
+		} catch (JsonGenerationException e) {
+			e.printStackTrace();
+		} catch (JsonMappingException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		
 		String basePath = "";
 		
 		Long storageId = assetDTOList.getAssets().get(0).getAssetInstances().get(0).getStorageLocId();
@@ -114,12 +134,13 @@ public class AssetServiceImpl implements AssetService {
 		for (AssetDTO assetDTO : assetDTOList.getAssets()) {
 			LOG.info(" save Asset member............. " + assetDTO);
 			String fsPath = assetDTO.getFs_path();
-			if (fsPath.contains(basePath)) {
-				fsPath = fsPath.substring(basePath.length(), fsPath.length());
-				assetDTO.setFs_path(fsPath);
-			} else {
-				throw new ReplicaWSException(
-						"Service ran from invalid location ");
+			if( storageId != Long.parseLong(utility.getLandingZoneId()) ) {
+				if (fsPath.contains(basePath)) {
+					fsPath = fsPath.substring(basePath.length(), fsPath.length());
+					assetDTO.setFs_path(fsPath);
+				} else {
+					throw new ReplicaWSException("Service ran from invalid location ");
+				}
 			}
 			// checking whether asset already exists
 			assetExists(assetDTO);
@@ -153,7 +174,7 @@ public class AssetServiceImpl implements AssetService {
 			}
 
 		}
-
+		System.out.println("exiting SAVE_ASSETS method...");
 		return assetDTOList;
 	}
 	/**
@@ -247,7 +268,8 @@ public class AssetServiceImpl implements AssetService {
 		query.setParameter("fsPath", asset.getFs_path());
 		List resultList = (List) query.getResultList();
 
-		if (!resultList.isEmpty() && resultList.get(0).equals("x")) {
+		if (!resultList.isEmpty()) {
+			asset.setId((Long)resultList.get(0));
 			asset.setAssetExists(true);
 		} 
 

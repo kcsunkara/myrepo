@@ -6,6 +6,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.cognizant.ui.beans.CustomPolicySiteInfo;
 import com.cognizant.ui.beans.SearchCriteria;
@@ -114,6 +115,10 @@ public class DashboardServiceImpl implements DashboardService {
 	
 	public int updatePolicyForAsset(Long pid, Long assetId) {
 		return dashBoardDao.updatePolicyForAsset(pid, assetId);
+	}
+	
+	public String addAssetForUploadedFile(Long pid, MultipartFile mpf) {
+		return dashBoardDao.addAssetForUploadedFile(pid, mpf);
 	}
 
 }

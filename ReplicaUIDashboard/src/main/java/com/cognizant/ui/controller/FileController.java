@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.Iterator;
 import java.util.LinkedList;
 
+import javax.persistence.Query;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Controller;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
@@ -39,6 +41,7 @@ public class FileController {
 			@RequestParam(value = "assetId", required = false) Long assetId,
 			MultipartHttpServletRequest request, HttpServletResponse response) {
  
+		System.out.println("Selected PID for file upload: "+request.getParameter("pid"));
 		//1. build an iterator
 		 Iterator<String> itr =  request.getFileNames();
 		 MultipartFile mpf = null;
@@ -62,7 +65,7 @@ public class FileController {
 			 
 			 try {
 				fileMeta.setBytes(mpf.getBytes());
-				FileCopyUtils.copy(mpf.getBytes(), new FileOutputStream("D:/temp/files/"+mpf.getOriginalFilename()));
+				FileCopyUtils.copy(mpf.getBytes(), new FileOutputStream("C:/Users/KCSunkara/Temp/"+mpf.getOriginalFilename()));
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -70,6 +73,8 @@ public class FileController {
 		 }
 		// result will be like this
 		// [{"fileName":"app_engine-85x77.png","fileSize":"8 Kb","fileType":"image/png"},...]
+		 
+		RestTemplate restTemplate = new RestTemplate();
 		return files;
  
 	}
