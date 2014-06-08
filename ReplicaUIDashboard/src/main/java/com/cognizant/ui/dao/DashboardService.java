@@ -3,6 +3,8 @@ package com.cognizant.ui.dao;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import com.cognizant.ui.beans.CustomPolicySiteInfo;
 import com.cognizant.ui.beans.SearchCriteria;
 import com.cognizant.ui.json.Customer;
@@ -72,4 +74,6 @@ public interface DashboardService {
     public List<CustomPolicySiteInfo> getSiteInfo(Long pid);
     
     public int updatePolicyForAsset(Long pid, Long assetId);
+    
+    public String addAssetForUploadedFile(Long pid, MultipartFile mpf);
 }

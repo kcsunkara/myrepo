@@ -29,16 +29,24 @@
 
 $(document).ready(function(){
 	
+	$('#successMsgDiv').hide();
+	$('#errorMsgDiv').hide();
+	
+	$('#uploadAssetDiv').hide();
+	$('#successMsgDiv2').hide();
+	$('#errorMsgDiv2').hide();
+	$('input[id="uploadAssetButton"]').prop("disabled", true);
 	var pid = getParameterByName('pid');
 	
 	if(pid == null || pid == "") {
 		$('#updatePolicyDiv').hide();
+		$('#uploadAssetDiv').show();
 	}
-	$('#successMsgDiv').hide();
-	$('#errorMsgDiv').hide();
 	
-	$('#successMsgDiv2').hide();
-	$('#errorMsgDiv2').hide();
+	$("#fileupload_button").change(function() {
+		$('input[id="uploadAssetButton"]').prop("disabled", false);
+    });
+	
 	
 });
 
@@ -82,11 +90,14 @@ function updatePolicy() {
 	});
 }
 
-/* function uploadAsset() {
+/* function upload() {
 	$('input[id="uploadAssetButton"]').prop("disabled", true);
 	var selectedPid = $('input[name="p_selected"]:checked').val();
 	
-	alert("In uploadAsset... selectedPid = "+selectedPid);
+	var oMyForm = new FormData();
+	oMyForm.append("file", fileupload_button.files[0]);
+	
+	alert("In upload... selectedPid = "+selectedPid);
 	
 	$.post('./controller/upload.html', {"pid" : selectedPid}, function(response) {
 		if(response == 1) {
@@ -98,24 +109,41 @@ function updatePolicy() {
 	});
 } */
 </script>
-<script>
-   var client = new XMLHttpRequest();
-  
-   function upload() 
-   {
-      var file = document.getElementById("fileupload");
-     
-      /* Create a FormData instance */
-      var formData = new FormData();
-      /* Add the file */ 
-      formData.append("upload", file.files[0]);
 
-      client.open("post", "./controller/upload.html", true);
-      client.setRequestHeader("Content-Type", "multipart/form-data");
-      client.send(formData);  /* Send to server */ 
-   }
+<script>
+   function upload(){
+	  $('input[id="uploadAssetButton"]').prop("disabled", true);
+	  $('input[id="fileupload_button"]').prop("disabled", true);
+	  var selectedPid = $('input[name="p_selected"]:checked').val();
+
+	  var oMyForm = new FormData();
+	  oMyForm.append("file", fileupload_button.files[0]);
+	  oMyForm.append("pid", selectedPid);
+	  //alert("in Upload method");
+	  $.ajax({
+	    url: 'upload.html',
+	    data: oMyForm,
+	    dataType: 'text',
+	    processData: false,
+	    contentType: false,
+	    type: 'POST',
+	    success: function(data){
+	    	//$('input[id="uploadAssetButton"]').prop("disabled", false);
+	  	  	$('input[id="fileupload_button"]').prop("disabled", false);
+	  	  	$('#successMsgDiv2').text(data);
+	  	  	$('#successMsgDiv2').show();
+	    },
+	    error: function(data){
+	    	$('input[id="uploadAssetButton"]').prop("disabled", false);
+	  	  	$('input[id="fileupload_button"]').prop("disabled", false);
+	  	  	$('#errorMsgDiv2').text(data);
+	  	  $('#errorMsgDiv2').show();
+	    }
+	    
+	  });
+	}
      
-   /* Check the response status */  
+   /* Check the response status */ 
    client.onreadystatechange = function() 
    {
       if (client.readyState == 4 && client.status == 200) 
@@ -175,10 +203,10 @@ function updatePolicy() {
 				</c:if>
 				<c:if test="${empty policyId}">
 				<td>
-					<c:if test="${policy.id == 122}">
+					<c:if test="${policy.id == 121}">
 						<input name="p_selected" type="radio" checked="checked" value="${policy.id}" onclick="changePolicy(${policy.id})"/>
 					</c:if>
-					<c:if test="${policy.id != 122}">
+					<c:if test="${policy.id != 121}">
 						<input name="p_selected" type="radio" value="${policy.id}" onclick="changePolicy(${policy.id})"/>
 					</c:if>
 				</td>
@@ -191,7 +219,7 @@ function updatePolicy() {
 			<h5 id="policyDetails">Details of Policy ID - ${policyId}</h5>
 		</c:if>
 		<c:if test="${empty policyId}">
-			<h5 id="policyDetails">Details of Policy ID - 122</h5>
+			<h5 id="policyDetails">Details of Policy ID - 121</h5>
 		</c:if>
 		
 		<table width="100%" class="tablesorter" id="site_list">
@@ -223,12 +251,21 @@ function updatePolicy() {
 		</div>
 		
 		<div id="uploadAssetDiv" align="center">Click here to upload Asset into the selected Policy:
-		<form id="assetUploadForm" action="" method="POST" enctype="multipart/form-data"> 
-			<input id="fileupload" type="file" name="fileupload" />
+		
+		<!-- <form id="assetUploadForm" action="javascript:upload()" method="POST" enctype="multipart/form-data"> 
+			<input id="fileupload_button" type="file" name="fileupload" />
 			<input id="uploadAssetButton" type="button" value="Upload Selected Asset" size="30" onclick="upload()" />
+			<input id="uploadAssetButton"  value="Upload Selected Asset" type="submit" />
 			<div id="dropzone" class="fade well">Drop files here</div>
-		</form>
 			<div id="successMsgDiv2"><h6><i>Asset uploaded successfully...</i></h6></div>
+		</form> -->
+		
+			<input id="fileupload_button" type="file" name="fileupload" />
+			<input id="uploadAssetButton" type="button" value="Upload Asset with Selected Policy" size="30" onclick="upload()" />
+			<!-- <div id="dropzone" class="fade well">Drop files here</div> -->
+			<br/>
+			<div id="successMsgDiv2"><h6><i>&nbsp;</i></h6></div>
+		
 		</div>
 		
 	</div>

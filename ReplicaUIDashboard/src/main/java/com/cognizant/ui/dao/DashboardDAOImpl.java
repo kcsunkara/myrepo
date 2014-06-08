@@ -1,5 +1,7 @@
 package com.cognizant.ui.dao;
 
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -14,19 +16,34 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import org.apache.log4j.Logger;
+import org.codehaus.jackson.JsonGenerationException;
+import org.codehaus.jackson.map.JsonMappingException;
+import org.codehaus.jackson.map.ObjectMapper;
+import org.codehaus.jackson.map.annotate.JsonSerialize.Inclusion;
 import org.hibernate.SQLQuery;
 import org.hibernate.type.BooleanType;
-import org.hibernate.type.CharacterType;
 import org.hibernate.type.IntegerType;
 import org.hibernate.type.LongType;
 import org.hibernate.type.StringType;
 import org.hibernate.type.TimestampType;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.FileCopyUtils;
+import org.springframework.web.client.RestTemplate;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.cognizant.ui.beans.CustomPolicySiteInfo;
 import com.cognizant.ui.beans.SearchCriteria;
+import com.cognizant.ui.exception.MessageResponse;
+import com.cognizant.ui.json.AssetDTO;
+import com.cognizant.ui.json.AssetDTOList;
+import com.cognizant.ui.json.AssetInstancesDTO;
 import com.cognizant.ui.json.Customer;
 import com.cognizant.ui.model.Asset;
 import com.cognizant.ui.model.AssetDetails;
@@ -535,6 +552,80 @@ public class DashboardDAOImpl implements DashboardDAO {
     	
     	int updatedCount = query.executeUpdate();
     	return updatedCount;
+    }
+    
+    public String addAssetForUploadedFile(Long pid, MultipartFile mpf) {
+		try {
+			Query absPathQuery = em.createNativeQuery(util.getAbsolutePathForPolicy());
+			absPathQuery.unwrap(SQLQuery.class).addScalar("ABS_PATH", StringType.INSTANCE);
+			absPathQuery.setParameter("pid", pid);
+			absPathQuery.setParameter("landingZoneId", util.getLandingZoneId());
+			String absPath = (String) absPathQuery.getSingleResult();
+			
+//			FileCopyUtils.copy(mpf.getBytes(), new FileOutputStream(absPath + File.pathSeparator + mpf.getOriginalFilename()));
+			FileCopyUtils.copy(mpf.getBytes(), new FileOutputStream("C:/Users/KCSunkara/Temp/" + mpf.getOriginalFilename()));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+    	Query fsPathQuery = em.createNativeQuery(util.getFsPathForPolicy());
+    	fsPathQuery.unwrap(SQLQuery.class).addScalar("FS_PATH", StringType.INSTANCE);
+    	fsPathQuery.setParameter("pid", pid);
+    	String fsPath = (String) fsPathQuery.getSingleResult();
+    	
+    	AssetDTO assetDTO = new AssetDTO();
+    	assetDTO.setName(mpf.getOriginalFilename());
+    	assetDTO.setFilesize(mpf.getSize());
+    	assetDTO.setFs_path(fsPath.endsWith("/") ? 
+    			fsPath + mpf.getOriginalFilename() : fsPath + "/" + mpf.getOriginalFilename());
+    	
+//    	"created_date": "08 Jun 2014 15:33:03.4432964160"
+    	SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMM YYYY HH:mm:ss");
+    	assetDTO.setCreated_date(dateFormat.format(new Date()));
+    	
+    	List<AssetInstancesDTO> assetInstances = new ArrayList<AssetInstancesDTO>();
+    	
+    	AssetInstancesDTO instanceDTO = new AssetInstancesDTO();
+    	instanceDTO.setFilename(mpf.getOriginalFilename());
+    	instanceDTO.setStorageLocId(Long.parseLong(util.getLandingZoneId()));
+    	
+    	assetInstances.add(instanceDTO);
+    	assetDTO.setAssetInstances(assetInstances);
+    	
+    	List<AssetDTO> assets = new ArrayList<AssetDTO>();
+    	assets.add(assetDTO);
+    	
+    	AssetDTOList assetDTOList = new AssetDTOList();
+    	assetDTOList.setAssets(assets);
+    	
+    	String inputJSON = null;
+    	ObjectMapper mapper = new ObjectMapper();
+    	mapper.setSerializationInclusion(Inclusion.NON_NULL);
+    	try {
+    		inputJSON = mapper.writeValueAsString(assetDTOList);
+    		System.out.println(mapper.writeValueAsString(assetDTOList));
+    	} catch (JsonGenerationException e) {
+    		e.printStackTrace();
+    	} catch (JsonMappingException e) {
+    		e.printStackTrace();
+    	} catch (IOException e) {
+    		e.printStackTrace();
+    	}
+    	
+    	HttpHeaders headers = new HttpHeaders();
+        headers.setContentType( MediaType.APPLICATION_JSON );
+
+        HttpEntity request= new HttpEntity( inputJSON, headers );
+
+    	
+    	RestTemplate restTemplate = new RestTemplate();
+    	MessageResponse response = restTemplate.postForObject(util.getAddAssetServiceUrl(), request, MessageResponse.class);
+    	
+    	if( HttpStatus.CREATED.toString().equals(response.getCode()) ) {
+    		return response.getMessage().equals("Asset already exists") ? 
+    				"Asset ID: " + response.getAssetId() + " already exists." : "Asset ID: " + response.getAssetId() + " is created.";
+    	}
+    	return "Something went wrong in /fileasset WebService...";
     }
 
 }
