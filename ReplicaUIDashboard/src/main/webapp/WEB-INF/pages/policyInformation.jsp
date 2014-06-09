@@ -6,27 +6,10 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Asset Replica Dashboard</title>
-<!-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script> -->
-<script type="text/javascript" src="../replicauidashboard/js/jquery.tablesorter.pager.js"></script>
-<script type="text/javascript" src="../replicauidashboard/js/jquery.tablesorter.js"></script> 
-	
-<link href="../replicauidashboard/css/search.css" rel="Stylesheet"
-	type="text/css">
+<script type="text/javascript" src="js/jquery.1.9.1.min.js"></script>
+<link href="../replicauidashboard/css/search.css" rel="Stylesheet" type="text/css">
 <link type="text/css" rel="stylesheet" href="css/styles.css" />
-<script type="text/javascript" src="js/jquery.pajinate.js"></script>
-
-<script src="js/jquery.1.9.1.min.js"></script>
-<script src="js/vendor/jquery.ui.widget.js"></script>
-<script src="js/jquery.iframe-transport.js"></script>
-<script src="js/jquery.fileupload.js"></script>
-<script src="bootstrap/js/bootstrap.min.js"></script>
-<!-- <link href="bootstrap/css/bootstrap.css" type="text/css" rel="stylesheet" />-->
-<link href="css/dropzone.css" type="text/css" rel="stylesheet" />
-<script src="js/myuploadfunction.js"></script>
-
-
 <script>
-
 $(document).ready(function(){
 	
 	$('#successMsgDiv').hide();
@@ -112,46 +95,104 @@ function updatePolicy() {
 
 <script>
    function upload(){
+	   
 	  $('input[id="uploadAssetButton"]').prop("disabled", true);
 	  $('input[id="fileupload_button"]').prop("disabled", true);
+	  $('input[name="p_selected"]').prop("disabled", true);
 	  var selectedPid = $('input[name="p_selected"]:checked').val();
+	  
+	  var myFormData = [];
+	  if(typeof FormData == "undefined") {
+		  
+		  myFormData.push("file", $('#fileupload_button').files[0]); // input[type="file"][multiple]
+		  myFormData.push("pid", selectedPid);
+	  }
+	  else {
+		  myFormData = new FormData();
+		  myFormData.append("file", fileupload_button.files[0]);
+		  myFormData.append("pid", selectedPid);
+	  }
 
-	  var oMyForm = new FormData();
-	  oMyForm.append("file", fileupload_button.files[0]);
-	  oMyForm.append("pid", selectedPid);
-	  //alert("in Upload method");
 	  $.ajax({
 	    url: 'upload.html',
-	    data: oMyForm,
+	    data: myFormData,
 	    dataType: 'text',
 	    processData: false,
 	    contentType: false,
 	    type: 'POST',
 	    success: function(data){
-	    	//$('input[id="uploadAssetButton"]').prop("disabled", false);
 	  	  	$('input[id="fileupload_button"]').prop("disabled", false);
+	  	  	$('input[name="p_selected"]').prop("disabled", false);
 	  	  	$('#successMsgDiv2').text(data);
 	  	  	$('#successMsgDiv2').show();
 	    },
 	    error: function(data){
+	    	alert(data);
+	    	$('input[id="fileupload_button"]').prop("disabled", false);
 	    	$('input[id="uploadAssetButton"]').prop("disabled", false);
-	  	  	$('input[id="fileupload_button"]').prop("disabled", false);
+	    	$('input[name="p_selected"]').prop("disabled", false);
 	  	  	$('#errorMsgDiv2').text(data);
-	  	  $('#errorMsgDiv2').show();
+	  	  	$('#errorMsgDiv2').show();
 	    }
 	    
 	  });
 	}
-     
-   /* Check the response status */ 
-   client.onreadystatechange = function() 
-   {
-      if (client.readyState == 4 && client.status == 200) 
-      {
-         alert(client.statusText);
-      }
-   }
+  
 </script>
+
+<script language="Javascript"> function fileUploadMethod(form, action_url, div_id) { 
+    // Create the iframe...     
+	var iframe = document.createElement("iframe"); 
+    iframe.setAttribute("id", "upload_iframe"); 
+    iframe.setAttribute("name", "upload_iframe"); 
+    iframe.setAttribute("width", "0"); 
+    iframe.setAttribute("height", "0"); 
+    iframe.setAttribute("border", "0"); 
+    iframe.setAttribute("style", "width: 0; height: 0; border: none;"); 
+  
+    // Add to document...     
+	form.parentNode.appendChild(iframe); 
+    window.frames['upload_iframe'].name = "upload_iframe"; 
+  
+    iframeId = document.getElementById("upload_iframe"); 
+  
+    // Add event...     
+	var eventHandler = function () { 
+  
+            if (iframeId.detachEvent) iframeId.detachEvent("onload", eventHandler); 
+            else iframeId.removeEventListener("load", eventHandler, false); 
+  
+            // Message from server...             
+			if (iframeId.contentDocument) { 
+                content = iframeId.contentDocument.body.innerHTML; 
+            } else if (iframeId.contentWindow) { 
+                content = iframeId.contentWindow.document.body.innerHTML; 
+            } else if (iframeId.document) { 
+                content = iframeId.document.body.innerHTML; 
+            } 
+  
+            document.getElementById(div_id).innerHTML = content; 
+  
+            // Del the iframe...             
+			setTimeout('iframeId.parentNode.removeChild(iframeId)', 250); 
+        } 
+  
+    if (iframeId.addEventListener) iframeId.addEventListener("load", eventHandler, true); 
+    if (iframeId.attachEvent) iframeId.attachEvent("onload", eventHandler); 
+  
+    // Set properties of form...     form.setAttribute("target", "upload_iframe"); 
+    form.setAttribute("action", action_url); 
+    form.setAttribute("method", "post"); 
+    form.setAttribute("enctype", "multipart/form-data"); 
+    form.setAttribute("encoding", "multipart/form-data");
+    
+    // Submit the form...     
+	form.submit(); 
+  
+    document.getElementById(div_id).innerHTML = "Uploading..."; 
+} 
+</script>
+
 </head>
 
 <body>
@@ -252,20 +293,27 @@ function updatePolicy() {
 		
 		<div id="uploadAssetDiv" align="center">Click here to upload Asset into the selected Policy:
 		
-		<!-- <form id="assetUploadForm" action="javascript:upload()" method="POST" enctype="multipart/form-data"> 
+		<!-- 
+		<form id="assetUploadForm" action="javascript:upload()" method="POST" enctype="multipart/form-data"> 
 			<input id="fileupload_button" type="file" name="fileupload" />
 			<input id="uploadAssetButton" type="button" value="Upload Selected Asset" size="30" onclick="upload()" />
 			<input id="uploadAssetButton"  value="Upload Selected Asset" type="submit" />
 			<div id="dropzone" class="fade well">Drop files here</div>
 			<div id="successMsgDiv2"><h6><i>Asset uploaded successfully...</i></h6></div>
-		</form> -->
+		</form> 
 		
-			<input id="fileupload_button" type="file" name="fileupload" />
-			<input id="uploadAssetButton" type="button" value="Upload Asset with Selected Policy" size="30" onclick="upload()" />
-			<!-- <div id="dropzone" class="fade well">Drop files here</div> -->
-			<br/>
-			<div id="successMsgDiv2"><h6><i>&nbsp;</i></h6></div>
+		<form id="assetUploadForm"> 
+			<input id="fileupload_button" type="file" name="fileupload" /></br> 
+			<input id="uploadAssetButton" type="button" value="upload" onClick="fileUploadMethod(this.form,'upload.html','upload'); return false;" > 
+			<div id="upload"></div> 
+		</form>
+		--> 
 		
+		<input id="fileupload_button" type="file" name="fileupload" />
+		<input id="uploadAssetButton" type="button" value="Upload Asset with Selected Policy" size="30" onclick="upload()" />
+		<br/>
+		<div id="successMsgDiv2"><h6><i>&nbsp;</i></h6></div>
+	
 		</div>
 		
 	</div>

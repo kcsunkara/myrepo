@@ -579,11 +579,7 @@ public class DashboardController {
 		Iterator<String> itr =  request.getFileNames();
 		MultipartFile mpf = null;
 		mpf = request.getFile(itr.next()); 
-		try {
-			FileCopyUtils.copy(mpf.getBytes(), new FileOutputStream("C:/Users/KCSunkara/Temp/"+mpf.getOriginalFilename()));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		
 		return dashboardService.addAssetForUploadedFile(pid, mpf);
 	}
   
