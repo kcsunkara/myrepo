@@ -4,7 +4,7 @@
 
 	<!-- Appenders -->
 	<appender name="FILE" class="org.apache.log4j.DailyRollingFileAppender">
-		<param name="file" value="C:/Users/KCSunkara/apache-tomcat-7.0.54_2nd_Inst/replica_logs/replicaui.log" />
+		<param name="file" value="${catalina.base}/logs/replicaui.log" />
 		<param name="DatePattern" value="'.'yyyy-MM-dd" />
 		<param name="Append" value="true" />
 		<layout class="org.apache.log4j.PatternLayout">
