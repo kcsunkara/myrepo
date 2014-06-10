@@ -47,10 +47,10 @@ public class CopyTierController {
 		LOG.debug("COPY WS Provider has received request from : " + inputHostName +"with storageId: " + storageId);
 		List<MessageResponse> mrList = copyTierService.requestCopyTier(storageId, inputHostName);
 		
-		LOG.debug("Finding alternate source node to route the ASCP request...");
-		List<MessageResponse> outputMsgList = copyTierService.getAlernateHost(mrList, inputHostName);
+		/*LOG.debug("Finding alternate source node to route the ASCP request...");
+		List<MessageResponse> outputMsgList = copyTierService.getAlernateHost(mrList, inputHostName);*/
 		
-		return new ResponseEntity<List<MessageResponse>>(outputMsgList, HttpStatus.OK);
+		return new ResponseEntity<List<MessageResponse>>(mrList, HttpStatus.OK);
 
 	}
 

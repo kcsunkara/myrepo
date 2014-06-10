@@ -12,7 +12,7 @@ import javax.persistence.*;
 @Entity
 @Table(name="policies")
 @NamedQueries(
-		{@NamedQuery(name = "allPolicies", query = "from  Policy order by id desc")})
+		{@NamedQuery(name = "allPolicies", query = "from  Policy order by id")})
 public class Policy implements Serializable {
 	private static final long serialVersionUID = 1L;
 

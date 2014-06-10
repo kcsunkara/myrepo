@@ -558,7 +558,7 @@ public class DashboardDAOImpl implements DashboardDAO {
 		try {
 			Query absPathQuery = em.createNativeQuery(util.getAbsolutePathForPolicy());
 			absPathQuery.unwrap(SQLQuery.class).addScalar("ABS_PATH", StringType.INSTANCE);
-			absPathQuery.setParameter("pid", pid);
+			absPathQuery.setParameter("pid", 121);
 			absPathQuery.setParameter("landingZoneId", util.getLandingZoneId());
 			String absPath = (String) absPathQuery.getSingleResult();
 			
@@ -578,6 +578,7 @@ public class DashboardDAOImpl implements DashboardDAO {
     	assetDTO.setFilesize(mpf.getSize());
     	assetDTO.setFs_path(fsPath.endsWith("/") ? 
     			fsPath + mpf.getOriginalFilename() : fsPath + "/" + mpf.getOriginalFilename());
+    	assetDTO.setPolicy_id(pid);
     	
 //    	"created_date": "08 Jun 2014 15:33:03.4432964160"
     	SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMM yyyy HH:mm:ss");
