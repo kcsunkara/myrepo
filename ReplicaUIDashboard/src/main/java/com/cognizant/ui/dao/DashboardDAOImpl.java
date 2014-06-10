@@ -580,7 +580,7 @@ public class DashboardDAOImpl implements DashboardDAO {
     			fsPath + mpf.getOriginalFilename() : fsPath + "/" + mpf.getOriginalFilename());
     	
 //    	"created_date": "08 Jun 2014 15:33:03.4432964160"
-    	SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMM YYYY HH:mm:ss");
+    	SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMM yyyy HH:mm:ss");
     	assetDTO.setCreated_date(dateFormat.format(new Date()));
     	
     	List<AssetInstancesDTO> assetInstances = new ArrayList<AssetInstancesDTO>();
