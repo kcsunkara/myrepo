@@ -609,7 +609,7 @@ public class AssetServiceImpl implements AssetService {
 			for (Object[] objects : assetList) {
 
 				Long assetId = (Long) objects[0];
-				String fsPath = (String) objects[2];
+				String fsPath = (String) objects[1];
 
 				Long verifyPolicyId = findAssetPolicy(fsPath,policiesList);
 				LOG.info("verifyPolicyId.." + verifyPolicyId);

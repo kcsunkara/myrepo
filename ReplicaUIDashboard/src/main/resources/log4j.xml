@@ -37,7 +37,7 @@
 	<!-- <logger name="org.hibernate"> <level value="warn" /> </logger> -->
 
 	<logger name="org.hibernate.tool.hbm2ddl" additivity="false">
-		<level value="info" />
+		<level value="debug" />
 		<appender-ref ref="FILE" />
 	</logger>
 
