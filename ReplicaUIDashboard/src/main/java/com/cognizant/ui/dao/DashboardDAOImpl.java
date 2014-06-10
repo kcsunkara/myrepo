@@ -562,8 +562,8 @@ public class DashboardDAOImpl implements DashboardDAO {
 			absPathQuery.setParameter("landingZoneId", util.getLandingZoneId());
 			String absPath = (String) absPathQuery.getSingleResult();
 			
-//			FileCopyUtils.copy(mpf.getBytes(), new FileOutputStream(absPath + File.pathSeparator + mpf.getOriginalFilename()));
-			FileCopyUtils.copy(mpf.getBytes(), new FileOutputStream("C:/Users/KCSunkara/Temp/" + mpf.getOriginalFilename()));
+			FileCopyUtils.copy(mpf.getBytes(), new FileOutputStream(absPath + "/" + mpf.getOriginalFilename()));
+//			FileCopyUtils.copy(mpf.getBytes(), new FileOutputStream("C:/Users/KCSunkara/Temp/" + mpf.getOriginalFilename()));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
