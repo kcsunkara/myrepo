@@ -558,7 +558,7 @@ public class DashboardDAOImpl implements DashboardDAO {
 		try {
 			Query absPathQuery = em.createNativeQuery(util.getAbsolutePathForPolicy());
 			absPathQuery.unwrap(SQLQuery.class).addScalar("ABS_PATH", StringType.INSTANCE);
-			absPathQuery.setParameter("pid", pid);
+			absPathQuery.setParameter("pid", 121);
 			absPathQuery.setParameter("landingZoneId", util.getLandingZoneId());
 			String absPath = (String) absPathQuery.getSingleResult();
 			
