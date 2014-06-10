@@ -530,10 +530,6 @@ public class DashboardController {
          
      }
 	 
-	 /**
-	 * This method will redirect the user to Search Screen.
-	 * @return
-	 */
 	@RequestMapping(value = "/policyInfo.html", method = RequestMethod.GET)
 	public String policyInfo(
 			@RequestParam(value = "pid", required = false) Long pid, 
