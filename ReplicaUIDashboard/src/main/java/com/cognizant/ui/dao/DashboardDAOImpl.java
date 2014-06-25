@@ -570,7 +570,7 @@ public class DashboardDAOImpl implements DashboardDAO {
 
     	Query fsPathQuery = em.createNativeQuery(util.getFsPathForPolicy());
     	fsPathQuery.unwrap(SQLQuery.class).addScalar("FS_PATH", StringType.INSTANCE);
-    	fsPathQuery.setParameter("pid", pid);
+    	fsPathQuery.setParameter("pid", 121);
     	String fsPath = (String) fsPathQuery.getSingleResult();
     	
     	AssetDTO assetDTO = new AssetDTO();
