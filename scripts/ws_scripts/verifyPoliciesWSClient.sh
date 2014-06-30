@@ -23,7 +23,7 @@ fi
 echo "CALLING 'verifyPolicies' WEBSERVICE: "
 
 #curl --request GET http://localhost:8080/replicawsprovider/replicaws/verifyPolicies > $OUTDIR/verifyPoliciesWSOutput_$CURRENT_TIME.json
-curl --request GET http://linuxdrupal-1.vpc.ctsdamlabs.com/replicawsprovider/replicaws/verifyPolicies > $OUTDIR/verifyPoliciesWSOutput_$CURRENT_TIME.json
+curl --request GET http://localhost/replicawsprovider/replicaws/verifyPolicies > $OUTDIR/verifyPoliciesWSOutput_$CURRENT_TIME.json
 
 if [ $? -eq 0 ]; then
 	echo "SUCCESSFULLY INVOKED 'verifyPolicies' WEBSERVICE"

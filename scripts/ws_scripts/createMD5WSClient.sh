@@ -26,8 +26,8 @@ create_md5() {
         echo "CURRENT TIME: $CURRENT_TIME"
         echo "-----------------------------------------------------------------------------"
 		
-		curl -X POST -H "Content-Type: application/json" --data '{"storageId":"'"$STORAGE_ID"'","hostName":"'"$MYHOSTNAME"'"}' http://linuxdrupal-1.vpc.ctsdamlabs.com/replicawsprovider/replicaws/requestmd5 > $OUTDIR/requestMD5Output_$CURRENT_TIME.json
-#       /usr/local/bin/curl -X POST -H "Content-Type: application/json" --data '{"storageId":"'"$STORAGE_ID"'","hostName":"'"$MYHOSTNAME"'"}' http://linuxdrupal-1.vpc.ctsdamlabs.com/replicawsprovider/replicaws/requestmd5 > $OUTDIR/requestMD5Output_$CURRENT_TIME.json
+		curl -X POST -H "Content-Type: application/json" --data '{"storageId":"'"$STORAGE_ID"'","hostName":"'"$MYHOSTNAME"'"}' http://localhost/replicawsprovider/replicaws/requestmd5 > $OUTDIR/requestMD5Output_$CURRENT_TIME.json
+#       /usr/local/bin/curl -X POST -H "Content-Type: application/json" --data '{"storageId":"'"$STORAGE_ID"'","hostName":"'"$MYHOSTNAME"'"}' http://localhost/replicawsprovider/replicaws/requestmd5 > $OUTDIR/requestMD5Output_$CURRENT_TIME.json
 #        curl -X POST -H "Content-Type: application/json" --data '{"storageId":"'"$STORAGE_ID"'","hostName":"'"$MYHOSTNAME"'"}' http://localhost:8080/replicawsprovider/replicaws/requestmd5 > $OUTDIR/requestMD5Output_$CURRENT_TIME.json
 
         if [ $? -eq 0 ]; then
@@ -91,8 +91,8 @@ create_md5() {
         echo "CALLING 'responseMD' WEBSERVICE WITH JOBID: $jobId , MD5: $MD5 and STATUS: $status"
         echo "-----------------------------------------------------------------------------"
 
-        curl -X POST -H "Content-Type: application/json" --data '{"batchId":"'"$jobId"'","paramMd5":"'"$MD5"'","errorCode":"'"$status"'"}' http://linuxdrupal-1.vpc.ctsdamlabs.com/replicawsprovider/replicaws/responsemd5 > $OUTDIR/responseMD5Output_$CURRENT_TIME.json
-		#/usr/local/bin/curl -X POST -H "Content-Type: application/json" --data '{"batchId":"'"$jobId"'","paramMd5":"'"$MD5"'","errorCode":"'"$status"'"}' http://linuxdrupal-1.vpc.ctsdamlabs.com/replicawsprovider/replicaws/responsemd5 > $OUTDIR/responseMD5Output_$CURRENT_TIME.json
+        curl -X POST -H "Content-Type: application/json" --data '{"batchId":"'"$jobId"'","paramMd5":"'"$MD5"'","errorCode":"'"$status"'"}' http://localhost/replicawsprovider/replicaws/responsemd5 > $OUTDIR/responseMD5Output_$CURRENT_TIME.json
+		#/usr/local/bin/curl -X POST -H "Content-Type: application/json" --data '{"batchId":"'"$jobId"'","paramMd5":"'"$MD5"'","errorCode":"'"$status"'"}' http://localhost/replicawsprovider/replicaws/responsemd5 > $OUTDIR/responseMD5Output_$CURRENT_TIME.json
         #curl -X POST -H "Content-Type: application/json" --data '{"batchId":"'"$jobId"'","paramMd5":"'"$MD5"'","errorCode":"'"$status"'"}' http://localhost:8080/replicawsprovider/replicaws/responsemd5 > $OUTDIR/responseMD5Output_$CURRENT_TIME.json
 
         if [ $? -eq 0 ]; then

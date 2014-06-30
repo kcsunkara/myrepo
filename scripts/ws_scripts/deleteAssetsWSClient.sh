@@ -65,7 +65,7 @@ deleteAssets() {
         echo "CALLING 'DeleteAssetsRequest' WEBSERVICE, WITH STORAGE_ID: $STORAGE_ID"
 
         #REQUEST_URL=`echo "http://localhost:8080/replicawsprovider/replicaws/deleteAssetRequest/$STORAGE_ID"`
-        REQUEST_URL=`echo "http://linuxdrupal-1.vpc.ctsdamlabs.com/replicawsprovider/replicaws/deleteAssetRequest/$STORAGE_ID"`
+        REQUEST_URL=`echo "http://localhost/replicawsprovider/replicaws/deleteAssetRequest/$STORAGE_ID"`
         curl --request GET $REQUEST_URL > $OUTDIR/DeleteAssetsRequestOutput_$CURRENT_TIME.json
         # cat sampleDelete.json > $OUTDIR/DeleteAssetsRequestOutput_$CURRENT_TIME.json
 
@@ -138,7 +138,7 @@ deleteAssets() {
         echo "-----------------------------------------------------------------------------"
 
 	#curl -X POST -H "Content-Type: application/json" --data @$RESP_JSON_FILE http://localhost:8080/replicawsprovider/replicaws/deleteAssetResponse 
-	curl -X POST -H "Content-Type: application/json" --data @$RESP_JSON_FILE http://linuxdrupal-1.vpc.ctsdamlabs.com/replicawsprovider/replicaws/deleteAssetResponse
+	curl -X POST -H "Content-Type: application/json" --data @$RESP_JSON_FILE http://localhost/replicawsprovider/replicaws/deleteAssetResponse
 	echo ""
 	if [ $? -eq 0 ]; then
 		echo "SUCCESSFULLY INVOKED 'DeleteAssetsResponse' WEBSERVICE."

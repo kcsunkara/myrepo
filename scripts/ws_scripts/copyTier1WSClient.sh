@@ -26,7 +26,7 @@ copyTier1() {
         echo "CURRENT TIME: $CURRENT_TIME"
         echo "-----------------------------------------------------------------------------"
 
-        REQUEST_URL=`echo "http://linuxdrupal-1.vpc.ctsdamlabs.com/replicawsprovider/replicaws/requestCopyTier/$MYHOSTNAME/$STORAGE_ID"`
+        REQUEST_URL=`echo "http://localhost/replicawsprovider/replicaws/requestCopyTier/$MYHOSTNAME/$STORAGE_ID"`
         curl --request GET $REQUEST_URL > $OUTDIR/requestCopyTierOutput_$CURRENT_TIME.json
 	
         if [ $? -eq 0 ]; then
@@ -105,7 +105,7 @@ copyTier1() {
         echo "CALLING responseCopyTier WEBSERVICE WITH JOBID: $jobId and STATUS: $status"
         echo "-----------------------------------------------------------------------------"
 
-        RESPONSE_URL=`echo "http://linuxdrupal-1.vpc.ctsdamlabs.com/replicawsprovider/replicaws/responseCopyTier/$jobId/$status"`
+        RESPONSE_URL=`echo "http://localhost/replicawsprovider/replicaws/responseCopyTier/$jobId/$status"`
         curl --request GET $RESPONSE_URL > $OUTDIR/responseCopyTierOutput_$CURRENT_TIME.json
 
         if [ $? -eq 0 ]; then

@@ -136,7 +136,7 @@ echo "--------------------------------------------------------------------------
 
 sh $5/createJSON.sh $READY $REQUEST $TMPDIR $STORAGE_ID
 
-curl -X POST -H "Content-Type: application/json" --data @$REQUEST http://linuxdrupal-1.vpc.ctsdamlabs.com/replicawsprovider/replicaws/fileasset > $OUTPUT
+curl -X POST -H "Content-Type: application/json" --data @$REQUEST http://localhost/replicawsprovider/replicaws/fileasset > $OUTPUT
 #rm -r $TMPDIR
 echo "-----------------------------------------------------------------------------"
 
