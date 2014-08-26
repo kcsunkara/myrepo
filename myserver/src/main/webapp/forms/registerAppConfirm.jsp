@@ -43,12 +43,12 @@ Calendar resources of Social.com users as part of OAuth flows.
 <br/> 
 <p>
 <big><big>
-Calendars of Social.com users can be accessed at <b><%= basePath %>thirdparty/calendar</b><br/> using an OAuth access token.
+Calendars of Social.com users can be accessed at <b><%= basePath %>/thirdparty/calendar</b><br/> using an OAuth access token.
 HTTP GET and POST verbs can be used.
 </p>
 <br/>
 <p>
-Please follow this <a href="<%= basePath %>forms/registerUser.jsp">link</a> to get a user registered with Social.com
+Please follow this <a href="<%= basePath %>/forms/registerUser.jsp">link</a> to get a user registered with Social.com
 </p>
 </big></big>
 </div>

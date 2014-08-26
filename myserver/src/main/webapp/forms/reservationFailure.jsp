@@ -26,7 +26,7 @@
 </p>
 <br/>
 <big>
-Back to <a href="<%= basePath %>forms/reservation.jsp">reservations</a>.
+Back to <a href="<%= basePath %>/forms/reservation.jsp">reservations</a>.
 </big> 
 </div>
 

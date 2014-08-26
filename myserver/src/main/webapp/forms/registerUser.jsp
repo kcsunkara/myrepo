@@ -17,7 +17,7 @@
 <br/>
 <p>
  <table>
-     <form action="/services/register/registerUser" method="POST">
+     <form action="/myservices/register/registerUser" method="POST">
         <tr>
             <td><big><big><big>User Name:</big></big></big></td>
             <td>

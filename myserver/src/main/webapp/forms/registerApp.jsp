@@ -14,7 +14,7 @@
 <body>
 <H1>Client Application Registration Form</H1>
 <br/>
-     <form action="/services/oauth/registerProvider"
+     <form action="/myservices/oauth/registerProvider"
            enctype="multipart/form-data" 
            method="POST">
        <div class="padded">  
@@ -41,7 +41,7 @@
         <tr>
             <td><big><big><big>Application URI:</big></big></big></td>
             <td>
-              <input type="text" size="50" name="appURI" value="http://localhost:${http.reservations.port}/services/reservations"/>
+              <input type="text" size="50" name="appURI" value="http://localhost:${http.reservations.port}/myservices/reservations"/>
             </td>
         </tr>
         <tr>
@@ -50,7 +50,7 @@
         <tr>
             <td><big><big><big>Application Redirect URI:</big></big></big></td>
             <td>
-              <input type="text" size="50" name="appRedirectURI" value="http://localhost:${http.reservations.port}/services/reservations/reserve/complete"/>
+              <input type="text" size="50" name="appRedirectURI" value="http://localhost:${http.reservations.port}/myservices/reservations/reserve/complete"/>
             </td>
         </tr>
         <tr>

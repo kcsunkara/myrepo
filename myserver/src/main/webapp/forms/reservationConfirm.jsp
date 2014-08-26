@@ -39,13 +39,13 @@ Here are the reservation details:
 <%
   if (reserve.isCalendarUpdated()) {
 %>
-Please verify your personal <a href="<%= basePath %>social/accounts">calendar</a> has been updated.
+Please verify your personal <a href="<%= basePath %>/social/accounts">calendar</a> has been updated.
 
 <%
   } else {
 %> 
 
-We have not been able to update your <a href="<%= basePath %>social/accounts">calendar</a>
+We have not been able to update your <a href="<%= basePath %>/social/accounts">calendar</a>
 <p/> with the reservation details. Please record them yourself.
  
 <%
@@ -54,7 +54,7 @@ We have not been able to update your <a href="<%= basePath %>social/accounts">ca
 </p>
 <br/>
 <p>
-Back to <a href="<%= basePath %>forms/reservation.jsp">reservations</a>.
+Back to <a href="<%= basePath %>/forms/reservation.jsp">reservations</a>.
 </p>
 </big></big>
 </div>

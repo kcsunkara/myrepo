@@ -53,7 +53,7 @@
 Our partner, Restaurant Reservations, is offering an online service which you can use<br/> to reserve a dinner at your favourite restaurant.
 </p>
 <p>
-Please follow this <a href="<%= basePath %>forms/reservation.jsp">link</a> to find out more.
+Please follow this <a href="<%= basePath %>/forms/reservation.jsp">link</a> to find out more.
 </p>
 </big></big>
 </div>

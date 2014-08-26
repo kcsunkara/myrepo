@@ -23,7 +23,7 @@
 Congratulations! You have successfully registered with Social.com</p>
 </p>
 <p>
-Please check your personal <a href="<%= basePath %>social/accounts"> page</a> next.
+Please check your personal <a href="<%= basePath %>/social/accounts"> page</a> next.
 </p>
 </big></big>
 </div>

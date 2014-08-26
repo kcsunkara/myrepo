@@ -76,7 +76,7 @@
 
 
 	<build>
-		<finalName>services</finalName>
+		<finalName>myservices</finalName>
 		<plugins>
 			<!-- <plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -94,7 +94,7 @@
 				<configuration>
 					<url>http://localhost:8080/manager/text</url>
 					<server>local_tomcat</server>
-					<path>/services</path>
+					<path>/myservices</path>
 				</configuration>
 			</plugin>
 		</plugins>
