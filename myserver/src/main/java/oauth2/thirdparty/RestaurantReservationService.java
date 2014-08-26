@@ -222,6 +222,7 @@ public class RestaurantReservationService {
     	// Create an authorization code request and redirect
 		URI authorizationServiceURI = 
 			manager.getAuthorizationServiceURI(request, getCallbackURI(), state.toString());
+		System.out.println("authorizationServiceURI ------------------------------- : "+authorizationServiceURI);
 		return Response.seeOther(authorizationServiceURI).build();
     }
     
