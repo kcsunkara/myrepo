@@ -1,30 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	default-autowire="byName"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" default-autowire="byName"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
 
 	<bean id="scheduler"
-		class="org.springframework.scheduling.quartz.SchedulerFactoryBean" lazy-init="false">
-		<property name="autoStartup" value="true"/>
-		<property name="applicationContextSchedulerContextKey" value="applicationContext"/>
-		<property name="waitForJobsToCompleteOnShutdown" value="true"/>
-		<property name="overwriteExistingJobs" value="true"/>
+		class="org.springframework.scheduling.quartz.SchedulerFactoryBean"
+		lazy-init="false" depends-on="quartzDbInitializer">
+		<property name="autoStartup" value="true" />
+		<property name="applicationContextSchedulerContextKey" value="applicationContext" />
+		<property name="waitForJobsToCompleteOnShutdown" value="true" />
+		<property name="overwriteExistingJobs" value="true" />
 		<property name="dataSource">
-			<ref bean="dataSource"/>
+			<ref bean="dataSource" />
 		</property>
 		<property name="transactionManager">
-			<ref bean="transactionManager"/>
+			<ref bean="transactionManager" />
 		</property>
 		<property name="jobFactory">
-			<bean class="com.hbo.itdmg.jobs.SpringBeanJobFactory"/>
+			<bean class="com.hbo.itdmg.jobs.SpringBeanJobFactory" />
 		</property>
 		<property name="quartzProperties">
 			<props>
 				<prop key="org.quartz.jobStore.misfireThreshold">6000000</prop>
-				<!-- <prop key="org.quartz.jobStore.class">org.quartz.impl.jdbcjobstore.JobStoreTX</prop>
-				<prop key="org.quartz.jobStore.driverDelegateClass">org.quartz.impl.jdbcjobstore.StdJDBCDelegate</prop> -->
-				<prop key="org.quartz.jobStore.driverDelegateClass">org.quartz.impl.jdbcjobstore.oracle.OracleDelegate</prop>
+				<prop key="org.quartz.jobStore.class">org.quartz.impl.jdbcjobstore.JobStoreTX</prop> 
+				<prop key="org.quartz.jobStore.driverDelegateClass">org.quartz.impl.jdbcjobstore.StdJDBCDelegate</prop>
+				<!-- <prop key="org.quartz.jobStore.driverDelegateClass">org.quartz.impl.jdbcjobstore.oracle.OracleDelegate</prop> -->
 				<prop key="org.quartz.jobStore.isClustered">true</prop>
 				<prop key="org.quartz.jobStore.clusterCheckinInterval">20000</prop>
 				<prop key="org.quartz.scheduler.instanceName">CTSClusteredScheduler</prop>
@@ -35,24 +35,44 @@
 		</property>
 		<property name="triggers">
 			<list>
-				<ref bean="lookupJobTrigger"/>
+				<ref bean="lookupJobTrigger" />
 			</list>
 		</property>
 	</bean>
 
-	<bean id="lookupJobTrigger"
-		class="org.springframework.scheduling.quartz.CronTriggerBean">
+	<bean id="lookupJobTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
 		<property name="jobDetail">
 			<bean name="lookupJob" class="org.springframework.scheduling.quartz.JobDetailBean">
-				<property name="name" value="lookupJob"/>
-				<property name="jobClass" value="com.hbo.itdmg.jobs.DigitalFusionLookupJob"/>
+				<property name="name" value="lookupJob" />
+				<property name="jobClass" value="com.hbo.itdmg.jobs.DigitalFusionLookupJob" />
 			</bean>
 		</property>
 		<property name="cronExpression" value="0 0/5 * * * ?" />
 	</bean>
 
 	<bean id="lookupJob" class="com.hbo.itdmg.jobs.DigitalFusionLookupJob">
-		<property name="daysToArchiveSuspended" value="10"/>
+		<property name="daysToArchiveSuspended" value="10" />
 	</bean>
-	
+
+	<bean id="quartzDbInitializer"
+		class="org.springframework.jdbc.datasource.init.DataSourceInitializer">
+		<property name="dataSource" ref="dataSource" />
+		<property name="enabled" value="true" />
+		<property name="databasePopulator">
+			<bean
+				class="org.springframework.jdbc.datasource.init.ResourceDatabasePopulator">
+				<property name="continueOnError" value="false" />
+				<property name="ignoreFailedDrops" value="true" />
+				<property name="sqlScriptEncoding" value="UTF-8" />
+				<property name="scripts">
+					<array>
+						<value type="org.springframework.core.io.Resource">
+							classpath:prepare_mysql.sql
+						</value>
+					</array>
+				</property>
+			</bean>
+		</property>
+	</bean>
+
 </beans>
