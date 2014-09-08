@@ -21,11 +21,11 @@
 				<property name="showSql" value="true" />
 			</bean>
 		</property>
-		<property name="jpaPropertyMap">
+		<!-- <property name="jpaPropertyMap">
 	        <map>
 	                <entry key="hibernate.default_schema" value="${db.schema}"/>
 	        </map>
-	    </property>
+	    </property> -->
 	</bean>
 
 	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
