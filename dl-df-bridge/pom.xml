@@ -173,18 +173,17 @@
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
-			<version>5.1.6</version>
+			<version>5.1.32</version>
 		</dependency>
-		<dependency>
+		<!-- <dependency>
 			<groupId>mm-mysql</groupId>
 			<artifactId>mm-mysql</artifactId>
 			<version>2.0.7</version>
-		</dependency>
-
+		</dependency> -->
 		<dependency>
 			<groupId>com.oracle</groupId>
-			<artifactId>ojdbc14</artifactId>
-			<version>10.2.0.2.0</version>
+			<artifactId>ojdbc6</artifactId>
+			<version>10.2.0.3.0</version>
 		</dependency>
 
 		<dependency>
