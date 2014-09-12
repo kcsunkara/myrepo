@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" default-autowire="byName"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="
+	http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+	http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
+	">
 
 	<bean id="scheduler"
 		class="org.springframework.scheduling.quartz.SchedulerFactoryBean"
@@ -31,6 +35,7 @@
 				<prop key="org.quartz.scheduler.instanceName">CTSClusteredScheduler</prop>
 				<prop key="org.quartz.scheduler.instanceId">AUTO</prop>
 				<prop key="org.quartz.scheduler.jmx.export">true</prop>
+				<!-- <prop key="org.quartz.jobStore.dontSetAutoCommitFalse">false</prop> -->
 				<!-- <prop key="org.quartz.jobStore.tablePrefix">QUARTZ_</prop> -->
 			</props>
 		</property>
@@ -41,10 +46,9 @@
 		</property>
 	</bean>
 
-	<!-- <bean id="lookupJobSimpleTrigger" class="org.springframework.scheduling.quartz.SimpleTriggerBean">
-		<property name="jobDetail" ref="lookupJobDetailBean"/>
-		<property name="repeatInterval" value="60000" />
-	</bean> -->
+	<!-- <bean id="lookupJobSimpleTrigger" class="org.springframework.scheduling.quartz.SimpleTriggerBean"> 
+		<property name="jobDetail" ref="lookupJobDetailBean"/> <property name="repeatInterval" 
+		value="60000" /> </bean> -->
 
 	<bean id="lookupJobCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
 		<property name="jobDetail" ref="lookupJobDetailBean" />
@@ -55,6 +59,16 @@
 		<property name="name" value="lookupJob" />
 		<property name="jobClass" value="com.hbo.itdmg.jobs.DigitalFusionLookupJob" />
 		<property name="durability" value="true" />
+		<property name="group" value="DL_DF" />
+		<property name="jobDataMap">
+			<bean class="org.quartz.JobDataMap">
+				<constructor-arg>
+					<util:map>
+						<entry key="jobCount" value="0" />
+					</util:map>
+				</constructor-arg>
+			</bean>
+		</property>
 	</bean>
 
 	<bean id="lookupJob" class="com.hbo.itdmg.jobs.DigitalFusionLookupJob" />
