@@ -1,7 +1,9 @@
 package com.csc.controller;
 
 import java.util.Arrays;
+import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,13 +20,15 @@ import com.csc.service.ArticleService;
 @RequestMapping("/")
 public class ArticleController {
 	
+	private static final Logger logger = Logger.getLogger(ArticleController.class);
+	
 	@Autowired
 	ArticleService articleService;
 	
-	/*@RequestMapping("/")
+	@RequestMapping("/")
 	public String defaultView() {
 		return "forward:/index.html";
-	}*/
+	}
 	
 	@RequestMapping(value = "/hello", method = RequestMethod.GET)
 	public @ResponseBody String sayHello() {
@@ -36,9 +40,22 @@ public class ArticleController {
 		return articleService.findById(id);
 	}
 	
+	@RequestMapping(value = "/findAll", method = RequestMethod.GET)
+	public @ResponseBody Iterable<Article> findById() {
+		return articleService.findAll();
+	}
+	
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
 	public @ResponseBody Article saveArticle(@RequestBody Article article) {
 		return articleService.save(article);
+	}
+	
+	@RequestMapping(value = "/findByAuthorsName", method = RequestMethod.GET)
+	public @ResponseBody List<Article> findByAuthorsName(@RequestParam String authorName) {
+		logger.info("ArticleController.findByAuthorsName() --> authorName = " + authorName);
+		List<Article> pages = null;
+		pages = articleService.findByAuthorsName(authorName);
+		return pages;
 	}
 	
 	@RequestMapping(value = "/save1", method = RequestMethod.GET)

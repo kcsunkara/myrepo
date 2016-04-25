@@ -1,8 +1,8 @@
 package com.csc.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import com.csc.doc.Article;
@@ -32,8 +32,8 @@ public class ArticleServiceImpl implements ArticleService {
 	}
 
 	@Override
-	public Page<Article> findByAuthorsName(String name, PageRequest pageRequest) {
-		return articleRepository.findByAuthorsName(name, pageRequest);
+	public List<Article> findByAuthorsName(String name) {
+		return articleRepository.findByAuthorsName(name);
 	}
 
 }

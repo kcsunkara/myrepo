@@ -1,7 +1,6 @@
 package com.csc.service;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
+import java.util.List;
 
 import com.csc.doc.Article;
 
@@ -11,5 +10,6 @@ public interface ArticleService {
 	Article findById(String id);
 	Iterable<Article> findAll();
 	
-	Page<Article> findByAuthorsName(String name, PageRequest pageRequest);
+//	Page<Article> findByAuthorsName(String name, PageRequest pageRequest);
+	List<Article> findByAuthorsName(String name);
 }
