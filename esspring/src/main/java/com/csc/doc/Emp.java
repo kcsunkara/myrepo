@@ -8,17 +8,17 @@ import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.data.elasticsearch.annotations.Field;
 import org.springframework.data.elasticsearch.annotations.FieldType;
 
-@Document(indexName = "emp", type = "emp", shards = 1, replicas = 0)
+@Document(indexName = "org", type = "emp", shards = 1, replicas = 0)
 public class Emp {
 
 	@Id
-	@Field(type = FieldType.Long, store = true)
+//	@Field(type = FieldType.Long, store = true)
 	private long id;
 	
 	private String name;
 	
-	@Field(type = FieldType.Nested)
-	private Dept dept;
+	/*@Field(type = FieldType.Nested)
+	private Dept dept;*/
 	
 	private Date fromDate;
 	
@@ -27,7 +27,7 @@ public class Emp {
 	public Long getId() {
 		return id;
 	}
-	public void setId(Long id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 	public String getName() {
@@ -35,12 +35,6 @@ public class Emp {
 	}
 	public void setName(String name) {
 		this.name = name;
-	}
-	public Dept getDept() {
-		return dept;
-	}
-	public void setDept(Dept dept) {
-		this.dept = dept;
 	}
 	public Date getFromDate() {
 		return fromDate;
@@ -56,8 +50,8 @@ public class Emp {
 	}
 	@Override
 	public String toString() {
-		return "Emp [id=" + id + ", name=" + name + ", dept=" + dept
-				+ ", fromDate=" + fromDate + ", toDate=" + toDate + "]";
+		return "Emp [id=" + id + ", name=" + name + ", fromDate=" + fromDate
+				+ ", toDate=" + toDate + "]";
 	}
 	
 }

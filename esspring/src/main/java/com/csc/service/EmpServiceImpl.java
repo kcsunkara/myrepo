@@ -33,14 +33,9 @@ public class EmpServiceImpl implements EmpService {
 		return empRepository.findAll();
 	}
 
-	@Override
-	public Page<Emp> findByDeptId(Long deptId, PageRequest pageRequest) {
-		return empRepository.findByDeptId(deptId, pageRequest);
-	}
-
-	@Override
-	public Page<Emp> findByDeptName(String deptName, PageRequest pageRequest) {
-		return empRepository.findByDeptName(deptName, pageRequest);
-	}
+	/*@Override
+	public Page<Emp> findByDeptNo(String deptNo, PageRequest pageRequest) {
+		return empRepository.findByDeptNo(deptNo, pageRequest);
+	}*/
 
 }

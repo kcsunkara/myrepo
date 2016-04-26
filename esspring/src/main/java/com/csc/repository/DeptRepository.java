@@ -4,10 +4,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.elasticsearch.repository.ElasticsearchRepository;
 
-import com.csc.doc.Emp;
+import com.csc.doc.Dept;
 
-public interface EmpRepository extends ElasticsearchRepository<Emp, Long> {
-	
-//	Page<Emp> findByDeptNo(String deptNo, Pageable pageable);
-
+public interface DeptRepository extends ElasticsearchRepository<Dept, Long> {
+	Page<Dept> findByEmpListName(String name, Pageable pageable);
 }

@@ -46,23 +46,24 @@ public class EmpController {
 		return empService.save(emp);
 	}
 	
-	@RequestMapping(value = "/findEmpByDeptName", method = RequestMethod.GET)
-	public @ResponseBody Page<Emp> findEmpByDeptName(@RequestParam String deptName) {
-		logger.info("EmpController.findEmpByDeptName() --> deptName = " + deptName);
+	/*@RequestMapping(value = "/findEmpByDeptNo", method = RequestMethod.GET)
+	public @ResponseBody Page<Emp> findEmpByDeptNo(@RequestParam String deptNo) {
+		logger.info("EmpController.findEmpByDeptNo() --> deptNo = " + deptNo);
 		Page<Emp> pages = null;
-		pages = empService.findByDeptName(deptName, new PageRequest(0, 10));
+		pages = empService.findByDeptNo(deptNo, new PageRequest(0, 10));
 		return pages;
-	}
+	}*/
 	
 	@RequestMapping(value = "/saveEmp1", method = RequestMethod.GET)
 	public @ResponseBody Emp saveEmp1() {
 		logger.info("EmpController.saveEmp()");
 		Dept dept = new Dept();
+		dept.setId(1);
 		dept.setName("Technology");
 		
 		Emp emp = new Emp();
+		emp.setId(101);
 		emp.setName("Krishna");
-		emp.setDept(dept);
 		emp.setFromDate(new Timestamp(Calendar.getInstance().getTime().getTime()));
 		
 		return empService.save(emp);
