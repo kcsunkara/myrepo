@@ -1,4 +1,4 @@
-package com.csc.doc;
+package com.csc.entity;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.Document;

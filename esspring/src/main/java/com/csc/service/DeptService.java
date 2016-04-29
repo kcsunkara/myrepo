@@ -11,5 +11,5 @@ public interface DeptService {
 	Dept findById(Long id);
 	Iterable<Dept> findAll();
 	
-	Page<Dept> findByEmpListName(String empName, PageRequest pageRequest);
+//	Page<Dept> findByEmpListName(String empName, PageRequest pageRequest);
 }

@@ -32,10 +32,10 @@ public class DeptServiceImpl implements DeptService {
 		return deptRepository.findAll();
 	}
 
-	@Override
+	/*@Override
 	public Page<Dept> findByEmpListName(String empName, PageRequest pageRequest) {
 		return deptRepository.findByEmpListName(empName, pageRequest);
-	}
+	}*/
 
 
 }

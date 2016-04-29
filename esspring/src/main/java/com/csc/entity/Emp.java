@@ -1,28 +1,21 @@
-package com.csc.doc;
+package com.csc.entity;
 
 import java.util.Date;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.Document;
-import org.springframework.data.elasticsearch.annotations.Field;
-import org.springframework.data.elasticsearch.annotations.FieldType;
 
 @Document(indexName = "org", type = "emp", shards = 1, replicas = 0)
 public class Emp {
 
 	@Id
-	@Field(type=FieldType.Long)
 	private long emo_no;
-	
 	private String first_name;
 	private String last_name;
 	private Date birth_date;
 	private Character gender;
 	private String email;
 	private Date hire_date;
-	
-	@Field(type = FieldType.Nested)
-	private Dept dept;
 	
 	public long getEmo_no() {
 		return emo_no;
@@ -65,12 +58,6 @@ public class Emp {
 	}
 	public void setHire_date(Date hire_date) {
 		this.hire_date = hire_date;
-	}
-	public Dept getDept() {
-		return dept;
-	}
-	public void setDept(Dept dept) {
-		this.dept = dept;
 	}
 	@Override
 	public String toString() {

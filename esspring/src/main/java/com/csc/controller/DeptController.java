@@ -43,12 +43,12 @@ public class DeptController {
 		return deptService.save(dept);
 	}
 	
-	@RequestMapping(value = "/findDeptByEmpName", method = RequestMethod.GET)
+	/*@RequestMapping(value = "/findDeptByEmpName", method = RequestMethod.GET)
 	public @ResponseBody Page<Dept> saveDept(@RequestParam String empName) {
 		return deptService.findByEmpListName(empName, new PageRequest(0, 10));
-	}
+	}*/
 	
-	@RequestMapping(value = "/saveDept1", method = RequestMethod.GET)
+	/*@RequestMapping(value = "/saveDept1", method = RequestMethod.GET)
 	public @ResponseBody Dept saveDept1() {
 		logger.info("DeptController.saveDept1()");
 		Dept dept = new Dept();
@@ -67,6 +67,6 @@ public class DeptController {
 		
 		dept.setEmpList(Arrays.asList(emp, emp2));
 		return deptService.save(dept);
-	}
+	}*/
 
 }

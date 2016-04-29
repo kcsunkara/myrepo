@@ -40,9 +40,6 @@ public class EmpController {
 	
 	@RequestMapping(value = "/saveEmp", method = RequestMethod.POST)
 	public @ResponseBody Emp saveEmp(@RequestBody Emp emp) {
-		if(emp.getFromDate() == null) {
-			emp.setFromDate(new Date());
-		}
 		return empService.save(emp);
 	}
 	
@@ -54,7 +51,7 @@ public class EmpController {
 		return pages;
 	}*/
 	
-	@RequestMapping(value = "/saveEmp1", method = RequestMethod.GET)
+	/*@RequestMapping(value = "/saveEmp1", method = RequestMethod.GET)
 	public @ResponseBody Emp saveEmp1() {
 		logger.info("EmpController.saveEmp()");
 		Dept dept = new Dept();
@@ -67,6 +64,6 @@ public class EmpController {
 		emp.setFromDate(new Timestamp(Calendar.getInstance().getTime().getTime()));
 		
 		return empService.save(emp);
-	}
+	}*/
 
 }
