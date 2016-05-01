@@ -57,6 +57,7 @@ public class EmpController {
 	@RequestMapping(value = "/saveEmp1", method = RequestMethod.GET)
 	public @ResponseBody Emp saveEmp1() {
 		logger.info("EmpController.saveEmp1()");
+		
 		return empService.save1();
 	}
 
