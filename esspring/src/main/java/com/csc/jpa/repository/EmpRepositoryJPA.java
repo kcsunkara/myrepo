@@ -1,4 +1,4 @@
-package com.csc.repository;
+package com.csc.jpa.repository;
 
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;

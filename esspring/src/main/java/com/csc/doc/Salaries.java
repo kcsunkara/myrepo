@@ -17,7 +17,7 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 @Entity
 @Table(name="salaries")
 @IdClass(SalaryKey.class)
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property="id, fromDate")
+//@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property="id, fromDate")
 
 @Document(indexName = "org", type = "salaries", shards = 1, replicas = 0)
 

@@ -11,9 +11,9 @@ import org.springframework.transaction.annotation.Transactional;
 import com.csc.doc.Dept;
 import com.csc.doc.Emp;
 import com.csc.doc.Salaries;
-import com.csc.repository.DeptRepositoryJPA;
+import com.csc.jpa.repository.DeptRepositoryJPA;
+import com.csc.jpa.repository.EmpRepositoryJPA;
 import com.csc.repository.EmpRepository;
-import com.csc.repository.EmpRepositoryJPA;
 
 @Service
 @Transactional
