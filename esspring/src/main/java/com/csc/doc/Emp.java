@@ -1,83 +1,129 @@
 package com.csc.doc;
 
+import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
-import org.springframework.data.annotation.Id;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
 import org.springframework.data.elasticsearch.annotations.Document;
-import org.springframework.data.elasticsearch.annotations.Field;
-import org.springframework.data.elasticsearch.annotations.FieldType;
+
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
+@Entity
+@Table(name="emp")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property="id")
 
 @Document(indexName = "org", type = "emp", shards = 1, replicas = 0)
-public class Emp {
+
+public class Emp implements Serializable {
+
+	private static final long serialVersionUID = 3963588439614553174L;
 
 	@Id
-	@Field(type=FieldType.Long)
-	private long emo_no;
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	@Column(name="emp_no")
+	@org.springframework.data.annotation.Id
+	private Integer id;
 	
-	private String first_name;
-	private String last_name;
-	private Date birth_date;
+	@Column(name="first_name")
+	private String firstName;
+	
+	@Column(name="last_name")
+	private String lastName;
+	
+	@Column(name="birth_date")
+	private Date birthDate;
+	
+	@Column(name="gender")
 	private Character gender;
-	private String email;
-	private Date hire_date;
 	
-	@Field(type = FieldType.Nested)
+	@Column(name="email")
+	private String email;
+	
+	@Column(name="hire_date")
+	private Date hireDate;
+	
+	@ManyToOne(fetch=FetchType.EAGER, targetEntity=Dept.class)
+	@JoinColumn(name = "dept_no")
 	private Dept dept;
 	
-	public long getEmo_no() {
-		return emo_no;
+	@OneToMany(cascade = CascadeType.PERSIST)
+	@JoinColumn(name="emp_no")
+	private List<Salaries> salaries;
+
+	public Integer getId() {
+		return id;
 	}
-	public void setEmo_no(long emo_no) {
-		this.emo_no = emo_no;
+	public void setId(Integer id) {
+		this.id = id;
 	}
-	public String getFirst_name() {
-		return first_name;
+
+	public String getFirstName() {
+		return firstName;
 	}
-	public void setFirst_name(String first_name) {
-		this.first_name = first_name;
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
 	}
-	public String getLast_name() {
-		return last_name;
+
+	public String getLastName() {
+		return lastName;
 	}
-	public void setLast_name(String last_name) {
-		this.last_name = last_name;
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
 	}
-	public Date getBirth_date() {
-		return birth_date;
+
+	public Date getBirthDate() {
+		return birthDate;
 	}
-	public void setBirth_date(Date birth_date) {
-		this.birth_date = birth_date;
+	public void setBirthDate(Date birthDate) {
+		this.birthDate = birthDate;
 	}
+
 	public Character getGender() {
 		return gender;
 	}
 	public void setGender(Character gender) {
 		this.gender = gender;
 	}
+
 	public String getEmail() {
 		return email;
 	}
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public Date getHire_date() {
-		return hire_date;
+
+	public Date getHireDate() {
+		return hireDate;
 	}
-	public void setHire_date(Date hire_date) {
-		this.hire_date = hire_date;
+	public void setHireDate(Date hireDate) {
+		this.hireDate = hireDate;
 	}
+
 	public Dept getDept() {
 		return dept;
 	}
 	public void setDept(Dept dept) {
 		this.dept = dept;
 	}
-	@Override
-	public String toString() {
-		return "Emp [emo_no=" + emo_no + ", first_name=" + first_name
-				+ ", last_name=" + last_name + ", birth_date=" + birth_date
-				+ ", gender=" + gender + ", email=" + email + ", hire_date="
-				+ hire_date + "]";
+
+	public List<Salaries> getSalaries() {
+		return salaries;
+	}
+	public void setSalaries(List<Salaries> salaries) {
+		this.salaries = salaries;
 	}
 	
 }
