@@ -20,6 +20,7 @@ import org.springframework.data.elasticsearch.repository.config.EnableElasticsea
 @Configuration
 @PropertySource(value = "classpath:application.properties")
 @EnableElasticsearchRepositories(basePackages = "com.csc.repository")
+//@EnableJpaRepositories(basePackages = "com.csc.repository")
 public class ElasticsearchConfiguration {
     @Resource
     private Environment environment;

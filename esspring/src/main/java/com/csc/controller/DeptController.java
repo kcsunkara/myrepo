@@ -1,13 +1,7 @@
 package com.csc.controller;
 
-import java.sql.Timestamp;
-import java.util.Arrays;
-import java.util.Calendar;
-
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -16,7 +10,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.csc.doc.Dept;
-import com.csc.doc.Emp;
 import com.csc.service.DeptService;
 
 @RestController 
@@ -29,7 +22,7 @@ public class DeptController {
 	DeptService deptService;
 	
 	@RequestMapping(value = "/findDeptById", method = RequestMethod.GET)
-	public @ResponseBody Dept findById(@RequestParam Long id) {
+	public @ResponseBody Dept findById(@RequestParam Integer id) {
 		return deptService.findById(id);
 	}
 	
