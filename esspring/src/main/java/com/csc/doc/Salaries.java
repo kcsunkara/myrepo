@@ -9,18 +9,14 @@ import javax.persistence.Id;
 import javax.persistence.IdClass;
 import javax.persistence.Table;
 
-import org.springframework.data.elasticsearch.annotations.Document;
-
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name="salaries")
 @IdClass(SalaryKey.class)
 //@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property="id, fromDate")
-
-@Document(indexName = "org", type = "salaries", shards = 1, replicas = 0)
-
+@JsonIgnoreProperties("id")
+//@Document(indexName = "org", type = "salaries", shards = 1, replicas = 0)
 public class Salaries implements Serializable {
 
 	private static final long serialVersionUID = 1381649684891283073L;

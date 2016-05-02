@@ -18,26 +18,26 @@
 		<mvc:message-converters register-defaults="true">
 			<bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
 				<property name="objectMapper">
-					<!-- <bean class="com.fasterxml.jackson.databind.ObjectMapper">
+					<bean class="com.fasterxml.jackson.databind.ObjectMapper">
 						<property name="dateFormat">
 							<bean class="java.text.SimpleDateFormat">
 								<constructor-arg type="java.lang.String" value="yyyy-MM-dd HH:mm:ss"></constructor-arg>
 							</bean>
 						</property>
-					</bean> -->
-					<bean class="org.springframework.http.converter.json.Jackson2ObjectMapperFactoryBean">
+					</bean>
+					<!-- <bean class="org.springframework.http.converter.json.Jackson2ObjectMapperFactoryBean">
                         <property name="featuresToDisable">
                             <list>
                                 <value type="com.fasterxml.jackson.databind.SerializationFeature">WRITE_DATES_AS_TIMESTAMPS</value>
                             </list>
                         </property>
-                        <!-- <property name="modules">
+                        <property name="modules">
                             <list>
                                 <bean id="jacksonJsr310Module" class="com.fasterxml.jackson.datatype.jsr310.JSR310Module"/>
                             </list>
                         </property>
-                        <property name="serializationInclusion" value="NON_NULL"/> -->
-                    </bean>
+                        <property name="serializationInclusion" value="NON_NULL"/>
+                    </bean> -->
 				</property>
 			</bean>
 		</mvc:message-converters>

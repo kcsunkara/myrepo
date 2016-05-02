@@ -1,7 +1,11 @@
 package com.csc.controller;
 
+import java.util.Map;
+
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -20,6 +24,11 @@ public class EmpController {
 	
 	@Autowired
 	EmpService empService;
+	
+	@RequestMapping("/")
+	public String defaultView() {
+		return "forward:/index.html";
+	}
 	
 	@RequestMapping(value = "/findEmpById", method = RequestMethod.GET)
 	public @ResponseBody Emp findById(@RequestParam Integer id) {
@@ -44,6 +53,16 @@ public class EmpController {
 	@RequestMapping(value = "/saveEmp", method = RequestMethod.POST)
 	public @ResponseBody Emp saveEmp(@RequestBody Emp emp) {
 		return empService.save(emp);
+	}
+	
+	@RequestMapping(value = "/indexAllEmps", method = RequestMethod.GET)
+	public @ResponseBody String indexAllEmps() {
+		return empService.indexAllEmps();
+	}
+	
+	@RequestMapping(value = "/findByNameOrDept", method = RequestMethod.POST)
+	public @ResponseBody Page<Emp> findByNameOrDept(@RequestBody Map<String, String> requestMap) {
+		return empService.findByNameOrDept(requestMap, new PageRequest(0, 3));
 	}
 	
 	/*@RequestMapping(value = "/findEmpByDeptNo", method = RequestMethod.GET)

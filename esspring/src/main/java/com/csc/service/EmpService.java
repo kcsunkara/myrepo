@@ -1,5 +1,10 @@
 package com.csc.service;
 
+import java.util.Map;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 import com.csc.doc.Emp;
 
 public interface EmpService {
@@ -15,4 +20,7 @@ public interface EmpService {
 	
 	Emp save1();
 	
+	String indexAllEmps();
+	
+	Page<Emp> findByNameOrDept(Map<String, String> requestMap, Pageable pageable);
 }

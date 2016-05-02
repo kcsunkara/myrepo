@@ -17,6 +17,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.springframework.data.elasticsearch.annotations.Document;
+import org.springframework.data.elasticsearch.annotations.Field;
+import org.springframework.data.elasticsearch.annotations.FieldType;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
@@ -24,9 +26,7 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 @Entity
 @Table(name="emp")
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property="id")
-
 @Document(indexName = "org", type = "emp", shards = 1, replicas = 0)
-
 public class Emp implements Serializable {
 
 	private static final long serialVersionUID = 3963588439614553174L;
@@ -57,10 +57,12 @@ public class Emp implements Serializable {
 	
 	@ManyToOne(fetch=FetchType.EAGER, targetEntity=Dept.class)
 	@JoinColumn(name = "dept_no")
+	@Field(type = FieldType.Nested)
 	private Dept dept;
 	
-	@OneToMany(cascade = CascadeType.PERSIST)
+	@OneToMany(cascade = CascadeType.PERSIST, fetch=FetchType.EAGER)
 	@JoinColumn(name="emp_no")
+	@Field(type = FieldType.Nested)
 	private List<Salaries> salaries;
 
 	public Integer getId() {
