@@ -1,0 +1,19 @@
+{"type":"object","id":"urn:jsonschema:com:mysearch:validation:EmpSearch", "properties": { "freeText": {"id": "http://jsonschema.net/searchvalue","type": "string"
+    },
+    "retrieveFromDate": {
+      "id": "http://jsonschema.net/retrieveFromDate",
+      "type": "string",
+      "pattern": "^(([0-9])|([0-2][0-9])|([3][0-1]))\/(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\/[0-9]{4}$"
+    },
+    "retrieveToDate": {
+      "id": "http://jsonschema.net/retrieveToDate",
+      "type": "string",
+      "pattern": "^(([0-9])|([0-2][0-9])|([3][0-1]))\/(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\/[0-9]{4}$"
+    }
+  },
+  "required": [
+    "freeText",
+    "retrieveFromDate",
+    "retrieveToDate"
+  ]
+}

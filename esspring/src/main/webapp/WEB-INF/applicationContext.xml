@@ -21,7 +21,7 @@
 					<bean class="com.fasterxml.jackson.databind.ObjectMapper">
 						<property name="dateFormat">
 							<bean class="java.text.SimpleDateFormat">
-								<constructor-arg type="java.lang.String" value="yyyy-MM-dd HH:mm:ss"></constructor-arg>
+								<constructor-arg type="java.lang.String" value="yyyy-MM-dd"></constructor-arg>
 							</bean>
 						</property>
 					</bean>
@@ -30,13 +30,13 @@
                             <list>
                                 <value type="com.fasterxml.jackson.databind.SerializationFeature">WRITE_DATES_AS_TIMESTAMPS</value>
                             </list>
-                        </property>
+                    </property>
                         <property name="modules">
                             <list>
                                 <bean id="jacksonJsr310Module" class="com.fasterxml.jackson.datatype.jsr310.JSR310Module"/>
                             </list>
                         </property>
-                        <property name="serializationInclusion" value="NON_NULL"/>
+                        <property name="serializationInclusion" value="NON_NULL"/> 
                     </bean> -->
 				</property>
 			</bean>

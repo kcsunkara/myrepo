@@ -1,8 +1,5 @@
 package com.csc.service;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
@@ -93,43 +90,21 @@ public class EmpServiceImpl implements EmpService {
 
 	@Override
 	public Page<Emp> findByNameOrDept(Map<String, String> requestMap, Pageable pageable) {
+
 		String searchText = requestMap.get("freeText");
-		String retriveFromDate = requestMap.get("retriveFromDate");
-		String retriveToDate = requestMap.get("retriveToDate");
-		
-		long fromDateMills = 0L;
-		long toDateMills = 0L;
-		
-		SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd");
-		Date d;
-		try {
-			d = f.parse(retriveFromDate);
-			fromDateMills = d.getTime();
-			d = f.parse(retriveToDate);
-			toDateMills = d.getTime();
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
-		
-		
-		QueryBuilder queryBuilder = QueryBuilders.boolQuery().must(QueryBuilders.rangeQuery("salaries.fromDate").gte(fromDateMills).lte(toDateMills))
-				.must(QueryBuilders.rangeQuery("salaries.toDate").gte(fromDateMills).lte(toDateMills));
+		String retrieveFromDateStr = requestMap.get("retrieveFromDate");
+		String retrieveToDateStr = requestMap.get("retrieveToDate");
+
+		QueryBuilder queryBuilder7 = QueryBuilders.boolQuery()
+				.must(QueryBuilders.rangeQuery("salaries.fromDate").gte(retrieveFromDateStr).lte(retrieveToDateStr))
+				.must(QueryBuilders.rangeQuery("salaries.toDate").gte(retrieveFromDateStr).lte(retrieveToDateStr));
 		
 		MultiMatchQueryBuilder multiMatchQueryBuilder = new MultiMatchQueryBuilder(searchText, "firstName", "lastName", "dept.deptName")
 																.analyzer("standard");
 		SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(multiMatchQueryBuilder)
 				.withSort(SortBuilders.fieldSort("id").order(SortOrder.DESC))
-				.withFilter(queryBuilder)
+				.withFilter(queryBuilder7)
 				.withPageable(pageable).build();
-
-		/*FilterBuilder filter1 = FilterBuilders.rangeFilter("dateFin").gt(df.format(getDateDebutRecherche()));
-		FilterBuilder filter2 = FilterBuilders.rangeFilter("dateDebut").lt( df.format(getDateFinRecherche()));
-		client=ClientProvider.getTransportClient();
-
-		    SearchResponse response = client.prepareSearch(INDEX_NAME).setTypes(TYPE_NAME).
-		            setQuery(QueryBuilders.filteredQuery(QueryBuilders.matchAllQuery(),FilterBuilders.andFilter(filter1,filter2)))
-		            .execute()
-		            .actionGet();*/
 		    
 		Page<Emp> matchingEntities = elasticsearchTemplate.queryForPage(searchQuery,Emp.class);
 		return matchingEntities;

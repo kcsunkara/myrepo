@@ -16,17 +16,20 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.type.TrueFalseType;
+import org.springframework.data.elasticsearch.annotations.DateFormat;
 import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.data.elasticsearch.annotations.Field;
 import org.springframework.data.elasticsearch.annotations.FieldType;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
 @Table(name="emp")
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property="id")
-@Document(indexName = "org", type = "emp", shards = 1, replicas = 0)
+@Document(indexName = "emp", type = "emp", shards = 1, replicas = 0)
 public class Emp implements Serializable {
 
 	private static final long serialVersionUID = 3963588439614553174L;
@@ -35,6 +38,7 @@ public class Emp implements Serializable {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="emp_no")
 	@org.springframework.data.annotation.Id
+	@Field(type = FieldType.Integer)
 	private Integer id;
 	
 	@Column(name="first_name")
@@ -44,6 +48,8 @@ public class Emp implements Serializable {
 	private String lastName;
 	
 	@Column(name="birth_date")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MMM/yyyy")
+	@Field(type = FieldType.Date, format = DateFormat.custom, pattern = "dd/MMM/yyyy")
 	private Date birthDate;
 	
 	@Column(name="gender")
@@ -53,16 +59,18 @@ public class Emp implements Serializable {
 	private String email;
 	
 	@Column(name="hire_date")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MMM/yyyy")
+	@Field(type = FieldType.Date, format = DateFormat.custom, pattern = "dd/MMM/yyyy")
 	private Date hireDate;
 	
 	@ManyToOne(fetch=FetchType.EAGER, targetEntity=Dept.class)
 	@JoinColumn(name = "dept_no")
-	@Field(type = FieldType.Nested)
+	@Field(type = FieldType.Nested, includeInParent=true)
 	private Dept dept;
 	
 	@OneToMany(cascade = CascadeType.PERSIST, fetch=FetchType.EAGER)
 	@JoinColumn(name="emp_no")
-	@Field(type = FieldType.Nested)
+	@Field(type = FieldType.Nested, includeInParent=true)
 	private List<Salaries> salaries;
 
 	public Integer getId() {

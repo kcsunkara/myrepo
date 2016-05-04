@@ -9,6 +9,12 @@ import javax.persistence.Id;
 import javax.persistence.IdClass;
 import javax.persistence.Table;
 
+import org.springframework.data.elasticsearch.annotations.DateFormat;
+import org.springframework.data.elasticsearch.annotations.Document;
+import org.springframework.data.elasticsearch.annotations.Field;
+import org.springframework.data.elasticsearch.annotations.FieldType;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
@@ -16,7 +22,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @IdClass(SalaryKey.class)
 //@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property="id, fromDate")
 @JsonIgnoreProperties("id")
-//@Document(indexName = "org", type = "salaries", shards = 1, replicas = 0)
+@Document(indexName = "salaries", type = "salaries", shards = 1, replicas = 0)
 public class Salaries implements Serializable {
 
 	private static final long serialVersionUID = 1381649684891283073L;
@@ -27,9 +33,16 @@ public class Salaries implements Serializable {
 	
 	@Id
 	@Column(name="from_date")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MMM/yyyy")
+	@Field(type = FieldType.Date, format = DateFormat.custom, pattern = "dd/MMM/yyyy")
 	private Date fromDate;
 	
-	private Date to_date;
+	@Id
+	@Column(name="to_date")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MMM/yyyy")
+	@Field(type = FieldType.Date, format = DateFormat.custom, pattern = "dd/MMM/yyyy")
+	private Date toDate;
+	
 	private Integer salary;
 	
 	public Integer getId() {
@@ -44,11 +57,11 @@ public class Salaries implements Serializable {
 	public void setFromDate(Date fromDate) {
 		this.fromDate = fromDate;
 	}
-	public Date getTo_date() {
-		return to_date;
+	public Date getToDate() {
+		return toDate;
 	}
-	public void setTo_date(Date to_date) {
-		this.to_date = to_date;
+	public void setToDate(Date toDate) {
+		this.toDate = toDate;
 	}
 	public Integer getSalary() {
 		return salary;

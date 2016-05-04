@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.example.org/empsearch" xmlns:tns="http://www.example.org/empsearch" elementFormDefault="qualified">
+
+
+   <element name="RequestJSON">
+      <complexType>
+         <sequence>
+            <element name="retrieveFromDate">
+                        <simpleType>
+                              <restriction base="string">
+                              <pattern value="\d{4}[-]\d{2}[-]\d{2}"/>
+                              <length value="10"/>
+                              </restriction>
+                        </simpleType>
+                  </element>
+            <element name="retrieveToDate">
+                        <simpleType>
+                              <restriction base="string">
+                              <pattern value="\d{4}[-]\d{2}[-]\d{2}"/>
+                              <length value="10"/>
+                              </restriction>
+                        </simpleType>
+                  </element>
+         </sequence>
+      </complexType>
+   </element>
+
+
+</schema>
