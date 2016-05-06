@@ -70,7 +70,6 @@
 			<artifactId>commons-dbcp</artifactId>
 			<version>1.4</version>
 		</dependency>
-
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit-dep</artifactId>
@@ -97,7 +96,6 @@
 			<artifactId>log4j-over-slf4j</artifactId>
 			<version>${org.slf4j.version}</version>
 		</dependency>
-
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-annotations</artifactId>
@@ -113,8 +111,17 @@
 			<artifactId>jackson-core</artifactId>
 			<version>${fasterxml.jackson}</version>
 		</dependency>
-		<!-- <dependency> <groupId>com.fasterxml.jackson.datatype</groupId> <artifactId>jackson-datatype-jsr310</artifactId> 
-			<version>${fasterxml.jackson}</version> </dependency> -->
+		<dependency>
+			<groupId>com.fasterxml.jackson.module</groupId>
+			<artifactId>jackson-module-jsonSchema</artifactId>
+			<version>${fasterxml.jackson}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.module</groupId>
+			<artifactId>jackson-module-jaxb-annotations</artifactId>
+			<version>${fasterxml.jackson}</version>
+		</dependency>
+	
 		<dependency>
 			<groupId>log4j</groupId>
 			<artifactId>log4j</artifactId>
@@ -125,7 +132,6 @@
 			<artifactId>servlet-api</artifactId>
 			<version>${servlet.version}</version>
 		</dependency>
-
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
@@ -136,13 +142,11 @@
 			<artifactId>HikariCP</artifactId>
 			<version>2.2.5</version>
 		</dependency>
-		<!-- JPA Provider (Hibernate) -->
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-entitymanager</artifactId>
 			<version>4.3.8.Final</version>
 		</dependency>
-
 		<dependency>
 	    	<groupId>com.github.fge</groupId>
 	    	<artifactId>json-schema-validator</artifactId>
@@ -153,8 +157,6 @@
 			<artifactId>json-simple</artifactId>
 			<version>1.1.1</version>
  		</dependency> 
-		<!-- <dependency> <groupId>org.elasticsearch</groupId> <artifactId>elasticsearch</artifactId> 
-			<version>2.3.1</version> </dependency> -->
 	</dependencies>
 
 	<build>

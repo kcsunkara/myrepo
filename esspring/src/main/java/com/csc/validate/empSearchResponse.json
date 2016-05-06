@@ -1,0 +1,188 @@
+{
+    "type": "object",
+    "id": "urn:jsonschema:com:csc:validation:ResponseJson",
+    "properties": {
+        "content": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "id": "urn:jsonschema:com:csc:validation:Content",
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "firstname": {
+                        "type": "string"
+                    },
+                    "lastName": {
+                        "type": "string"
+                    },
+                    "birthDate": {
+                        "type": "string",
+                        "pattern": "^(([0-9])|([0-2][0-9])|([3][0-1]))\/(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\/[0-9]{4}$"
+                    },
+                    "gender": {
+                        "type": "string"
+                    },
+                    "email": {
+                        "type": "string",
+                        "pattern": "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$"
+                    },
+                    "hireDate": {
+                        "type": "string",
+                        "pattern": "^(([0-9])|([0-2][0-9])|([3][0-1]))\/(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\/[0-9]{4}$"
+                    },
+                    "dept": {
+                        "type": "object",
+                        "id": "urn:jsonschema:com:csc:validation:Dept",
+                        "properties": {
+                            "id": {
+                                "type": "integer"
+                            },
+                            "deptName": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "salaries": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "id": "urn:jsonschema:com:csc:validation:Salaries",
+                            "properties": {
+                                "fromDate": {
+                                    "type": "string",
+                                    "pattern": "^(([0-9])|([0-2][0-9])|([3][0-1]))\/(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\/[0-9]{4}$"
+                                },
+                                "toDate": {
+                                    "type": "string",
+                                    "pattern": "^(([0-9])|([0-2][0-9])|([3][0-1]))\/(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\/[0-9]{4}$"
+                                },
+                                "salary": {
+                                    "type": "integer"
+                                }
+                            }
+                        }
+                    },
+                    "titles": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "id": "urn:jsonschema:com:csc:validation:Titles",
+                            "properties": {
+                                "fromDate": {
+                                    "type": "string",
+                                    "pattern": "^(([0-9])|([0-2][0-9])|([3][0-1]))\/(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\/[0-9]{4}$"
+                                },
+                                "toDate": {
+                                    "type": "string",
+                                    "pattern": "^(([0-9])|([0-2][0-9])|([3][0-1]))\/(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\/[0-9]{4}$"
+                                },
+                                "title": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    },
+                    "phones": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "id": "urn:jsonschema:com:csc:validation:Phones",
+                            "properties": {
+                                "phoneType": {
+                                    "type": "string"
+                                },
+                                "salary": {
+                                    "type": "integer"
+                                }
+                            }
+                        }
+                    },
+                    "addresses": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "id": "urn:jsonschema:com:csc:validation:Addresses",
+                            "properties": {
+                                "addressType": {
+                                    "type": "string"
+                                },
+                                "primaryAddress": {
+                                    "type": "string"
+                                },
+                                "alternateAddress": {
+                                    "type": "string"
+                                },
+                                "city": {
+                                    "type": "string"
+                                },
+                                "state": {
+                                    "type": "string"
+                                },
+                                "country": {
+                                    "type": "string"
+                                },
+                                "postalCode": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                },
+				  "required": [
+				  "id",
+				  "firstName",
+				  "lastName",
+				  "birthDate",
+				  "gender",
+				  "email",
+				  "hireDate",
+				  "dept",
+				  "salary",
+				  "titles",
+				  "phones",
+				  "addresses"
+        	]
+            },
+            "required": [
+        	"0"
+      		]
+        },
+        "last": {
+            "type": "boolean"
+        },
+        "totalElements": {
+            "type": "integer"
+        },
+        "totalPages": {
+            "type": "integer"
+        },
+        "size": {
+            "type": "integer"
+        },
+        "number": {
+            "type": "integer"
+        },
+        "sort": {
+            "type": "null"
+        },
+        "numberOfElements": {
+            "type": "integer"
+        },
+        "first": {
+            "type": "boolean"
+        }
+    },
+    "required": [
+    "content",
+    "last",
+    "totalElements",
+    "totalPages",
+    "size",
+    "number",
+    "numberOfElements",
+    "sort",
+    "first"
+  ]
+}

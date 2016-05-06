@@ -16,7 +16,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import org.hibernate.type.TrueFalseType;
 import org.springframework.data.elasticsearch.annotations.DateFormat;
 import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.data.elasticsearch.annotations.Field;
@@ -71,11 +70,27 @@ public class Emp implements Serializable {
 	@OneToMany(cascade = CascadeType.PERSIST, fetch=FetchType.EAGER)
 	@JoinColumn(name="emp_no")
 	@Field(type = FieldType.Nested, includeInParent=true)
-	private List<Salaries> salaries;
+	private List<Salary> salary;
+	
+	@OneToMany(cascade = CascadeType.PERSIST, fetch=FetchType.EAGER)
+	@JoinColumn(name="emp_no")
+	@Field(type = FieldType.Nested, includeInParent=true)
+	private List<Title> titles;
 
+	@OneToMany(cascade = CascadeType.PERSIST, fetch=FetchType.EAGER)
+	@JoinColumn(name="emp_no")
+	@Field(type = FieldType.Nested, includeInParent=true)
+	private List<Phone> phones;
+	
+	@OneToMany(cascade = CascadeType.PERSIST, fetch=FetchType.EAGER)
+	@JoinColumn(name="emp_no")
+	@Field(type = FieldType.Nested, includeInParent=true)
+	private List<Address> addresses;
+	
 	public Integer getId() {
 		return id;
 	}
+
 	public void setId(Integer id) {
 		this.id = id;
 	}
@@ -83,6 +98,7 @@ public class Emp implements Serializable {
 	public String getFirstName() {
 		return firstName;
 	}
+
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
 	}
@@ -90,6 +106,7 @@ public class Emp implements Serializable {
 	public String getLastName() {
 		return lastName;
 	}
+
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
 	}
@@ -97,6 +114,7 @@ public class Emp implements Serializable {
 	public Date getBirthDate() {
 		return birthDate;
 	}
+
 	public void setBirthDate(Date birthDate) {
 		this.birthDate = birthDate;
 	}
@@ -104,6 +122,7 @@ public class Emp implements Serializable {
 	public Character getGender() {
 		return gender;
 	}
+
 	public void setGender(Character gender) {
 		this.gender = gender;
 	}
@@ -111,6 +130,7 @@ public class Emp implements Serializable {
 	public String getEmail() {
 		return email;
 	}
+
 	public void setEmail(String email) {
 		this.email = email;
 	}
@@ -118,6 +138,7 @@ public class Emp implements Serializable {
 	public Date getHireDate() {
 		return hireDate;
 	}
+
 	public void setHireDate(Date hireDate) {
 		this.hireDate = hireDate;
 	}
@@ -125,15 +146,41 @@ public class Emp implements Serializable {
 	public Dept getDept() {
 		return dept;
 	}
+
 	public void setDept(Dept dept) {
 		this.dept = dept;
 	}
 
-	public List<Salaries> getSalaries() {
-		return salaries;
+	public List<Salary> getSalary() {
+		return salary;
 	}
-	public void setSalaries(List<Salaries> salaries) {
-		this.salaries = salaries;
+
+	public void setSalary(List<Salary> salary) {
+		this.salary = salary;
+	}
+
+	public List<Title> getTitles() {
+		return titles;
+	}
+
+	public void setTitles(List<Title> titles) {
+		this.titles = titles;
+	}
+
+	public List<Phone> getPhones() {
+		return phones;
+	}
+
+	public void setPhones(List<Phone> phones) {
+		this.phones = phones;
+	}
+
+	public List<Address> getAddresses() {
+		return addresses;
+	}
+
+	public void setAddresses(List<Address> addresses) {
+		this.addresses = addresses;
 	}
 	
 }

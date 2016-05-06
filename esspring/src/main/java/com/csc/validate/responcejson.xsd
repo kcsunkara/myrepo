@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.example.org/responcejson" xmlns:tns="http://www.example.org/responcejson" elementFormDefault="qualified">
+
+<element name='ResponceJson'>
+   
+   <complexType >
+      <sequence>
+        <element name="content" type="tns:content" minOccurs="0" maxOccurs="unbounded" />
+      	<element name="last" type="boolean"/>
+      	<element name="totalElements" type="positiveInteger" />
+      	<element name="totalPages" type="positiveInteger"/>
+      	<element name="size" type="positiveInteger" />
+      	<element name="number" type="positiveInteger"/>
+      	<element name="sort" type="string"/>
+      	<element name="numberOfElements" type="positiveInteger"/>
+		<element name="first" type="boolean"/>
+      </sequence>
+   </complexType> 
+
+    </element>
+   <complexType name="content">
+      <sequence>
+      	<element name="id" type="positiveInteger"/>
+      	<element name="firstname" type="string"/>
+      	<element name="lastName" type="string"/>
+      	<element name="birthDate" type="string"/>
+      	<element name="gender" type="string"/>
+      	<element name="email" type="string"/>
+      	<element name="hireDate" type="string"/>
+        <element name="dept" type="tns:dept" />
+        <element name="salaries" type="tns:salaries" minOccurs="0" maxOccurs="unbounded" />
+        <element name="titles" type="tns:titles" minOccurs="0" maxOccurs="unbounded" />
+        <element name="phones" type="tns:phones" minOccurs="0" maxOccurs="unbounded" />
+        <element name="addresses" type="tns:addresses" minOccurs="0" maxOccurs="unbounded" />
+      </sequence>
+   </complexType>
+	<complexType name="dept">
+	   <sequence>
+	      <element name="id" type="positiveInteger"/>
+	      <element name="deptName" type="string"/>
+	   </sequence>
+	</complexType>
+	
+	<complexType name="salaries">
+	   <sequence>
+	      <element name="fromDate" type="string"/>
+	      <element name="toDate" type="string"/>
+	      <element name="salary" type="positiveInteger"/>
+	   </sequence>
+	</complexType>
+	<complexType name="titles">
+	   <sequence>
+	      <element name="fromDate" type="string"/>
+	      <element name="toDate" type="string"/>
+	      <element name="title" type="string"/>
+	   </sequence>
+	</complexType>
+		<complexType name="phones">
+	   <sequence>
+	      <element name="phoneType" type="string"/>
+	      <element name="salary" type="positiveInteger"/>
+	   </sequence>
+	</complexType>
+		<complexType name="addresses">
+	   <sequence>
+	      <element name="addressType" type="string"/>
+	      <element name="primaryAddress" type="string"/>
+	      <element name="alternateAddress" type="string"/>
+	      <element name="city" type="string"/>
+	      <element name="state" type="string"/>
+	      <element name="country" type="string"/>
+	      <element name="postalCode" type="positiveInteger"/>
+	   </sequence>
+	</complexType>
+
+</schema>

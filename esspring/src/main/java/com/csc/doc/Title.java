@@ -18,15 +18,15 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
-@Table(name="salaries")
-@IdClass(SalaryKey.class)
+@Table(name="titles")
+@IdClass(TitleKey.class)
 //@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property="id, fromDate")
 @JsonIgnoreProperties("id")
-@Document(indexName = "salaries", type = "salaries", shards = 1, replicas = 0)
-public class Salaries implements Serializable {
+@Document(indexName = "title", type = "title", shards = 1, replicas = 0)
+public class Title implements Serializable {
 
-	private static final long serialVersionUID = 1381649684891283073L;
-	
+	private static final long serialVersionUID = -5246410547252139497L;
+
 	@Id
 	@Column(name="emp_no")
 	private Integer id;
@@ -37,14 +37,14 @@ public class Salaries implements Serializable {
 	@Field(type = FieldType.Date, format = DateFormat.custom, pattern = "dd/MMM/yyyy")
 	private Date fromDate;
 	
-	@Id
 	@Column(name="to_date")
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MMM/yyyy")
 	@Field(type = FieldType.Date, format = DateFormat.custom, pattern = "dd/MMM/yyyy")
 	private Date toDate;
 	
-	private Integer salary;
-	
+	@Column(name="title")
+	private String title;
+
 	public Integer getId() {
 		return id;
 	}
@@ -63,11 +63,11 @@ public class Salaries implements Serializable {
 	public void setToDate(Date toDate) {
 		this.toDate = toDate;
 	}
-	public Integer getSalary() {
-		return salary;
+	public String getTitle() {
+		return title;
 	}
-	public void setSalary(Integer salary) {
-		this.salary = salary;
+	public void setTitle(String title) {
+		this.title = title;
 	}
 	
 }

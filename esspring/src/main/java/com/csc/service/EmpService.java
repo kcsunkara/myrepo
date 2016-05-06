@@ -12,15 +12,8 @@ public interface EmpService {
 	Emp save(Emp emp);
 	Emp findById(Integer id);
 	Iterable<Emp> findAll();
-	
-//	Page<Emp> findByDeptNo(String deptNo, PageRequest pageRequest);
-	
 	Emp jpaFindByID(Integer id);
 	Iterable<Emp> jpaFindAll();
-	
-	Emp save1();
-	
 	String indexAllEmps();
-	
-	Page<Emp> findByNameOrDept(Map<String, String> requestMap, Pageable pageable);
+	Map<String, Page<Emp>> findByNameOrDept(Map<String, String> requestMap, Pageable pageable);
 }

@@ -1,5 +1,6 @@
 package com.csc.service;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
@@ -37,9 +38,6 @@ public class EmpServiceImpl implements EmpService {
 	@Autowired
 	private EmpRepositoryJPA jpaEmpRepository;
 	
-	@Autowired
-	private DeptRepositoryJPA jpaDeptRepository;
-	
 	@Override
 	public Emp save(Emp emp) {
 		logger.debug("EmpServiceImpl.save() --> " + emp);
@@ -70,18 +68,6 @@ public class EmpServiceImpl implements EmpService {
 	}
 
 	@Override
-	@Transactional
-	public Emp save1() {
-		Dept dept = jpaDeptRepository.findOne(70);
-		Emp emp = new Emp();
-		emp.setId(10413);
-		emp.setFirstName("Krishna");
-		emp.setDept(dept);
-		jpaEmpRepository.save(emp);
-		return emp;
-	}
-
-	@Override
 	public String indexAllEmps() {
 		Iterable<Emp> empListIterable = jpaFindAll();
 		empRepository.save(empListIterable);
@@ -89,15 +75,15 @@ public class EmpServiceImpl implements EmpService {
 	}
 
 	@Override
-	public Page<Emp> findByNameOrDept(Map<String, String> requestMap, Pageable pageable) {
+	public Map<String, Page<Emp>> findByNameOrDept(Map<String, String> requestMap, Pageable pageable) {
 
 		String searchText = requestMap.get("freeText");
 		String retrieveFromDateStr = requestMap.get("retrieveFromDate");
 		String retrieveToDateStr = requestMap.get("retrieveToDate");
 
 		QueryBuilder queryBuilder7 = QueryBuilders.boolQuery()
-				.must(QueryBuilders.rangeQuery("salaries.fromDate").gte(retrieveFromDateStr).lte(retrieveToDateStr))
-				.must(QueryBuilders.rangeQuery("salaries.toDate").gte(retrieveFromDateStr).lte(retrieveToDateStr));
+				.must(QueryBuilders.rangeQuery("salary.fromDate").gte(retrieveFromDateStr).lte(retrieveToDateStr))
+				.must(QueryBuilders.rangeQuery("salary.toDate").gte(retrieveFromDateStr).lte(retrieveToDateStr));
 		
 		MultiMatchQueryBuilder multiMatchQueryBuilder = new MultiMatchQueryBuilder(searchText, "firstName", "lastName", "dept.deptName")
 																.analyzer("standard");
@@ -105,14 +91,11 @@ public class EmpServiceImpl implements EmpService {
 				.withSort(SortBuilders.fieldSort("id").order(SortOrder.DESC))
 				.withFilter(queryBuilder7)
 				.withPageable(pageable).build();
-		    
 		Page<Emp> matchingEntities = elasticsearchTemplate.queryForPage(searchQuery,Emp.class);
-		return matchingEntities;
+		
+		Map<String, Page<Emp>> resultMap = new HashMap<String, Page<Emp>>();
+		resultMap.put("Success", matchingEntities);
+		return resultMap;
 	}
-	
-	/*@Override
-	public Page<Emp> findByDeptNo(String deptNo, PageRequest pageRequest) {
-		return empRepository.findByDeptNo(deptNo, pageRequest);
-	}*/
 
 }

@@ -1,6 +1,7 @@
 package com.csc.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.csc.doc.Emp;
+import com.csc.enums.JsonMessageType;
 import com.csc.service.EmpService;
 import com.csc.validate.JsonValidator;
 
@@ -68,7 +70,7 @@ public class EmpController {
 	}
 
 	@RequestMapping(value = "/findByNameOrDept", method = RequestMethod.POST)
-	public @ResponseBody Page<Emp> findByNameOrDept(
+	public @ResponseBody Map<String, Page<Emp>> findByNameOrDept(
 			@RequestParam Integer pageNo, @RequestParam Integer maxRecords,
 			@RequestBody Map<String, String> requestMap) {
 
@@ -78,25 +80,17 @@ public class EmpController {
 		obj.put("retrieveFromDate", requestMap.get("retrieveFromDate"));
 		obj.put("retrieveToDate", requestMap.get("retrieveToDate"));
 
-		if (jsonValidator.validate(obj)) {
+		if(jsonValidator.validate(obj,JsonMessageType.REQUEST)) {
 			return empService.findByNameOrDept(requestMap, new PageRequest(pageNo, maxRecords));
+		} else {
+			Map<String, Page<Emp>> resultMap = new HashMap<String, Page<Emp>>();
+			String message = "Request JSON is not valid. Required Format: " + "{" +
+			    "freeText:" + "<name dept>, " +
+			    "retrieveFromDate:" + "dd/MMM/yyyy, " +
+			    "retrieveToDate:" + "dd/MMM/yyyy " + "}";
+			resultMap.put(message, null);
+			return resultMap;
 		}
-		return null;
-	}
-
-	/*
-	 * @RequestMapping(value = "/findEmpByDeptNo", method = RequestMethod.GET)
-	 * public @ResponseBody Page<Emp> findEmpByDeptNo(@RequestParam String
-	 * deptNo) { logger.info("EmpController.findEmpByDeptNo() --> deptNo = " +
-	 * deptNo); Page<Emp> pages = null; pages = empService.findByDeptNo(deptNo,
-	 * new PageRequest(0, 10)); return pages; }
-	 */
-
-	@RequestMapping(value = "/saveEmp1", method = RequestMethod.GET)
-	public @ResponseBody Emp saveEmp1() {
-		logger.info("EmpController.saveEmp1()");
-
-		return empService.save1();
 	}
 
 }
