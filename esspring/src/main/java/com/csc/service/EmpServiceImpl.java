@@ -88,8 +88,8 @@ public class EmpServiceImpl implements EmpService {
 		MultiMatchQueryBuilder multiMatchQueryBuilder = new MultiMatchQueryBuilder(searchText, "firstName", "lastName", "dept.deptName")
 																.analyzer("standard");
 		SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(multiMatchQueryBuilder)
-				.withSort(SortBuilders.fieldSort("id").order(SortOrder.DESC))
 				.withFilter(queryBuilder7)
+				.withSort(SortBuilders.fieldSort("id").order(SortOrder.ASC))
 				.withPageable(pageable).build();
 		Page<Emp> matchingEntities = elasticsearchTemplate.queryForPage(searchQuery,Emp.class);
 		

@@ -1,4 +1,4 @@
-package com.csc.config;
+/*package com.csc.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -15,3 +15,4 @@ public class RestSecurityConfig extends WebSecurityConfigurerAdapter {
   }
   
 }
+*/
