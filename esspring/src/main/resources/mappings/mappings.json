@@ -1,6 +1,11 @@
 {
-	
+"mappings": {
 		"emp": {
+			"_all": {
+			            "type": "string",
+			            "index_analyzer": "ngram_analyzer",
+			            "search_analyzer": "standard"
+			 },
 			"properties": {
 				"firstName": {
 					"type": "string",
@@ -26,5 +31,5 @@
 				}
 			}
 		}
-
+	}
 }

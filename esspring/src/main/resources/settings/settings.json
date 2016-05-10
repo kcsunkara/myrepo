@@ -1,6 +1,5 @@
 {
-
-	"number_of_shards": 1,
+"settings": {
 	"analysis": {
 		"filter": {
 			"ngram_filter": {
@@ -20,5 +19,5 @@
 			}
 		}
 	}
-
+	}
 }

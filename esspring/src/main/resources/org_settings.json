@@ -1,11 +1,5 @@
 {
 	"settings": {
-		"number_of_replicas": 0,
-		"number_of_shards": 1,
-		"store.compress": {
-			"stored": true,
-			"tv": true
-		},
 		"analysis": {
 			"filter": {
 				"ngram_filter": {
@@ -41,6 +35,21 @@
 					"search_analyzer": "ngram_analyzer"
 				},
 				"lastName": {
+					"type": "string",
+					"include_in_all": false,
+					"index_analyzer": "ngram_analyzer",
+					"search_analyzer": "ngram_analyzer"
+				}
+			}
+		},
+		"dept": {
+			"_all": {
+				"type": "string",
+				"index_analyzer": "ngram_analyzer",
+				"search_analyzer": "standard"
+			},
+			"properties": {
+				"deptName": {
 					"type": "string",
 					"include_in_all": false,
 					"index_analyzer": "ngram_analyzer",

@@ -32,9 +32,9 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 @Entity
 @Table(name="emp")
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property="id")
-//@Setting(settingPath = "settings/settings.json")
-//@Mapping(mappingPath = "mappings/mappings.json")
-@Setting(settingPath = "emp_settings.json")
+//@Setting(settingPath = "/settings/settings.json")
+//@Mapping(mappingPath = "/mappings/mappings.json")
+@Setting(settingPath = "/org_settings.json")
 @Document(indexName = "org", type = "emp", shards = 1, replicas = 0)
 public class Emp implements Serializable {
 
@@ -48,11 +48,13 @@ public class Emp implements Serializable {
 	private Integer id;
 	
 	@Column(name="first_name")
-	@Field(type = FieldType.String, analyzer="ngram_analyzer")
+	@Field(type = FieldType.String, analyzer="ngram_analyzer", searchAnalyzer="ngram_analyzer")
+//	@Field(type = FieldType.String)
 	private String firstName;
 	
 	@Column(name="last_name")
-	@Field(type = FieldType.String, analyzer="ngram_analyzer")
+	@Field(type = FieldType.String, analyzer="ngram_analyzer", searchAnalyzer="ngram_analyzer")
+//	@Field(type = FieldType.String)
 	private String lastName;
 	
 	@Column(name="birth_date")
