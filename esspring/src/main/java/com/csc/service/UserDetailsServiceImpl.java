@@ -18,7 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.csc.doc.Role;
 import com.csc.jpa.repository.UserRepositoryJPA;
 
-@Service("userServiceImpl")
+//@Service("userServiceImpl")
 @Transactional(readOnly = true)
 public class UserDetailsServiceImpl implements UserDetailsService {
 	

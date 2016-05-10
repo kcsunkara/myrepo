@@ -1,0 +1,30 @@
+{
+	
+		"emp": {
+			"properties": {
+				"firstName": {
+					"type": "string",
+					"include_in_all": false,
+					"index_analyzer": "ngram_analyzer",
+					"search_analyzer": "ngram_analyzer"
+				},
+				"lastName": {
+					"type": "string",
+					"include_in_all": false,
+					"index_analyzer": "ngram_analyzer",
+					"search_analyzer": "ngram_analyzer"
+				}
+			}
+		},
+		"dept": {
+			"properties": {
+				"deptName": {
+					"type": "string",
+					"include_in_all": false,
+					"index_analyzer": "ngram_analyzer",
+					"search_analyzer": "ngram_analyzer"
+				}
+			}
+		}
+
+}

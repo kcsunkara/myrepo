@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.csc.doc.Emp;
 import com.csc.enums.JsonMessageType;
-import com.csc.service.EmpService;
+import com.csc.service.OrgService;
 import com.csc.validate.JsonValidator;
 
 @RestController
@@ -29,7 +29,7 @@ public class EmpController {
 	private static final Logger logger = Logger.getLogger(EmpController.class);
 
 	@Autowired
-	EmpService empService;
+	OrgService orgService;
 
 	@Autowired
 	JsonValidator jsonValidator;
@@ -41,32 +41,32 @@ public class EmpController {
 
 	@RequestMapping(value = "/findEmpById", method = RequestMethod.GET)
 	public @ResponseBody Emp findById(@RequestParam Integer id) {
-		return empService.findById(id);
+		return orgService.findById(id);
 	}
 
 	@RequestMapping(value = "/findAllEmps", method = RequestMethod.GET)
 	public @ResponseBody Iterable<Emp> findAll() {
-		return empService.findAll();
+		return orgService.findAll();
 	}
 
 	@RequestMapping(value = "/jpaFindAllEmps", method = RequestMethod.GET)
 	public @ResponseBody Iterable<Emp> jpaFindAllEmps() {
-		return empService.jpaFindAll();
+		return orgService.jpaFindAllEmps();
 	}
 
 	@RequestMapping(value = "/jpaFindEmpById", method = RequestMethod.GET)
 	public @ResponseBody Emp jpaFindEmpById(@RequestParam Integer id) {
-		return empService.jpaFindByID(id);
+		return orgService.jpaFindByID(id);
 	}
 
 	@RequestMapping(value = "/saveEmp", method = RequestMethod.POST)
 	public @ResponseBody Emp saveEmp(@RequestBody Emp emp) {
-		return empService.save(emp);
+		return orgService.save(emp);
 	}
 
 	@RequestMapping(value = "/indexAllEmps", method = RequestMethod.GET)
 	public @ResponseBody String indexAllEmps() {
-		return empService.indexAllEmps();
+		return orgService.indexAllEmps();
 	}
 
 	@RequestMapping(value = "/findByNameOrDept", method = RequestMethod.POST)
@@ -81,7 +81,7 @@ public class EmpController {
 		obj.put("retrieveToDate", requestMap.get("retrieveToDate"));
 
 		if(jsonValidator.validate(obj,JsonMessageType.REQUEST)) {
-			return empService.findByNameOrDept(requestMap, new PageRequest(pageNo, maxRecords));
+			return orgService.findByNameOrDept(requestMap, new PageRequest(pageNo, maxRecords));
 		} else {
 			Map<String, Page<Emp>> resultMap = new HashMap<String, Page<Emp>>();
 			String message = "Request JSON is not valid. Required Format: " + "{" +

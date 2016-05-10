@@ -6,21 +6,20 @@
 	http://www.springframework.org/schema/security/spring-security.xsd">
 
 	<global-method-security secured-annotations="enabled"/>
-	<http auto-config="true" use-expressions="true" create-session="stateless"> <!-- entry-point-ref="delegatingAuthenticationEntryPoint"> -->
+	<http auto-config="true" use-expressions="true" create-session="stateless">
 		<csrf disabled="true"/>
-		<!-- <http-basic/> -->
 		<intercept-url pattern="/index.html*" access="hasRole('ANONYMOUS')" />
 		<intercept-url pattern="/find*" access="hasRole('ROLE_USER')" />
 		<intercept-url pattern="/jpaFind*" access="hasRole('ROLE_ADMIN')" />
 		<intercept-url pattern="/indexAll*" access="hasRole('ROLE_ADMIN')" />
 		<intercept-url pattern="/save*" access="hasRole('ROLE_ADMIN')" />
-
-		<!-- <custom-filter ref="basicAuthenticationFilter" position="BASIC_AUTH_FILTER" /> -->
 	</http>
 
 	<beans:bean id="encoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder">
-		<!-- <beans:constructor-arg name="strength" value="7" /> -->
 	</beans:bean>
+	
+	<beans:bean id="userServiceImpl" class="com.csc.service.UserDetailsServiceImpl"/>
+	
 
 	<beans:bean id="authProvider" class="org.springframework.security.authentication.dao.DaoAuthenticationProvider">
 		<beans:property name="userDetailsService" ref="userServiceImpl" />
@@ -30,30 +29,5 @@
   	<authentication-manager alias="authenticationManager">
 		<authentication-provider ref="authProvider"/>
 	</authentication-manager>
-  	
-  	<!--  
-  	<beans:bean id="basicAuthenticationEntryPoint" class="org.springframework.security.web.authentication.www.BasicAuthenticationEntryPoint">
-    	<beans:property name="realmName" value="CSC_Webservices" />
-  	</beans:bean>
-  	
-  	<beans:bean id="formAuthenticationEntryPoint" class="org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint">
-  		<beans:property name="loginFormUrl" value="/login.jsp"/>
-  	</beans:bean>
-          
-  	<beans:bean id="delegatingAuthenticationEntryPoint" class="org.springframework.security.web.authentication.DelegatingAuthenticationEntryPoint">
-  		<beans:constructor-arg>
-            <beans:map>
-                <beans:entry key="hasHeader('User-Agent','Mozilla') or hasHeader('User-Agent','Opera') or hasHeader('User-Agent','Explorer')" 
-                	   value-ref="formAuthenticationEntryPoint" />
-            </beans:map>
-        </beans:constructor-arg>
-        <beans:property name="defaultEntryPoint" ref="basicAuthenticationEntryPoint"/>
-    </beans:bean>
-  	
-  	<beans:bean id="basicAuthenticationFilter" class="org.springframework.security.web.authentication.www.BasicAuthenticationFilter">
-        <beans:property name="authenticationManager" ref="authenticationManager" />
-        <beans:property name="authenticationEntryPoint" ref="basicAuthenticationEntryPoint" />
-    </beans:bean>
-  	-->
   
 </beans:beans>

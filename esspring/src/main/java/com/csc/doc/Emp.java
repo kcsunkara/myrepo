@@ -15,20 +15,27 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.springframework.data.elasticsearch.annotations.DateFormat;
 import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.data.elasticsearch.annotations.Field;
 import org.springframework.data.elasticsearch.annotations.FieldType;
+import org.springframework.data.elasticsearch.annotations.Mapping;
+import org.springframework.data.elasticsearch.annotations.Setting;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
 @Table(name="emp")
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property="id")
-@Document(indexName = "emp", type = "emp", shards = 1, replicas = 0)
+//@Setting(settingPath = "settings/settings.json")
+//@Mapping(mappingPath = "mappings/mappings.json")
+@Setting(settingPath = "emp_settings.json")
+@Document(indexName = "org", type = "emp", shards = 1, replicas = 0)
 public class Emp implements Serializable {
 
 	private static final long serialVersionUID = 3963588439614553174L;
@@ -41,9 +48,11 @@ public class Emp implements Serializable {
 	private Integer id;
 	
 	@Column(name="first_name")
+	@Field(type = FieldType.String, analyzer="ngram_analyzer")
 	private String firstName;
 	
 	@Column(name="last_name")
+	@Field(type = FieldType.String, analyzer="ngram_analyzer")
 	private String lastName;
 	
 	@Column(name="birth_date")
@@ -62,9 +71,10 @@ public class Emp implements Serializable {
 	@Field(type = FieldType.Date, format = DateFormat.custom, pattern = "dd/MMM/yyyy")
 	private Date hireDate;
 	
+	@JsonIgnore
 	@ManyToOne(fetch=FetchType.EAGER, targetEntity=Dept.class)
 	@JoinColumn(name = "dept_no")
-	@Field(type = FieldType.Nested, includeInParent=true)
+//	@Field(type = FieldType.Nested, includeInParent=true)
 	private Dept dept;
 	
 	@OneToMany(cascade = CascadeType.PERSIST, fetch=FetchType.EAGER)
@@ -86,6 +96,9 @@ public class Emp implements Serializable {
 	@JoinColumn(name="emp_no")
 	@Field(type = FieldType.Nested, includeInParent=true)
 	private List<Address> addresses;
+	
+	@Transient
+	private Integer deptNo;
 	
 	public Integer getId() {
 		return id;
@@ -142,11 +155,13 @@ public class Emp implements Serializable {
 	public void setHireDate(Date hireDate) {
 		this.hireDate = hireDate;
 	}
-
+	
+	@JsonIgnore
 	public Dept getDept() {
 		return dept;
 	}
 
+	@JsonIgnore
 	public void setDept(Dept dept) {
 		this.dept = dept;
 	}
@@ -181,6 +196,17 @@ public class Emp implements Serializable {
 
 	public void setAddresses(List<Address> addresses) {
 		this.addresses = addresses;
+	}
+
+	public Integer getDeptNo() {
+		if(dept != null) {
+			return dept.getId();
+		}
+		return deptNo;
+	}
+
+	public void setDeptNo(Integer deptNo) {
+		this.deptNo = deptNo;
 	}
 	
 }

@@ -22,43 +22,43 @@ import com.csc.doc.Dept;
 import com.csc.doc.Emp;
 import com.csc.jpa.repository.DeptRepositoryJPA;
 import com.csc.jpa.repository.EmpRepositoryJPA;
+import com.csc.repository.DeptRepository;
 import com.csc.repository.EmpRepository;
 
 @Service
-public class EmpServiceImpl implements EmpService {
+public class OrgServiceImpl implements OrgService {
 
-	private static final Logger logger = Logger.getLogger(EmpServiceImpl.class);
+	private static final Logger logger = Logger.getLogger(OrgServiceImpl.class);
 	
 	@Autowired
 	private ElasticsearchTemplate elasticsearchTemplate;
 	
 	@Autowired
-	private EmpRepository empRepository;
+	private EmpRepository esEmpRepository;
+	
+	@Autowired
+	private DeptRepository esDeptRepository;
 	
 	@Autowired
 	private EmpRepositoryJPA jpaEmpRepository;
 	
+	@Autowired
+	private DeptRepositoryJPA jpaDeptRepository;
+	
 	@Override
 	public Emp save(Emp emp) {
 		logger.debug("EmpServiceImpl.save() --> " + emp);
-		return empRepository.save(emp);
+		return esEmpRepository.save(emp);
 	}
 
 	@Override
 	public Emp findById(Integer id) {
-		return empRepository.findOne(id);
+		return esEmpRepository.findOne(id);
 	}
 
 	@Override
 	public Iterable<Emp> findAll() {
-		return empRepository.findAll();
-	}
-
-	@Override
-	@Transactional
-	public Iterable<Emp> jpaFindAll() {
-		Iterable<Emp> empListIterable =  jpaEmpRepository.findAll();
-		return empListIterable;
+		return esEmpRepository.findAll();
 	}
 
 	@Override
@@ -69,8 +69,10 @@ public class EmpServiceImpl implements EmpService {
 
 	@Override
 	public String indexAllEmps() {
-		Iterable<Emp> empListIterable = jpaFindAll();
-		empRepository.save(empListIterable);
+		Iterable<Emp> empListIterable = jpaFindAllEmps();
+		Iterable<Dept> deptListIterable = jpaFindAllDepts();
+		esEmpRepository.save(empListIterable);
+		esDeptRepository.save(deptListIterable);
 		return "Success";
 	}
 
@@ -81,14 +83,14 @@ public class EmpServiceImpl implements EmpService {
 		String retrieveFromDateStr = requestMap.get("retrieveFromDate");
 		String retrieveToDateStr = requestMap.get("retrieveToDate");
 
-		QueryBuilder queryBuilder7 = QueryBuilders.boolQuery()
+		QueryBuilder queryBuilder = QueryBuilders.boolQuery()
 				.must(QueryBuilders.rangeQuery("salary.fromDate").gte(retrieveFromDateStr).lte(retrieveToDateStr))
 				.must(QueryBuilders.rangeQuery("salary.toDate").gte(retrieveFromDateStr).lte(retrieveToDateStr));
 		
-		MultiMatchQueryBuilder multiMatchQueryBuilder = new MultiMatchQueryBuilder(searchText, "firstName", "lastName", "dept.deptName")
-																.analyzer("standard");
+		MultiMatchQueryBuilder multiMatchQueryBuilder = new MultiMatchQueryBuilder(searchText, "firstName", "lastName")
+																.analyzer("ngram_analyzer");
 		SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(multiMatchQueryBuilder)
-				.withFilter(queryBuilder7)
+				.withFilter(queryBuilder)
 				.withSort(SortBuilders.fieldSort("id").order(SortOrder.ASC))
 				.withPageable(pageable).build();
 		Page<Emp> matchingEntities = elasticsearchTemplate.queryForPage(searchQuery,Emp.class);
@@ -96,6 +98,16 @@ public class EmpServiceImpl implements EmpService {
 		Map<String, Page<Emp>> resultMap = new HashMap<String, Page<Emp>>();
 		resultMap.put("Success", matchingEntities);
 		return resultMap;
+	}
+
+	@Override
+	public Iterable<Emp> jpaFindAllEmps() {
+		return jpaEmpRepository.findAll();
+	}
+
+	@Override
+	public Iterable<Dept> jpaFindAllDepts() {
+		return jpaDeptRepository.findAll();
 	}
 
 }
