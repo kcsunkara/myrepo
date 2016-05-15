@@ -21,8 +21,6 @@ import org.springframework.data.elasticsearch.annotations.DateFormat;
 import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.data.elasticsearch.annotations.Field;
 import org.springframework.data.elasticsearch.annotations.FieldType;
-import org.springframework.data.elasticsearch.annotations.Mapping;
-import org.springframework.data.elasticsearch.annotations.Setting;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
@@ -34,7 +32,7 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property="id")
 //@Setting(settingPath = "/settings/settings.json")
 //@Mapping(mappingPath = "/mappings/mappings.json")
-@Setting(settingPath = "/org_settings.json")
+//@Setting(settingPath = "/org_settings.json")
 @Document(indexName = "org", type = "emp", shards = 1, replicas = 0)
 public class Emp implements Serializable {
 
@@ -48,13 +46,13 @@ public class Emp implements Serializable {
 	private Integer id;
 	
 	@Column(name="first_name")
-	@Field(type = FieldType.String, analyzer="ngram_analyzer", searchAnalyzer="ngram_analyzer")
-//	@Field(type = FieldType.String)
+//	@Field(type = FieldType.String, analyzer="ngram_analyzer", searchAnalyzer="ngram_analyzer")
+	@Field(type = FieldType.String)
 	private String firstName;
 	
 	@Column(name="last_name")
-	@Field(type = FieldType.String, analyzer="ngram_analyzer", searchAnalyzer="ngram_analyzer")
-//	@Field(type = FieldType.String)
+//	@Field(type = FieldType.String, analyzer="ngram_analyzer", searchAnalyzer="ngram_analyzer")
+	@Field(type = FieldType.String)
 	private String lastName;
 	
 	@Column(name="birth_date")
