@@ -99,6 +99,30 @@ public class EmpController {
 		}
 	}
 	
+	@RequestMapping(value = "/findByNameOrDept_2", method = RequestMethod.POST)
+	public @ResponseBody Map<String, Page<Emp>> findByNameOrDept_2(
+			@RequestParam Integer pageNo, @RequestParam Integer maxRecords,
+			@RequestBody Map<String, String> requestMap) {
+		logger.info("EmpController.findByNameOrDept_2() - for request: " + requestMap + " - pageNo: " + pageNo + " - maxRecords: " + maxRecords);
+		List ls = new ArrayList();
+		JSONObject obj = new JSONObject();
+		obj.put("freeText", requestMap.get("freeText"));
+		obj.put("retrieveFromDate", requestMap.get("retrieveFromDate"));
+		obj.put("retrieveToDate", requestMap.get("retrieveToDate"));
+
+		if(jsonValidator.validate(obj,JsonMessageType.REQUEST)) {
+			return orgService.findByNameOrDept_2(requestMap, new PageRequest(pageNo, maxRecords));
+		} else {
+			Map<String, Page<Emp>> resultMap = new HashMap<String, Page<Emp>>();
+			String message = "Request JSON is not valid. Required Format: " + "{" +
+			    "freeText:" + "<name dept>, " +
+			    "retrieveFromDate:" + "dd/MMM/yyyy, " +
+			    "retrieveToDate:" + "dd/MMM/yyyy " + "}";
+			resultMap.put(message, null);
+			return resultMap;
+		}
+	}
+	
 	@RequestMapping(value = "/findByNameOrDept_Manual", method = RequestMethod.POST)
 	public @ResponseBody Map<String, Page<Emp>> findByNameOrDept_manual(
 			@RequestParam Integer pageNo, @RequestParam Integer maxRecords,
