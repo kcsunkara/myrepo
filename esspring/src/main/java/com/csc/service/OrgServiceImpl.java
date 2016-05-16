@@ -185,7 +185,11 @@ public class OrgServiceImpl implements OrgService {
 					.withSort(SortBuilders.fieldSort("id").order(SortOrder.ASC))
 					.withPageable(pageable).build();
 		} else {
-			searchQuery = new NativeSearchQueryBuilder().withQuery(QueryBuilders.termsQuery("deptNo", matchingDeptList)).build();
+			queryBuilderFilter = QueryBuilders.boolQuery()
+					.must(QueryBuilders.termsQuery("deptNo", matchingDeptList))
+					.must(QueryBuilders.rangeQuery("salary.fromDate").gte(retrieveFromDateStr).lte(retrieveToDateStr))
+					.must(QueryBuilders.rangeQuery("salary.toDate").gte(retrieveFromDateStr).lte(retrieveToDateStr));
+			searchQuery = new NativeSearchQueryBuilder().withQuery(queryBuilderFilter).build();
 		}
 		
 		
