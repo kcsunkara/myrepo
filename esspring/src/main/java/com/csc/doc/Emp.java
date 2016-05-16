@@ -2,7 +2,7 @@ package com.csc.doc;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -21,6 +21,8 @@ import org.springframework.data.elasticsearch.annotations.DateFormat;
 import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.data.elasticsearch.annotations.Field;
 import org.springframework.data.elasticsearch.annotations.FieldType;
+import org.springframework.data.elasticsearch.annotations.Mapping;
+import org.springframework.data.elasticsearch.annotations.Setting;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
@@ -30,9 +32,8 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 @Entity
 @Table(name="emp")
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property="id")
-//@Setting(settingPath = "/settings/settings.json")
-//@Mapping(mappingPath = "/mappings/mappings.json")
-//@Setting(settingPath = "/org_settings.json")
+@Setting(settingPath = "/settings/settings.json")
+@Mapping(mappingPath = "/mappings/emp_mappings.json")
 @Document(indexName = "org", type = "emp", shards = 1, replicas = 0)
 public class Emp implements Serializable {
 
@@ -42,33 +43,35 @@ public class Emp implements Serializable {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="emp_no")
 	@org.springframework.data.annotation.Id
-	@Field(type = FieldType.Integer)
+//	@Field(type = FieldType.Integer)
 	private Integer id;
 	
 	@Column(name="first_name")
 //	@Field(type = FieldType.String, analyzer="ngram_analyzer", searchAnalyzer="ngram_analyzer")
-	@Field(type = FieldType.String)
+//	@Field(type = FieldType.String)
 	private String firstName;
 	
 	@Column(name="last_name")
 //	@Field(type = FieldType.String, analyzer="ngram_analyzer", searchAnalyzer="ngram_analyzer")
-	@Field(type = FieldType.String)
+//	@Field(type = FieldType.String)
 	private String lastName;
 	
 	@Column(name="birth_date")
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MMM/yyyy")
-	@Field(type = FieldType.Date, format = DateFormat.custom, pattern = "dd/MMM/yyyy")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MMM/yyyy", timezone="Asia/Kolkata")
+//	@Field(type = FieldType.Date, format = DateFormat.custom, pattern = "dd/MMM/yyyy")
 	private Date birthDate;
 	
 	@Column(name="gender")
+//	@Field(type = FieldType.String)
 	private Character gender;
 	
 	@Column(name="email")
+//	@Field(type = FieldType.String)
 	private String email;
 	
 	@Column(name="hire_date")
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MMM/yyyy")
-	@Field(type = FieldType.Date, format = DateFormat.custom, pattern = "dd/MMM/yyyy")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MMM/yyyy", timezone="Asia/Kolkata")
+//	@Field(type = FieldType.Date, format = DateFormat.custom, pattern = "dd/MMM/yyyy")
 	private Date hireDate;
 	
 	@JsonIgnore
@@ -77,27 +80,28 @@ public class Emp implements Serializable {
 //	@Field(type = FieldType.Nested, includeInParent=true)
 	private Dept dept;
 	
-	@OneToMany(cascade = CascadeType.PERSIST, fetch=FetchType.EAGER)
+	@OneToMany(cascade = CascadeType.PERSIST, fetch=FetchType.EAGER, mappedBy="")
 	@JoinColumn(name="emp_no")
-	@Field(type = FieldType.Nested, includeInParent=true)
-	private List<Salary> salary;
+//	@Field(type = FieldType.Nested, includeInParent=true)
+	private Set<Salary> salary;
 	
 	@OneToMany(cascade = CascadeType.PERSIST, fetch=FetchType.EAGER)
 	@JoinColumn(name="emp_no")
-	@Field(type = FieldType.Nested, includeInParent=true)
-	private List<Title> titles;
+//	@Field(type = FieldType.Nested, includeInParent=true)
+	private Set<Title> titles;
 
 	@OneToMany(cascade = CascadeType.PERSIST, fetch=FetchType.EAGER)
 	@JoinColumn(name="emp_no")
-	@Field(type = FieldType.Nested, includeInParent=true)
-	private List<Phone> phones;
+//	@Field(type = FieldType.Nested, includeInParent=true)
+	private Set<Phone> phones;
 	
 	@OneToMany(cascade = CascadeType.PERSIST, fetch=FetchType.EAGER)
 	@JoinColumn(name="emp_no")
-	@Field(type = FieldType.Nested, includeInParent=true)
-	private List<Address> addresses;
+//	@Field(type = FieldType.Nested, includeInParent=true)
+	private Set<Address> addresses;
 	
 	@Transient
+//	@Field(type = FieldType.Integer)
 	private Integer deptNo;
 	
 	public Integer getId() {
@@ -166,35 +170,35 @@ public class Emp implements Serializable {
 		this.dept = dept;
 	}
 
-	public List<Salary> getSalary() {
+	public Set<Salary> getSalary() {
 		return salary;
 	}
 
-	public void setSalary(List<Salary> salary) {
+	public void setSalary(Set<Salary> salary) {
 		this.salary = salary;
 	}
 
-	public List<Title> getTitles() {
+	public Set<Title> getTitles() {
 		return titles;
 	}
 
-	public void setTitles(List<Title> titles) {
+	public void setTitles(Set<Title> titles) {
 		this.titles = titles;
 	}
 
-	public List<Phone> getPhones() {
+	public Set<Phone> getPhones() {
 		return phones;
 	}
 
-	public void setPhones(List<Phone> phones) {
+	public void setPhones(Set<Phone> phones) {
 		this.phones = phones;
 	}
 
-	public List<Address> getAddresses() {
+	public Set<Address> getAddresses() {
 		return addresses;
 	}
 
-	public void setAddresses(List<Address> addresses) {
+	public void setAddresses(Set<Address> addresses) {
 		this.addresses = addresses;
 	}
 

@@ -18,4 +18,7 @@ public interface OrgService {
 	Iterable<Dept> jpaFindAllDepts();
 	String indexAllEmps();
 	Map<String, Page<Emp>> findByNameOrDept(Map<String, String> requestMap, Pageable pageable);
+	
+	Map<String, Page<Emp>> findByNameOrDept_Manual(Map<String, String> requestMap, Pageable pageable);
+	
 }
