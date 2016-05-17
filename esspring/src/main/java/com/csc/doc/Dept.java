@@ -13,8 +13,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.springframework.data.elasticsearch.annotations.Document;
-import org.springframework.data.elasticsearch.annotations.Field;
-import org.springframework.data.elasticsearch.annotations.FieldType;
 import org.springframework.data.elasticsearch.annotations.Mapping;
 import org.springframework.data.elasticsearch.annotations.Setting;
 
@@ -22,7 +20,6 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name="dept")
-//@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property="id")
 @JsonIgnoreProperties("emps")
 @Document(indexName = "org", type = "dept", shards = 1, replicas = 0)
 @Setting(settingPath = "/settings/settings.json")
@@ -35,12 +32,9 @@ public class Dept implements Serializable {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="dept_no")
 	@org.springframework.data.annotation.Id
-//	@Field(type = FieldType.Integer)
 	private Integer id;
 	
 	@Column(name="dept_name")
-//	@Field(type = FieldType.String, analyzer="ngram_analyzer", searchAnalyzer="ngram_analyzer")
-//	@Field(type = FieldType.String)
 	private String deptName;
 	
 	@OneToMany(cascade = CascadeType.PERSIST, mappedBy = "dept")
