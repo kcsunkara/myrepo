@@ -148,6 +148,61 @@ public class OrgServiceImpl implements OrgService {
 	}
 
 	@Override
+	public Map<String, Page<Emp>> findByNameOrDept_2(Map<String, String> requestMap, Pageable pageable) {
+		logger.info("OrgServiceImpl.findByNameOrDept_2() - for request - " + requestMap + " - for Paging - " + pageable);
+
+		String searchText = requestMap.get("freeText");
+		String retrieveFromDateStr = requestMap.get("retrieveFromDate");
+		String retrieveToDateStr = requestMap.get("retrieveToDate");
+
+		QueryBuilder queryBuilderDept = QueryBuilders.matchQuery("deptName", searchText).analyzer("standard");
+		SearchQuery searchQueryDept = new NativeSearchQueryBuilder().withQuery(queryBuilderDept).build();
+		List<String> matchingDeptList = elasticsearchTemplate.queryForIds(searchQueryDept);
+		logger.info("OrgServiceImpl.findByNameOrDept_2() - Matching Dept ID's for input text("+ searchText + "): " + matchingDeptList);
+
+		QueryBuilder queryBuilderFilter = null;
+		if (matchingDeptList.size() > 0) {
+			queryBuilderFilter = QueryBuilders.boolQuery()
+					.must(QueryBuilders.termsQuery("deptNo", matchingDeptList))
+					.must(QueryBuilders.rangeQuery("salary.fromDate").gte(retrieveFromDateStr).lte(retrieveToDateStr))
+					.must(QueryBuilders.rangeQuery("salary.toDate").gte(retrieveFromDateStr).lte(retrieveToDateStr));
+		} else {
+			queryBuilderFilter = QueryBuilders.boolQuery()
+					.must(QueryBuilders.rangeQuery("salary.fromDate").gte(retrieveFromDateStr).lte(retrieveToDateStr))
+					.must(QueryBuilders.rangeQuery("salary.toDate").gte(retrieveFromDateStr).lte(retrieveToDateStr));
+		}
+
+		MultiMatchQueryBuilder multiMatchQueryBuilder = new MultiMatchQueryBuilder(searchText, "firstName", "lastName").analyzer("standard");
+
+		SearchQuery searchQueryForEmps = new NativeSearchQueryBuilder().withQuery(multiMatchQueryBuilder).build();
+		List<String> matchingEmpIdList = elasticsearchTemplate.queryForIds(searchQueryForEmps);
+		logger.info("OrgServiceImpl.findByNameOrDept_2() - Matching Emp ID's for input text("+ searchText + "): " + matchingEmpIdList);
+		
+		SearchQuery searchQuery = null;
+		if(matchingEmpIdList.size() > 0) {
+			searchQuery = new NativeSearchQueryBuilder().withQuery(multiMatchQueryBuilder)
+					.withFilter(queryBuilderFilter)
+					.withSort(SortBuilders.fieldSort("id").order(SortOrder.ASC))
+					.withPageable(pageable).build();
+		} else {
+			queryBuilderFilter = QueryBuilders.boolQuery()
+					.must(QueryBuilders.termsQuery("deptNo", matchingDeptList))
+					.must(QueryBuilders.rangeQuery("salary.fromDate").gte(retrieveFromDateStr).lte(retrieveToDateStr))
+					.must(QueryBuilders.rangeQuery("salary.toDate").gte(retrieveFromDateStr).lte(retrieveToDateStr));
+			searchQuery = new NativeSearchQueryBuilder().withQuery(queryBuilderFilter).build();
+		}
+		
+		
+		Page<Emp> matchingEntities = elasticsearchTemplate.queryForPage(searchQuery, Emp.class);
+
+		logger.info("OrgServiceImpl.findByNameOrDept_2() - No. of matching Emp's for total search criteria: " + matchingEntities.getTotalElements());
+
+		Map<String, Page<Emp>> resultMap = new HashMap<String, Page<Emp>>();
+		resultMap.put("Success", matchingEntities);
+		return resultMap;
+	}
+	
+	@Override
 	public Map<String, Page<Emp>> findByNameOrDept_Manual(
 			Map<String, String> requestMap, Pageable pageable) {
 
