@@ -10,13 +10,11 @@ import javax.persistence.Table;
 
 import org.springframework.data.elasticsearch.annotations.Document;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name="phones")
 @IdClass(PhoneKey.class)
-//@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property="id, fromDate")
 @JsonIgnoreProperties("id")
 @Document(indexName = "phone", type = "phone", shards = 1, replicas = 0)
 public class Phone implements Serializable {

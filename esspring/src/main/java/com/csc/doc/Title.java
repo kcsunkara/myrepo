@@ -17,7 +17,6 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @Entity
 @Table(name="titles")
 @IdClass(TitleKey.class)
-//@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property="id, fromDate")
 @JsonIgnoreProperties("id")
 @Document(indexName = "title", type = "title", shards = 1, replicas = 0)
 public class Title implements Serializable {
@@ -31,12 +30,10 @@ public class Title implements Serializable {
 	@Id
 	@Column(name="from_date")
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MMM/yyyy", timezone="Asia/Kolkata")
-//	@Field(type = FieldType.Date, format = DateFormat.custom, pattern = "dd/MMM/yyyy")
 	private Date fromDate;
 	
 	@Column(name="to_date")
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MMM/yyyy", timezone="Asia/Kolkata")
-//	@Field(type = FieldType.Date, format = DateFormat.custom, pattern = "dd/MMM/yyyy")
 	private Date toDate;
 	
 	@Column(name="title")

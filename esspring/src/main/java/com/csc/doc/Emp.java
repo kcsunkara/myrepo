@@ -17,10 +17,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
-import org.springframework.data.elasticsearch.annotations.DateFormat;
 import org.springframework.data.elasticsearch.annotations.Document;
-import org.springframework.data.elasticsearch.annotations.Field;
-import org.springframework.data.elasticsearch.annotations.FieldType;
 import org.springframework.data.elasticsearch.annotations.Mapping;
 import org.springframework.data.elasticsearch.annotations.Setting;
 
@@ -43,65 +40,50 @@ public class Emp implements Serializable {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="emp_no")
 	@org.springframework.data.annotation.Id
-//	@Field(type = FieldType.Integer)
 	private Integer id;
 	
 	@Column(name="first_name")
-//	@Field(type = FieldType.String, analyzer="ngram_analyzer", searchAnalyzer="ngram_analyzer")
-//	@Field(type = FieldType.String)
 	private String firstName;
 	
 	@Column(name="last_name")
-//	@Field(type = FieldType.String, analyzer="ngram_analyzer", searchAnalyzer="ngram_analyzer")
-//	@Field(type = FieldType.String)
 	private String lastName;
 	
 	@Column(name="birth_date")
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MMM/yyyy", timezone="Asia/Kolkata")
-//	@Field(type = FieldType.Date, format = DateFormat.custom, pattern = "dd/MMM/yyyy")
 	private Date birthDate;
 	
 	@Column(name="gender")
-//	@Field(type = FieldType.String)
 	private Character gender;
 	
 	@Column(name="email")
-//	@Field(type = FieldType.String)
 	private String email;
 	
 	@Column(name="hire_date")
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MMM/yyyy", timezone="Asia/Kolkata")
-//	@Field(type = FieldType.Date, format = DateFormat.custom, pattern = "dd/MMM/yyyy")
 	private Date hireDate;
 	
 	@JsonIgnore
 	@ManyToOne(fetch=FetchType.EAGER, targetEntity=Dept.class)
 	@JoinColumn(name = "dept_no")
-//	@Field(type = FieldType.Nested, includeInParent=true)
 	private Dept dept;
 	
 	@OneToMany(cascade = CascadeType.PERSIST, fetch=FetchType.EAGER, mappedBy="")
 	@JoinColumn(name="emp_no")
-//	@Field(type = FieldType.Nested, includeInParent=true)
 	private Set<Salary> salary;
 	
 	@OneToMany(cascade = CascadeType.PERSIST, fetch=FetchType.EAGER)
 	@JoinColumn(name="emp_no")
-//	@Field(type = FieldType.Nested, includeInParent=true)
 	private Set<Title> titles;
 
 	@OneToMany(cascade = CascadeType.PERSIST, fetch=FetchType.EAGER)
 	@JoinColumn(name="emp_no")
-//	@Field(type = FieldType.Nested, includeInParent=true)
 	private Set<Phone> phones;
 	
 	@OneToMany(cascade = CascadeType.PERSIST, fetch=FetchType.EAGER)
 	@JoinColumn(name="emp_no")
-//	@Field(type = FieldType.Nested, includeInParent=true)
 	private Set<Address> addresses;
 	
 	@Transient
-//	@Field(type = FieldType.Integer)
 	private Integer deptNo;
 	
 	public Integer getId() {
