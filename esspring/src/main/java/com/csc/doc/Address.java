@@ -15,7 +15,6 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @Entity
 @Table(name="addresses")
 @IdClass(AddressKey.class)
-//@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property="id, fromDate")
 @JsonIgnoreProperties("id")
 @Document(indexName = "address", type = "address", shards = 1, replicas = 0)
 public class Address implements Serializable {
